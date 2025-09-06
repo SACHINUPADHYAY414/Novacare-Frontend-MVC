@@ -1,0 +1,617 @@
+.btn-link {
+  color: #2a9d8f;
+  font-size: 2rem !important;
+  text-decoration: none;
+}
+
+.btn-link:hover {
+  color: #264653;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.col-lg-between-3-4 {
+  flex: 0 0 21%;
+  max-width: 21%;
+}
+
+.date-card {
+  border-right: 1px solid #eee;
+  cursor: pointer;
+  flex-shrink: 0;
+  min-width: 120px;
+  padding: 0.5rem;
+  text-align: center;
+  transition: background 0.3s;
+}
+
+.date-card:hover {
+  background-color: #f5f5f5;
+}
+
+.date-scroll-wrapper {
+  display: flex;
+  flex-grow: 1;
+  overflow-x: auto;
+  scroll-behavior: smooth;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.date-scroll-wrapper::-webkit-scrollbar {
+  display: none;
+}
+
+.date-slider-container {
+  align-items: center;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  display: flex;
+  margin: 0 auto;
+  max-width: 100%;
+  overflow: hidden;
+  padding: 0.3rem;
+  position: relative;
+}
+
+.doctor-name {
+  font-size: 1rem;
+}
+
+.doctor-profile-card {
+  border-radius: 0.5rem;
+  padding: 1rem;
+}
+
+.doctor-profile-img {
+  height: 100px;
+  object-fit: cover;
+  transition: width 0.3s ease, height 0.3s ease;
+  width: 100px;
+}
+
+.doctor-specialization,
+.doctor-title {
+  font-size: 0.85rem;
+}
+
+.fade-slide {
+  opacity: 1;
+  transform: translateY(0);
+  transition: opacity 0.4s ease, transform 0.4s ease;
+}
+
+.fade-slide.hidden {
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(-10px);
+}
+
+.form-control {
+  font-size: 0.9rem !important;
+  line-height: 1.5rem !important;
+}
+
+.form-control::placeholder {
+  color: #cacaca !important;
+  font-family: inherit;
+  font-size: 0.9rem !important;
+  font-weight: 500;
+  line-height: 1.5rem !important;
+  margin: 0;
+}
+
+.form-control:focus {
+  border-color: #005457 !important;
+  box-shadow: 0 0 0 0 transparent !important;
+  outline: none;
+}
+
+.form-select:focus {
+  border-color: #005457 !important;
+  box-shadow: 0 0 0 0 transparent !important;
+  outline: none;
+}
+
+.hasError {
+  border-color: red !important;
+}
+
+.hasError:focus {
+  border-color: red !important;
+}
+
+.hero-form-container {
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(10px);
+  border-radius: 12px;
+}
+
+.input-group .form-control-sm {
+  font-size: 0.85rem;
+}
+
+.is-valid-date {
+  background-position: right 2.4rem center !important;
+}
+
+.li.nav-item:hover a.nav-link {
+  color: #ffcc00 !important;
+  cursor: pointer;
+}
+
+.navbar-brand,
+.nav-link,
+.btn {
+  text-decoration: none !important;
+}
+
+.p-toast-container {
+  position: fixed !important;
+  right: 1rem;
+  top: 1rem;
+  z-index: 9999 !important;
+}
+
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+
+@media(min-width: 768px) {
+  .doctor-profile-card {
+    max-width: 80% !important;
+    flex: 0 0 80% !important;
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
+
+
+@media (max-width: 576px) {
+  .doctor-profile-card {
+    margin-bottom: 0.4rem;
+    padding: 0.75rem;
+  }
+
+  .scroll-btn-left {
+    left: 5px !important;
+  }
+
+  .scroll-btn-right {
+    right: 5px !important;
+  }
+}
+
+@media (min-width: 576px) {
+  .doctor-name {
+    font-size: 1.1rem;
+  }
+
+  .doctor-profile-img {
+    height: 120px;
+    width: 120px;
+  }
+
+  .doctor-specialization,
+  .doctor-title {
+    font-size: 0.9rem;
+  }
+}
+
+@media (min-width: 768px) {
+  .doctor-name {
+    font-size: 1.2rem;
+  }
+
+  .doctor-profile-img {
+    height: 140px;
+    width: 140px;
+  }
+
+  .doctor-specialization,
+  .doctor-title {
+    font-size: 1rem;
+  }
+}
+
+@media (min-width: 992px) {
+  .doctor-profile-img {
+    height: 160px;
+    width: 160px;
+  }
+}
+
+#userDropdown::after {
+  content: none !important;
+  display: none !important;
+}
+
+.dropdown-toggle::after {
+  display: none;
+}
+
+.chatbot-card {
+  width: 100%;
+  max-width: 310px;
+  max-height: 65vh;
+  display: flex;
+  flex-direction: column;
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.chatbot-header {
+  border-top-left-radius: 5px !important;
+  border-top-right-radius: 5px !important;
+  background-color: #0074bc !important;
+}
+
+
+.chatbot-body {
+  height: 350px;
+  overflow-y: auto;
+  padding: 12px;
+  background-color: #e5ddd5;
+  display: flex;
+  flex-direction: column;
+}
+
+.chatbot-footer {
+  padding: 10px;
+  border-top: 1px solid #dee2e6;
+  background-color: #fff;
+}
+
+.chatbot-message {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-end;
+  gap: 6px;
+  padding: 8px 12px;
+  max-width: 70%;
+  font-size: 14px;
+  position: relative;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  word-break: break-word;
+}
+
+.chatbot-text {
+  flex: 1 1 auto;
+  white-space: normal;
+}
+
+.chatbot-time,
+.chatbot-checkmarks {
+  flex-shrink: 0;
+  white-space: nowrap;
+  font-size: 10px;
+  color: rgba(0, 0, 0, 0.45);
+  user-select: none;
+  margin-left: 6px;
+  align-self: flex-end;
+}
+
+.chatbot-user {
+  background-color: #dcf8c6;
+  color: #000;
+  margin-left: auto;
+  margin-bottom: 8px;
+  justify-content: flex-end;
+  border-top-right-radius: 0;
+  border-top-left-radius: 7.5px;
+  border-bottom-left-radius: 7.5px;
+  border-bottom-right-radius: 7.5px;
+}
+
+.chatbot-bot {
+  background-color: #fff;
+  color: #000;
+  margin-right: auto;
+  margin-bottom: 8px;
+  justify-content: flex-start;
+  border-top-left-radius: 0;
+  border-top-right-radius: 7.5px;
+  border-bottom-left-radius: 7.5px;
+  border-bottom-right-radius: 7.5px;
+}
+
+.chatbot-checkmarks.read {
+  color: #4fc3f7;
+}
+/* Desktop-only styles */
+@media (min-width: 577px) {
+  body.chatbot-open {
+    overflow: hidden;
+  }
+
+  .chatbot-card {
+    position: fixed;
+    bottom: 10px;
+    right: 20px;
+    width: 360px;
+    height: 600px;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    background-color: #fff;
+    z-index: 1050;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  }
+
+  .chatbot-body {
+    flex-grow: 1;
+    overflow-y: auto;
+    padding: 10px;
+  }
+
+  .chatbot-body::-webkit-scrollbar {
+    width: 0px;
+    background: transparent;
+  }
+
+  .chatbot-body {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+}
+
+/* Mobile styles — keep your existing ones */
+@media (max-width: 576px) {
+  .chatbot-card {
+    position: fixed !important;
+    inset: 0 !important;
+    width: 100vw !important;
+    height: 100dvh !important;
+    max-width: 100vw !important;
+    max-height: 100dvh !important;
+    border-radius: 0 !important;
+    display: flex !important;
+    flex-direction: column !important;
+    z-index: 1050;
+  }
+
+  .chatbot-body {
+    flex-grow: 1;
+    max-height: unset !important;
+    height: auto !important;
+    overflow-y: auto;
+  }
+
+  .emoji-picker-react {
+    width: 100vw !important;
+    max-width: 100vw !important;
+    position: fixed !important;
+    bottom: 60px !important;
+    left: 0 !important;
+    right: 0 !important;
+    z-index: 1060 !important;
+  }
+
+  body.chatbot-open {
+    overflow: hidden;
+  }
+}
+.btn-chatbot-open {
+  width: 3.5rem;
+  height: 3.5rem;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 2rem;
+  border-radius: 50%;
+  transition: transform 0.3s ease, font-size 0.3s ease;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+  background-color: #0074bc;
+  color: white;
+  border: none;
+
+  /* Optional: Apply pulse or bounce */
+  animation: pulse 2s infinite;
+}
+
+.btn-chatbot-open:hover {
+  animation: bounce 0.6s;
+}
+
+@keyframes bounce {
+  0%   { transform: scale(1); }
+  30%  { transform: scale(1.15); }
+  50%  { transform: scale(0.95); }
+  70%  { transform: scale(1.05); }
+  100% { transform: scale(1); }
+}
+
+@keyframes pulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+  100% { transform: scale(1); }
+}
+
+.open-btn {
+  width: auto;
+  height: auto;
+  font-size: inherit;
+  pointer-events: none;
+}
+
+@media (max-width: 575.98px) {
+  .btn-chatbot-open {
+    width: 3rem;
+    height: 3rem;
+    font-size: 1.8rem;
+  }
+}
+
+@media (min-width: 576px) and (max-width: 991.98px) {
+  .btn-chatbot-open {
+    width: 3.5rem;
+    height: 3.5rem;
+    font-size: 2rem;
+  }
+}
+
+@media (min-width: 992px) {
+  .btn-chatbot-open {
+    width: 3rem;
+    height: 3rem;
+    font-size: 1.75rem;
+  }
+}
+
+.navbar-custom {
+  background: transparent;
+  z-index: 10;
+  position: absolute;
+  top: 0;
+  width: 100%;
+  padding: 1rem 3rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.navbar-custom .nav-links a {
+  margin: 0 1rem;
+  color: black;
+  font-weight: 500;
+  text-decoration: none;
+}
+
+.navbar-custom .nav-buttons button {
+  margin-left: 1rem;
+  padding: 0.5rem 1rem;
+  border: none;
+  font-weight: 600;
+}
+
+.nav-buttons .btn-help {
+  background-color: black;
+  color: white;
+}
+
+.nav-buttons .btn-login {
+  background-color: #f57c00;
+  color: white;
+}
+/* Smaller icon and flip effect */
+.login-icon img {
+  width: 60%;
+  height: 60%;
+  object-fit: contain;
+  transform: scaleX(-1);
+  transition: transform 0.3s ease;
+}
+
+.login-card h5 {
+  font-size: 1.2rem;
+  color: #333;
+}
+
+/* Base styles (Mobile first) */
+.login-card {
+  z-index: 2;
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: 16px;
+  padding: 1.5rem;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+  width: 90%;
+  max-width: 360px;
+  margin: 5vh auto;
+  transition: all 0.3s ease;
+}
+
+.login-icon,
+.otp-verify-icon {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #f57c00;
+  border-radius: 50%;
+  overflow: hidden;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+}
+
+.login-icon {
+  width: 50px;
+  height: 50px;
+  // margin: -2.5rem auto 1.5rem;
+}
+
+.otp-verify-icon {
+  width: 50px;
+  height: 50px;
+  margin: 0.3rem auto 1rem;
+}
+
+.login-icon img,
+.otp-verify-icon img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 50%;
+}
+
+/* Tablets (≥768px) */
+@media (min-width: 768px) {
+  .login-card {
+    padding: 3rem;
+    margin: 10vh auto;
+  }
+
+  .login-icon,
+  .otp-verify-icon {
+    width: 70px;
+    height: 70px;
+  }
+
+  .login-icon {
+    margin: -3.5rem auto 2rem;
+    font-size: 28px;
+  }
+
+  .otp-verify-icon {
+    margin: 0.5rem auto 1.5rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .login-card {
+    padding: 1.5rem 2rem;
+    margin: 12vh auto;
+    max-width: 360px;
+    min-height: 340px;
+  }
+
+  .login-icon {
+    font-size: 32px;
+    margin: -0.4rem auto 0.5rem;
+  }
+
+  .otp-verify-icon {
+    margin: 0rem auto 1rem;
+    height: 60px;
+    width: 60px;
+  }
+}
+
+.rotate-circle {
+  border-radius: 50%;
+  animation: spin 30s linear infinite;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}

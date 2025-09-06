@@ -1,0 +1,88 @@
+.masters-bg-green {
+  background-color: #c6e8e1;
+}
+
+.theme-dark-green {
+  color: #005457;
+}
+
+.rs-calendar-table-cell-disabled {
+  opacity: 50% !important;
+}
+
+.rs-calendar-table-cell-is-today .rs-calendar-table-cell-content span {
+  background-color: inherit !important;
+  color: inherit !important;
+}
+
+.rs-calendar-table-cell .rs-calendar-table-cell-content {
+  border-radius: 50% !important;
+  box-shadow: 0 0 0 1px transparent !important;
+  background-color: #c6e8e1 !important;
+  color: #005457 !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  margin-top: 0.3rem !important;
+  margin-bottom: 0.3rem !important;
+  margin-left: auto !important;
+  margin-right: auto !important;
+  font-weight: 600 !important;
+  height: 50px !important;
+  width: 50px !important;
+}
+
+@media screen and (max-width: 450px) {
+  .rs-calendar-table-cell .rs-calendar-table-cell-content {
+    height: 35px !important;
+    width: 35px !important;
+  }
+}
+
+.rs-calendar-table-cell-selected .rs-calendar-table-cell-content {
+  background-color: rgb(12, 184, 182) !important;
+  color: #fff !important;
+  outline-color: rgb(12, 184, 182) !important;
+}
+
+.rs-btn-icon {
+  color: rgb(12, 184, 182) !important;
+  padding: 0 !important;
+  svg {
+    font-size: 2em !important;
+  }
+}
+
+.rs-calendar-header-title-date {
+  font-size: 1.2em !important;
+  font-weight: 600 !important;
+  pointer-events: none;
+}
+
+.rs-calendar-btn-today {
+  display: none !important;
+}
+
+.rs-calendar-table-header-cell-content {
+  font-size: large !important;
+}
+
+.rs-calendar-table-header-row {
+  font-weight: 600;
+}
+
+.rs-calendar-table-cell-content {
+  text-decoration: none !important;
+}
+
+.form-select {
+  font-size: 1rem !important;
+}
+
+.masters-appointment-slots {
+  max-height: 25rem;
+}
+
+.master-appointment-section {
+  min-height: inherit;
+}

@@ -1,0 +1,48 @@
+import axios from "axios";
+
+const api = axios.create({
+  baseURL: import.meta.env.VITE_LOCAL_API || "http://localhost:8080",
+  headers: {
+    "Content-Type": "application/json",
+  },
+});
+
+let storeToken = null;
+let toastFn = null;
+
+export const setToastHandler = (fn) => {
+  toastFn = fn;
+};
+
+export const setToken = (token) => {
+  storeToken = token;
+};
+
+// Request Interceptor: Add token to headers unless skipAuth is true
+api.interceptors.request.use(
+  (config) => {
+    if (!config.skipAuth && storeToken) {
+      config.headers.Authorization = `Bearer ${storeToken}`;
+    }
+    return config;
+  },
+  (error) => Promise.reject(error)
+);
+
+// Response Interceptor: Show toast on network/server errors
+api.interceptors.response.use(
+  (response) => response,
+  (error) => {
+    if (!error.response && typeof toastFn === "function") {
+      toastFn({
+        severity: "error",
+        summary: "Server Error",
+        detail: "Server unreachable. Please try again later.",
+        life: 3000,
+      });
+    }
+    return Promise.reject(error);
+  }
+);
+
+export default api;

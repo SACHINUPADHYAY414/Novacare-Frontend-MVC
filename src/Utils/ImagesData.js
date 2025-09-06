@@ -1,0 +1,47 @@
+const images = {
+  year: "https://res.cloudinary.com/dt9kb92su/image/upload/v1756983758/years_nk1jdb.png",
+  background1:
+    "https://res.cloudinary.com/dt9kb92su/image/upload/v1756983685/why-choose-bg_snoybf.png",
+  background2:
+    "https://res.cloudinary.com/dt9kb92su/image/upload/v1756983472/Background1_qzhl1k.jpg",
+  compalyLogo:
+    "https://res.cloudinary.com/dt9kb92su/image/upload/v1756983455/CompanyLogo_nxrqwa.png",
+  background3:
+    "https://res.cloudinary.com/dt9kb92su/image/upload/v1756983475/OtpVerification_x9fmmn.avif",
+  icon2mfa:
+    "https://res.cloudinary.com/dt9kb92su/image/upload/v1756983453/Otp_ts3lxh.jpg",
+  surgicalOncology:
+    "https://www.rgcirc.org/wp-content/uploads/2023/11/Sergical-oncology-Services1a.jpg",
+  radiationOncology:
+    "https://www.rgcirc.org/wp-content/uploads/2023/11/Radiation-Oncology-Services-a.jpg",
+  medicalOncology:
+    "https://www.rgcirc.org/wp-content/uploads/2023/11/Medical-oncology-Services-a.jpg",
+  pediatricOncology:
+    "https://www.rgcirc.org/wp-content/uploads/2023/11/Hemotology-Oncology-and-Bone-Marrow-Services.jpg",
+  interventionalGastro:
+    "https://www.rgcirc.org/wp-content/uploads/2023/10/laboratory-transfusion-1.png",
+  nuclearMedicine:
+    "https://www.rgcirc.org/wp-content/uploads/2023/10/neuclear-medicine.png",
+  supportServices:
+    "https://www.rgcirc.org/wp-content/uploads/2023/11/SUPPORT-SERVICES.png",
+  internalMedicine:
+    "https://www.rgcirc.org/wp-content/uploads/2023/11/INTERNAL-MEDICINE-ENDOCRINOLOGY-RHEUMATOLOGY-AND-INFECTIOUS-DISEASES-SERVICES.png",
+  preventiveOncology:
+    "https://www.rgcirc.org/wp-content/uploads/2023/10/preventive-onology.png",
+  respiratory:
+    "https://www.rgcirc.org/wp-content/uploads/2023/11/RESPIRATORY-MEDICINE.png",
+  radiology:
+    "https://www.rgcirc.org/wp-content/uploads/2023/10/interventional-radiology-2.png",
+  otpImage:
+    "https://www.rgcirc.org/wp-content/uploads/2023/11/INTERVENTIONAL-GASTROENTEROLOGY-SERVICES.png",
+  maleImage:
+    "https://res.cloudinary.com/dt9kb92su/image/upload/v1756985715/Men_fd6afd.jpg",
+  femaleImage:
+    "https://res.cloudinary.com/dt9kb92su/image/upload/v1756985715/Female_osrp2e.jpg",
+  loaderImage:
+    "https://res.cloudinary.com/dt9kb92su/image/upload/v1756986858/image-loader_v2n1m6.gif",
+  footerImage:
+    "https://www.rgcirc.org/wp-content/uploads/2023/07/ftr-img-btm.png",
+    donateImage:"https://res.cloudinary.com/dt9kb92su/image/upload/v1756986953/donateicon.png_z9pwdp.webp"
+};
+export default images;

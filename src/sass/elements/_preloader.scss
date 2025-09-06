@@ -1,0 +1,149 @@
+/*--------------------------------------------------------------
+4. Preloader
+----------------------------------------------------------------*/
+.st-perloader {
+  position: fixed;
+  height: 100vh;
+  width: 100vw;
+  z-index: 99999;
+  left: 0;
+  top: 0;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.1));
+  backdrop-filter: blur(3px);
+  -webkit-backdrop-filter: blur(3px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  .st-perloader-in {
+    position: relative;
+
+    svg {
+      width: 110px;
+      height: 110px;
+    }
+  }
+
+  .st-wave-first {
+    svg {
+      fill: $black4;
+    }
+  }
+
+  .st-wave-second {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    overflow: hidden;
+    animation: spark 1.25s linear infinite;
+
+    svg {
+      fill: $blue;
+    }
+  }
+
+  &.st-color1 {
+    .st-wave-second {
+      svg {
+        fill: $light-blue;
+      }
+    }
+  }
+
+  &.st-color2 {
+    .st-wave-second {
+      svg {
+        fill: $pink;
+      }
+    }
+  }
+}
+
+@keyframes spark {
+  0% {
+    max-width: 0;
+  }
+
+  100% {
+    max-width: 100%;
+  }
+}
+
+// for slot bookings pase
+.loader-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 99999;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.1));
+  backdrop-filter: blur(2px);
+  -webkit-backdrop-filter: blur(3px);
+
+  .slot-perloader {
+    width: 40px;
+    height: 40px;
+    position: relative;
+  }
+
+  .slot-perloader-in {
+    position: relative;
+
+    svg {
+      width: 110px;
+      height: 110px;
+    }
+  }
+
+  .slot-wave-first {
+    svg {
+      fill: $black4;
+    }
+  }
+
+  .slot-wave-second {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    overflow: hidden;
+    animation: spark 1.25s linear infinite;
+
+    svg {
+      fill: $blue;
+    }
+  }
+
+  &.slot-color1 {
+    .st-wave-second {
+      svg {
+        fill: $light-blue;
+      }
+    }
+  }
+
+  &.slot-color2 {
+    .slot-wave-second {
+      svg {
+        fill: $pink;
+      }
+    }
+  }
+
+  @keyframes spark {
+    0% {
+      max-width: 0;
+    }
+
+    100% {
+      max-width: 100%;
+    }
+
+
+  }
+}
