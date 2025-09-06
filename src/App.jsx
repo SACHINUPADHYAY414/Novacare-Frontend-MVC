@@ -11,7 +11,8 @@ import { logout } from "./Redux/authSlice.js";
 import { setToken, setToastHandler } from "./Components/Action/Api";
 import { useToastr } from "./Components/Toastr/ToastrProvider";
 import { OPPS_MSG, SESSION_EXPIRE, EXPIRATION_TIME } from "./Utils/strings.js";
-import ValidateOtp from "./Pages/ValidateOtp/ValidateOtp.jsx";
+import ValidateOtp from "./Pages/validateOtp/ValidateOtp.jsx";
+
 import { persistor } from "./Redux/store";
 import PageNotFound from "./Pages/PageNotFound/PageNotFound.jsx";
 import DoctorSlot from "./Pages/DoctorSlot/DoctorSlot.jsx";
