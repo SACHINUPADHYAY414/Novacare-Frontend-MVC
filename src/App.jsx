@@ -45,6 +45,8 @@ const App = () => {
             </ProtectedRoute>
           }
         />
+
+        <Route path="*" element={<PageNotFound />} />
       </Route>
 
       {/* Admin Dashboard */}
@@ -61,8 +63,6 @@ const App = () => {
         <Route path="doctors" element={<Doctors />} />
         <Route path="add-user" element={<AddUser />} />
       </Route>
-
-      <Route path="*" element={<PageNotFound />} />
     </Routes>
   );
 };

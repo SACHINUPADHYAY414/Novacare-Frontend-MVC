@@ -2,15 +2,11 @@ import React, { useEffect, useState, useCallback } from "react";
 import { useSelector } from "react-redux";
 import api from "../../../Components/Action/Api";
 import { useToastr } from "../../../Components/Toastr/ToastrProvider";
-import {
-  RiInformation2Line,
-  RiEdit2Line,
-  RiDeleteBinLine,
-  RiSave2Line
-} from "react-icons/ri";
+import { RiEdit2Line, RiDeleteBinLine, RiSave2Line, RiCloseLine } from "react-icons/ri";
 import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
 import CustomInputField from "../../../Components/CustomInput/CustomInputField";
-import TooltipWrapper from "../../../Components/Tooltip/TooltipWrapper";
+import { OverlayTrigger, Tooltip } from "react-bootstrap";
+import { Link } from "react-router-dom";
 import {
   OPPS_MSG,
   SUCCESS_MSG,
@@ -31,9 +27,8 @@ import {
   verifyEmail
 } from "../../../Utils/allValidation";
 import "bootstrap/dist/css/bootstrap.min.css";
-import { Link } from "react-router-dom";
 
-// Dummy title mapping function (optional)
+// Dummy title mapping function
 const mapTitleToString = (title) => title;
 
 const Users = () => {
@@ -55,7 +50,9 @@ const Users = () => {
 
   const fetchUsers = async () => {
     try {
-      const res = await api.get("/api/admin/users", { headers: { Authorization: `Bearer ${token}` } });
+      const res = await api.get("/api/admin/users", {
+        headers: { Authorization: `Bearer ${token}` }
+      });
       setUsers(res.data || []);
     } catch (err) {
       customToast({
@@ -79,7 +76,7 @@ const Users = () => {
       name: user.name || "",
       gender: user.gender || "",
       email: user.email || "",
-      password: "", // Optional
+      password: "",
       presentAddressLine1: user.address || "",
       presentCity: user.city || "",
       presentState: user.state || "",
@@ -141,22 +138,12 @@ const Users = () => {
       await api.put(`/api/admin/user/${editedData.id}`, payload, {
         headers: { Authorization: `Bearer ${token}` }
       });
-      customToast({
-        severity: "success",
-        summary: SUCCESS_MSG,
-        detail: "User updated successfully!",
-        life: 3000
-      });
+      customToast({ severity: "success", summary: SUCCESS_MSG, detail: "User updated successfully!", life: 3000 });
       fetchUsers();
       setEditRowId(null);
       setErrors({});
     } catch (err) {
-      customToast({
-        severity: ERROR,
-        summary: OPPS_MSG,
-        detail: err.response?.data?.message || OPPS_ERROR,
-        life: 4000
-      });
+      customToast({ severity: ERROR, summary: OPPS_MSG, detail: err.response?.data?.message || OPPS_ERROR, life: 4000 });
     }
   };
 
@@ -164,23 +151,11 @@ const Users = () => {
     if (!window.confirm("Are you sure you want to delete this user?")) return;
 
     try {
-      await api.delete(`/api/admin/user/${id}`, {
-        headers: { Authorization: `Bearer ${token}` }
-      });
-      customToast({
-        severity: "success",
-        summary: SUCCESS_MSG,
-        detail: "User deleted successfully!",
-        life: 3000
-      });
+      await api.delete(`/api/admin/user/${id}`, { headers: { Authorization: `Bearer ${token}` } });
+      customToast({ severity: "success", summary: SUCCESS_MSG, detail: "User deleted successfully!", life: 3000 });
       fetchUsers();
     } catch (err) {
-      customToast({
-        severity: ERROR,
-        summary: OPPS_MSG,
-        detail: err.response?.data?.message || OPPS_ERROR,
-        life: 4000
-      });
+      customToast({ severity: ERROR, summary: OPPS_MSG, detail: err.response?.data?.message || OPPS_ERROR, life: 4000 });
     }
   };
 
@@ -195,24 +170,16 @@ const Users = () => {
           >
             <option value="">{field.placeholder}</option>
             {field.options?.map((opt) => (
-              <option key={opt.id} value={opt.id}>
-                {opt.name}
-              </option>
+              <option key={opt.id} value={opt.id}>{opt.name}</option>
             ))}
           </select>
           {error && (
-            <TooltipWrapper tooltipMessage={error}>
-              <span
-                style={{
-                  position: "absolute",
-                  right: "2px",
-                  top: "50%",
-                  transform: "translateY(-50%)"
-                }}
-              >
-                <RiInformation2Line color="#ff3d42" />
-              </span>
-            </TooltipWrapper>
+            <OverlayTrigger
+              placement="top"
+              overlay={<Tooltip>{error}</Tooltip>}
+            >
+              <span style={{ position: "absolute", right: "2px", top: "50%", transform: "translateY(-50%)", color: "#ff3d42" }}>!</span>
+            </OverlayTrigger>
           )}
         </div>
       );
@@ -238,111 +205,87 @@ const Users = () => {
     <div className="my-2">
       <div className="d-flex justify-content-start align-items-center mb-1 gap-2">
         <h3 className="text-muted mb-0">Users List</h3>
-        <Link to="/dashboard/add-user" className="text-primary mt-1 fw-bold text-decoration-none">
-          + Add
-        </Link>
+        <Link to="/dashboard/add-user" className="text-primary mt-1 fw-bold text-decoration-none">+ Add</Link>
       </div>
 
-      <div className="w-100">
+      <div className="w-100 px-1">
         <div className="table-responsive rounded">
           <table className="table table-striped table-bordered table-hover text-center mb-0">
-            <thead className="table-dark">
+            <thead className="table-primary">
               <tr>
-                <th>S.no</th>
-                <th>Name</th>
-                <th>Email</th>
-                <th>Mobile</th>
-                <th>Role</th>
-                <th>Action</th>
+                <th className="align-middle text-nowrap">S.no</th>
+                <th className="align-middle text-nowrap">Name</th>
+                <th className="align-middle text-nowrap">Email</th>
+                <th className="align-middle text-nowrap">Mobile</th>
+                <th className="align-middle text-nowrap">Role</th>
+                <th className="align-middle text-nowrap">Action</th>
               </tr>
             </thead>
             <tbody>
               {currentUsers.map((user, idx) => (
                 <tr key={user.id}>
-                  <td>{indexOfFirstUser + idx + 1}</td>
-                  <td>
+                  <td className="align-middle text-nowrap">{indexOfFirstUser + idx + 1}</td>
+                  <td className="align-middle text-nowrap">
                     {editRowId === user.id
                       ? renderField({ name: "name", type: "text" }, editedData.name, errors.name, handleChange)
                       : user.name}
                   </td>
-                  <td>
+                  <td className="align-middle text-nowrap">
                     {editRowId === user.id
                       ? renderField({ name: "email", type: "text" }, editedData.email, errors.email, handleChange)
                       : user.email}
                   </td>
-                  <td>
+                  <td className="align-middle text-nowrap">
                     {editRowId === user.id
                       ? renderField({ name: "mobileNumber", type: "text" }, editedData.mobileNumber, errors.mobileNumber, handleChange)
                       : user.mobileNumber}
                   </td>
-                  <td>
+                  <td className="align-middle text-nowrap">
                     {editRowId === user.id
-                      ? renderField(
-                          {
-                            name: "role",
-                            type: "select",
-                            options: roleOptions,
-                            placeholder: "Select Role"
-                          },
-                          editedData.role,
-                          errors.role,
-                          handleChange
-                        )
+                      ? renderField({ name: "role", type: "select", options: roleOptions, placeholder: "Select Role" }, editedData.role, errors.role, handleChange)
                       : user.role}
                   </td>
-                  <td>
+                  <td className="align-middle text-nowrap">
                     {editRowId === user.id ? (
-                      <TooltipWrapper tooltipMessage="Save">
-                        <RiSave2Line
-                          size={22}
-                          className="text-success cursor-pointer me-2"
-                          onClick={handleSave}
-                        />
-                      </TooltipWrapper>
+                      <div className="d-flex justify-content-center gap-2">
+                        <OverlayTrigger placement="top" overlay={<Tooltip>Save</Tooltip>}>
+                          <RiSave2Line size={22} className="text-success cursor-pointer" onClick={handleSave} />
+                        </OverlayTrigger>
+                        <OverlayTrigger placement="top" overlay={<Tooltip>Cancel</Tooltip>}>
+                          <RiCloseLine size={22} className="text-secondary cursor-pointer" onClick={() => { setEditRowId(null); setErrors({}); }} />
+                        </OverlayTrigger>
+                      </div>
                     ) : (
-                      <>
-                        <TooltipWrapper tooltipMessage="Edit">
-                          <RiEdit2Line
-                            size={22}
-                            className="text-primary cursor-pointer me-2"
-                            onClick={() => handleEdit(user)}
-                          />
-                        </TooltipWrapper>
-                        <TooltipWrapper tooltipMessage="Delete">
-                          <RiDeleteBinLine
-                            size={22}
-                            className="text-danger cursor-pointer"
-                            onClick={() => handleDelete(user.id)}
-                          />
-                        </TooltipWrapper>
-                      </>
+                      <div className="d-flex justify-content-center gap-2">
+                        <OverlayTrigger placement="top" overlay={<Tooltip>Edit</Tooltip>}>
+                          <RiEdit2Line size={22} className="text-primary cursor-pointer" onClick={() => handleEdit(user)} />
+                        </OverlayTrigger>
+                        <OverlayTrigger placement="top" overlay={<Tooltip>Delete</Tooltip>}>
+                          <RiDeleteBinLine size={22} className="text-danger cursor-pointer" onClick={() => handleDelete(user.id)} />
+                        </OverlayTrigger>
+                      </div>
                     )}
                   </td>
                 </tr>
               ))}
             </tbody>
           </table>
-        </div>
 
-        {/* Pagination */}
-        <div className="d-flex justify-content-center align-items-center mt-2 gap-3">
-          <button
-            className="btn btn-light"
-            disabled={currentPage === 1}
-            onClick={() => setCurrentPage((prev) => prev - 1)}
-          >
-            <FaChevronLeft />
-          </button>
-          <span>
-            Page {currentPage} of {totalPages}
-          </span>
-          <button
-            className="btn btn-light"
-            disabled={currentPage === totalPages}
-            onClick={() => setCurrentPage((prev) => prev + 1)}
-          >
-            <FaChevronRight />
-          </button>
+          {totalPages > 1 && (
+            <div className="d-flex justify-content-center align-items-center mt-3 gap-1">
+              <FaChevronLeft
+                size={20}
+                className={`cursor-pointer ${currentPage === 1 ? "text-muted" : "text-primary"}`}
+                onClick={() => currentPage > 1 && setCurrentPage(currentPage - 1)}
+              />
+              <span>Page {currentPage} of {totalPages}</span>
+              <FaChevronRight
+                size={20}
+                className={`cursor-pointer ${currentPage === totalPages ? "text-muted" : "text-primary"}`}
+                onClick={() => currentPage < totalPages && setCurrentPage(currentPage + 1)}
+              />
+            </div>
+          )}
         </div>
       </div>
     </div>

@@ -43,9 +43,9 @@ const Doctors = () => {
   return (
     <div className='my-2'>
        <h3 className="text-muted mb-1">Doctors List</h3>
-      <div className='table-responsive rounded'>
-        <table className='table table-striped table-bordered table-hover text-center '>
-          <thead className='table-dark'>
+        <div className="table-responsive rounded mx-1">
+          <table className="table table-striped table-bordered table-hover text-center mb-0 align-middle text-nowrap">
+            <thead className="table-primary">
             <tr>
               <th>ID</th>
               <th>Name</th>
@@ -74,7 +74,7 @@ const Doctors = () => {
 
       {/* Icon Pagination */}
       {totalPages > 1 && (
-        <div className='d-flex justify-content-center align-items-center mt-3 gap-3'>
+        <div className='d-flex justify-content-center align-items-center mt-3 gap-1'>
           <FaChevronLeft
             size={20}
             className={`cursor-pointer ${currentPage === 1 ? 'text-muted' : 'text-primary'}`}
