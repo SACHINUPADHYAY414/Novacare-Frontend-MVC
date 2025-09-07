@@ -7,6 +7,7 @@ import { otpVerifySuccess } from "../../Redux/authSlice";
 import {
   ENTER_CORRECT_OTP,
   ERROR,
+  EXPIRATION_TIME,
   INVALID_OTP,
   OPPS_ERROR,
   OPPS_MSG,
@@ -49,60 +50,87 @@ const ValidateOtp = () => {
     }
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    const otpValue = otpDigits.join("");
+ const handleSubmit = async (e) => {
+  e.preventDefault();
+  const otpValue = otpDigits.join("");
 
-    if (otpValue.length < 6) {
+  if (otpValue.length < 6) {
+    customToast({
+      severity: WARNING,
+      summary: OPPS_MSG,
+      detail: ENTER_CORRECT_OTP,
+      life: 3000
+    });
+    return;
+  }
+
+  try {
+    setLoading(true);
+
+    // Determine endpoint based on origin
+    const endpoint =
+      from === "register"
+        ? "/api/auth/otp-verify"
+        : "/api/auth/login/otp-verify";
+
+    const response = await api.post(endpoint, {
+      email,
+      otp: otpValue
+    });
+
+    const returnedUser = response.data?.user;
+    const token = response.data?.token;
+
+    if (!returnedUser) {
       customToast({
-        severity: WARNING,
+        severity: ERROR,
         summary: OPPS_MSG,
-        detail: ENTER_CORRECT_OTP,
+        detail: INVALID_OTP,
         life: 3000
       });
       return;
     }
 
-    try {
-      setLoading(true);
-      const endpoint =
-        from === "register"
-          ? "/api/auth/otp-verify"
-          : "/api/auth/login/otp-verify";
-      const response = await api.post(endpoint, {
-        email,
-        otp: otpValue
-      });
-      customToast({
-        severity: SUCCESS,
-        summary: SUCCESS_MSG,
-        detail: response.data.message || OTP_VERIFY_SUCCESS,
-        life: 3000
-      });
+    const userRole = returnedUser?.role || returnedUser?.type;
 
-      if (from === "register") {
-        navigate("/login", { replace: true });
-      } else {
-        dispatch(
-          otpVerifySuccess({
-            token: response.data.token,
-            user: response.data.user
-          })
-        );
+    // Show success toast
+    customToast({
+      severity: SUCCESS,
+      summary: SUCCESS_MSG,
+      detail: response.data?.message || OTP_VERIFY_SUCCESS,
+      life: 3000
+    });
 
-        navigate("/", { replace: true });
-      }
-    } catch (error) {
-      customToast({
-        severity: ERROR,
-        summary: OPPS_MSG,
-        detail: error.response?.data?.message || INVALID_OTP,
-        life: 3000
-      });
-    } finally {
-      setLoading(false);
+    // Dispatch user + token to Redux
+   if (token) {
+   dispatch(
+     otpVerifySuccess({
+       token,
+       user: returnedUser
+     })
+   );
+   localStorage.setItem("loginTime", Date.now().toString());
+   localStorage.setItem("tokenExpiresIn", EXPIRATION_TIME.toString());
+}
+
+    // Navigate based on role
+    if (userRole === "ADMIN") {
+      navigate("/dashboard", { replace: true });
+    } else {
+      navigate("/", { replace: true });
     }
-  };
+  } catch (error) {
+    customToast({
+      severity: ERROR,
+      summary: OPPS_MSG,
+      detail: error.response?.data?.message || INVALID_OTP,
+      life: 3000
+    });
+  } finally {
+    setLoading(false);
+  }
+};
+
 
   // Resend OTP handler
   const handleResendOtp = async () => {

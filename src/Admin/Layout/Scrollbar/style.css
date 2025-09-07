@@ -1,0 +1,135 @@
+/* Global box-sizing */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+/* Body to prevent horizontal scroll */
+body {
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+  font-family: Arial, sans-serif;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 0.3rem;
+}
+
+::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 5px grey;
+  border-radius: 10px;
+  position: absolute;
+  right: 0;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #0ad8b5;
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  border-radius: 10px;
+}
+
+/* Header background gradient */
+.dashboard-header-background-color {
+  background: linear-gradient(
+    180deg,
+    rgba(248, 248, 248, 0.95) 44%,
+    rgba(248, 248, 248, 0.46) 73%,
+    rgba(255, 255, 255, 0)
+  );
+  color: white;
+  width: 100% !important;
+  z-index: 1051;
+}
+
+/* Top Navbar */
+.dashboard-navbar-header {
+  width: 100% !important;
+  /* background-color: #0a5353 !important; */
+  z-index: 1051 !important;
+  position: sticky;
+  top: 0;
+}
+
+/* Main Content Scroll Area */
+.dashboard-main-content {
+  width: 100%;
+  height: 100vh;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+
+/* Navigation */
+.dashboard-nav-item {
+  font-size: 0.9rem;
+  font-weight: 400;
+}
+
+.dashboard-nav-link.active {
+  background-color: #0ad8b5;
+}
+
+/* Header Gradient */
+.dashboard-header-background-color {
+  background: linear-gradient(
+    0deg,
+    rgba(0, 84, 87, 1) 0%,
+    rgba(3, 218, 197, 1) 100%
+  );
+}
+
+/* Sidebar scroll behavior */
+.dashboard-vh-100.dashboard-overflow-y-auto {
+  overflow-y: auto !important;
+}
+
+/* No horizontal overflow anywhere */
+.dashboard-main-content * {
+  max-width: 100%;
+  overflow-wrap: break-word;
+}
+
+/* Fix for elements causing overflow */
+.dashboard-main-content * {
+  max-width: 100%;
+  overflow-wrap: break-word;
+}
+
+.dashboard-main-content img,
+.dashboard-main-content table {
+  max-width: 100%;
+  height: auto;
+}
+
+
+/* Utility: Remove horizontal margin causing overflow */
+.dashboard-mx-2,
+.dashboard-mx-3 {
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+}
+
+/* Button cursor */
+button {
+  cursor: pointer;
+}
+
+/* Optional: make sidebar icons consistent size */
+.dashboard-icon {
+  width: 1.5rem;
+  height: 1.5rem;
+  flex-shrink: 0;
+}
+
+/* Offcanvas sidebar width */
+.dashboard-offcanvas-start {
+  width: 14rem !important;
+  background-color: #0a5353 !important;
+}

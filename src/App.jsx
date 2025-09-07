@@ -1,120 +1,31 @@
 import React, { useEffect } from "react";
-import { Route, Routes, useLocation, useNavigate } from "react-router-dom";
-import { useSelector, useDispatch } from "react-redux";
-
+import { Routes, Route, useLocation } from "react-router-dom";
+import { useSelector } from "react-redux";
 import Layout from "./Components/Layout/Layout";
 import Home from "./Pages/Home/Home.jsx";
 import Login from "./Pages/Login/Login";
 import Register from "./Pages/Register/Register.jsx";
-import ProtectedRoute from "./ProtectRoute.jsx/ProtectRoute";
-import { logout } from "./Redux/authSlice.js";
-import { setToken, setToastHandler } from "./Components/Action/Api";
-import { useToastr } from "./Components/Toastr/ToastrProvider";
-import { OPPS_MSG, SESSION_EXPIRE, EXPIRATION_TIME } from "./Utils/strings.js";
 import ValidateOtp from "./Pages/ValidateOtp/ValidateOtp.jsx";
-
-import { persistor } from "./Redux/store";
-import PageNotFound from "./Pages/PageNotFound/PageNotFound.jsx";
 import DoctorSlot from "./Pages/DoctorSlot/DoctorSlot.jsx";
 import Appointments from "./Pages/Appoitntments/Appointments.jsx";
 import ContactUs from "./Pages/ContactUs/ContactUs.jsx";
+import PageNotFound from "./Pages/PageNotFound/PageNotFound.jsx";
+import ProtectedRoute from "./ProtectRoute.jsx/ProtectRoute";
+
+// Admin
+import Dashboard from "./Admin/Layout/Dashboard.jsx";
+import HomeDashboard from "./Admin/Pages/HomeDashboard/HomeDashboard.jsx";
+import Users from "./Admin/Pages/Users/Users.jsx";
+import Doctors from "./Admin/Pages/Doctors/Doctors.jsx";
+import AddUser from "./Admin/Pages/Users/AddUser.jsx";
 
 const App = () => {
-  const { customToast } = useToastr();
   const { pathname } = useLocation();
-  const navigate = useNavigate();
-  const dispatch = useDispatch();
+  const token = useSelector((state) => state.auth.token);
 
-  const token = useSelector((state) => state.auth.token) || "";
-
-  // Loading indicator on route change
   useEffect(() => {
-    window.loadingStart?.();
     window.scrollTo(0, 0);
-    const timer = setTimeout(() => window.loadingEnd?.(), 2000);
-    return () => clearTimeout(timer);
   }, [pathname]);
-
-  // Set API token on token change
-  useEffect(() => {
-    setToken(token);
-  }, [token]);
-
-  // Save login time and expiration on login
-  useEffect(() => {
-    if (token) {
-      const now = Date.now();
-      localStorage.setItem("loginTime", now.toString());
-      localStorage.setItem("tokenExpiresIn", EXPIRATION_TIME.toString());
-    } else {
-      localStorage.removeItem("loginTime");
-      localStorage.removeItem("tokenExpiresIn");
-    }
-  }, [token]);
-
-  // Check token expiry on route change
-  useEffect(() => {
-    if (!token) return;
-
-    const loginTime = localStorage.getItem("loginTime");
-    const tokenExpiresIn = localStorage.getItem("tokenExpiresIn");
-
-    if (loginTime && tokenExpiresIn) {
-      const now = Date.now();
-      const expiresAt = parseInt(loginTime, 10) + parseInt(tokenExpiresIn, 10);
-
-      if (now >= expiresAt) {
-        handleTokenExpiry();
-      }
-    }
-  }, [token, pathname]);
-
-  // Set interval to check token expiry every minute
-  useEffect(() => {
-    if (!token) return;
-
-    const interval = setInterval(() => {
-      const loginTime = localStorage.getItem("loginTime");
-      const tokenExpiresIn = localStorage.getItem("tokenExpiresIn");
-
-      if (loginTime && tokenExpiresIn) {
-        const now = Date.now();
-        const expiresAt =
-          parseInt(loginTime, 10) + parseInt(tokenExpiresIn, 10);
-
-        if (now >= expiresAt) {
-          clearInterval(interval);
-          handleTokenExpiry();
-        }
-      }
-    }, 60 * 1000);
-
-    return () => clearInterval(interval);
-  }, [token]);
-
-  const handleTokenExpiry = async () => {
-    dispatch(logout());
-    await persistor.purge();
-    setToken("");
-    localStorage.removeItem("loginTime");
-    localStorage.removeItem("tokenExpiresIn");
-
-    customToast({
-      severity: "error",
-      summary: OPPS_MSG,
-      detail: SESSION_EXPIRE,
-      life: 3000,
-      sticky: false,
-      closable: true
-    });
-
-    navigate("/login");
-  };
-
-  // Setup toast handler for API calls
-  useEffect(() => {
-    setToastHandler(customToast);
-  }, [customToast]);
 
   return (
     <Routes>
@@ -127,15 +38,6 @@ const App = () => {
         <Route path="contact-us" element={<ContactUs />} />
 
         <Route
-          path="payment"
-          element={
-            <ProtectedRoute>
-              <DoctorSlot />
-            </ProtectedRoute>
-          }
-        />
-
-        <Route
           path="appointments"
           element={
             <ProtectedRoute>
@@ -143,8 +45,24 @@ const App = () => {
             </ProtectedRoute>
           }
         />
-        <Route path="*" element={<PageNotFound />} />
       </Route>
+
+      {/* Admin Dashboard */}
+      <Route
+        path="dashboard"
+        element={
+          <ProtectedRoute role="ADMIN">
+            <Dashboard />
+          </ProtectedRoute>
+        }
+      >
+        <Route index element={<HomeDashboard />} />
+        <Route path="users" element={<Users />} />
+        <Route path="doctors" element={<Doctors />} />
+        <Route path="add-user" element={<AddUser />} />
+      </Route>
+
+      <Route path="*" element={<PageNotFound />} />
     </Routes>
   );
 };

@@ -47,18 +47,18 @@ const CustomInputField = ({
 
   return (
     <div className={colClass} key={field.id} style={{ position: "relative" }}>
-      {!hideLabel && (
-        <label
-          htmlFor={field?.id}
-          className={`${
-            field?.required
-              ? "form-label fw-medium required-label"
-              : "form-label fw-medium"
-          }`}
-        >
-          {field?.label || ""}
-        </label>
-      )}
+      {!hideLabel && field?.label && (
+  <label
+    htmlFor={field?.id}
+    className={`${
+      field?.required
+        ? "form-label fw-medium required-label"
+        : "form-label fw-medium"
+    }`}
+  >
+    {field?.label}
+  </label>
+)}
 
       {field.type === "date" ? (
         <DatePicker

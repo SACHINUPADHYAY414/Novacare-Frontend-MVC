@@ -1,0 +1,116 @@
+/**
+  Theme Name: Nischinto
+  Author: Laralink
+  Developer: Tamjid Bin Murtoza
+  Version: 1.0.0
+ */
+
+/*Google Fonts*/
+// @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&family=Nunito:wght@300;400;500;600;700&family=Roboto:wght@300;400;500;700&family=Spectral:wght@300;400;500;600;700&display=swap');
+
+/*Fonts*/
+@import "./_fonts.scss";
+
+/*--------------------------------------------------------------
+>> TABLE OF CONTENTS:
+----------------------------------------------------------------
+1. Typography
+2. Spacing
+3. General
+4. Preloader
+5. Header
+6. Button
+7. Slider
+8. Slider
+9. Section Heading
+10. Icon box
+11. Text Block
+12. Text Block
+13. Video Block
+14. Image Box
+15. Funfact
+16. Isotope
+17. Image Gallery
+18. Skill
+19. Member
+20. CTA
+21. Pricing Table
+22. Post
+23. Logo carousel
+24. Testimonial
+25. Newsletter
+26. Contact Form
+27. Blog Details
+28. Comments
+29. Tab
+30. Select
+31. Accordian
+32. Before After Slider
+33. Footer
+
+--------------------------------------------------------------*/
+
+/*--------------------------------------------------------------
+1. Typography
+----------------------------------------------------------------*/
+
+body,
+html {
+  color: $black2;
+  background-color: $white;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 15px;
+  font-weight: 400;
+  line-height: 1.6em;
+  overflow-x: hidden;
+}
+
+ul {
+  margin: 0 0 15px 0;
+  padding-left: 15px;
+  list-style: square outside none;
+}
+
+ol {
+  padding-left: 15px;
+  margin-bottom: 15px;
+}
+
+dfn,
+cite,
+em,
+i {
+  font-style: italic;
+}
+
+blockquote {
+  margin: 0 15px;
+}
+
+address {
+  margin: 0 0 15px;
+}
+
+img {
+  border: 0;
+  max-width: 100%;
+  height: auto;
+}
+
+a {
+  color: inherit;
+  -webkit-transition: all 0.3s ease;
+  -o-transition: all 0.3s ease;
+  transition: all 0.3s ease;
+}
+
+a:hover {
+  text-decoration: none;
+  color: inherit;
+}
+@media screen and (max-width: 991px) {
+  body,
+  html {
+    font-size: 14px;
+  }
+}
