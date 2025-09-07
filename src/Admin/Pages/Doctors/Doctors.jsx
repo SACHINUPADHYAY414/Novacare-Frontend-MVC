@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useToastr } from '../../../Components/Toastr/ToastrProvider';
 import api from '../../../Components/Action/Api';
 import { FaChevronLeft, FaChevronRight } from 'react-icons/fa';
+import { OverlayTrigger, Tooltip } from "react-bootstrap";
 
 const Doctors = () => {
   const { customToast } = useToastr();
@@ -42,7 +43,7 @@ const Doctors = () => {
 
   return (
     <div className='my-2'>
-       <h3 className="text-muted mb-1">Doctors List</h3>
+       <h4 className="text-muted mb-1">Doctors List</h4>
         <div className="table-responsive rounded mx-1">
           <table className="table table-striped table-bordered table-hover text-center mb-0 align-middle text-nowrap">
             <thead className="table-primary">
@@ -70,26 +71,32 @@ const Doctors = () => {
             )}
           </tbody>
         </table>
-      </div>
-
-      {/* Icon Pagination */}
+      
+       {/* Icon Pagination */}
       {totalPages > 1 && (
         <div className='d-flex justify-content-center align-items-center mt-3 gap-1'>
+          <OverlayTrigger placement="top" overlay={<Tooltip>Previous</Tooltip>}>
           <FaChevronLeft
             size={20}
             className={`cursor-pointer ${currentPage === 1 ? 'text-muted' : 'text-primary'}`}
             onClick={handlePrev}
           />
+          </OverlayTrigger> 
           <span>
             Page {currentPage} of {totalPages}
           </span>
-          <FaChevronRight
+           <OverlayTrigger placement="top" overlay={<Tooltip>Next</Tooltip>}>
+            <FaChevronRight
             size={20}
             className={`cursor-pointer ${currentPage === totalPages ? 'text-muted' : 'text-primary'}`}
             onClick={handleNext}
           />
+           </OverlayTrigger>
+         
         </div>
-      )}
+      )}</div>
+
+     
     </div>
   );
 };

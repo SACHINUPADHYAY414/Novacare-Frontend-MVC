@@ -12,6 +12,9 @@ body {
   overflow-x: hidden;
   font-family: Arial, sans-serif;
 }
+.dashboard-main-content {
+  background-color:#e4fffb
+}
 
 /* Custom Scrollbar */
 ::-webkit-scrollbar {
@@ -34,46 +37,35 @@ body {
   border-radius: 10px;
 }
 
-/* Header background gradient */
-.dashboard-header-background-color {
-  background: linear-gradient(
-    180deg,
-    rgba(248, 248, 248, 0.95) 44%,
-    rgba(248, 248, 248, 0.46) 73%,
-    rgba(255, 255, 255, 0)
-  );
-  color: white;
-  width: 100% !important;
+/* Top Navbar */
+.dashboard-navbar-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: calc(100% - 0px);
   z-index: 1051;
 }
 
-/* Top Navbar */
-.dashboard-navbar-header {
-  width: 100% !important;
-  /* background-color: #0a5353 !important; */
-  z-index: 1051 !important;
-  position: sticky;
-  top: 0;
+.dashboard-main-content {
+  padding-top: 0px !important;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  overflow: hidden;
 }
 
-/* Main Content Scroll Area */
-.dashboard-main-content {
-  width: 100%;
-  height: 100vh;
+.dashboard-main-content main {
+  flex: 1 1 auto;
   overflow-y: auto;
-  overflow-x: hidden;
-  padding-left: 1rem;
-  padding-right: 1rem;
+  /* padding-top: 1rem; */
+  /* padding-bottom: 1rem; */
 }
+
 
 /* Navigation */
 .dashboard-nav-item {
   font-size: 0.9rem;
   font-weight: 400;
-}
-
-.dashboard-nav-link.active {
-  background-color: #0ad8b5;
 }
 
 /* Header Gradient */
@@ -96,11 +88,6 @@ body {
   overflow-wrap: break-word;
 }
 
-/* Fix for elements causing overflow */
-.dashboard-main-content * {
-  max-width: 100%;
-  overflow-wrap: break-word;
-}
 
 .dashboard-main-content img,
 .dashboard-main-content table {
@@ -132,4 +119,20 @@ button {
 .dashboard-offcanvas-start {
   width: 14rem !important;
   background-color: #0a5353 !important;
+}
+
+.dashboard-nav-link:hover{
+  background-color: #0ad8b5;
+}
+
+.dashboard-nav-link.active {
+  background-color: #0ad8b5;
+  color: #fff;
+}
+.icon{
+  width: 20px;
+  height: 20px;
+  margin-left: 0.1rem;
+  display: inline-block;
+  vertical-align: middle;
 }

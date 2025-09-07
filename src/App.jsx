@@ -18,6 +18,7 @@ import HomeDashboard from "./Admin/Pages/HomeDashboard/HomeDashboard.jsx";
 import Users from "./Admin/Pages/Users/Users.jsx";
 import Doctors from "./Admin/Pages/Doctors/Doctors.jsx";
 import AddUser from "./Admin/Pages/Users/AddUser.jsx";
+import Specialt from './Admin/Pages/Specialty/Specialty';
 
 const App = () => {
   const { pathname } = useLocation();
@@ -62,6 +63,7 @@ const App = () => {
         <Route path="users" element={<Users />} />
         <Route path="doctors" element={<Doctors />} />
         <Route path="add-user" element={<AddUser />} />
+        <Route path="specialty" element={<Specialt/>}/>
       </Route>
     </Routes>
   );

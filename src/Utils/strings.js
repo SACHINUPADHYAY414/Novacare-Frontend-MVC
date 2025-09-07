@@ -19,7 +19,7 @@ export const ERROR_PASTE_DATA = "Pasted data is invalid.";
 export const ERROR_REQUIRED = (label) =>
   `${label ?? "This field"} is required.`;
 export const ERROR_VALIDATE_EMAIL = "Email validation error.";
-export const EXPIRATION_TIME = 20 * 60 * 1000;
+export const EXPIRATION_TIME = 50 * 60 * 1000;
 export const INVALID_SLOT = "Invalid Slot";
 export const INVALID_SLOT_DETAIL =
   "Selected time slot is invalid. Please choose again.";

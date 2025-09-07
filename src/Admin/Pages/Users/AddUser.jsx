@@ -46,8 +46,7 @@ import {
   start_with_char_or_number
 } from "../../../Utils/allValidation.js";
 import { useNavigate } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
-import images from "../../../Utils/ImagesData.js";
+import { useSelector } from "react-redux";
 
 const defaultFormData = {
   title: "",
@@ -66,7 +65,6 @@ const defaultFormData = {
 };
 
 const AddUser = () => {
-      const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
   const token = useSelector((state) => state.auth.token);
   const navigate = useNavigate();
   const { customToast } = useToastr();
@@ -75,7 +73,6 @@ const AddUser = () => {
   const [stateList, setStateList] = useState([]);
   const [cityList, setCityList] = useState([]);
   const [submitted, setSubmitted] = useState(false);
-  const dispatch = useDispatch();
   const titleList = [
     { id: "1", name: "Mr." },
     { id: "2", name: "Mrs." },
@@ -351,8 +348,7 @@ const AddUser = () => {
         detail: response?.data?.message,
         life: 4000
       });
-
-      navigate("/validate-otp");
+      navigate("/dashboard/users");
     } catch (err) {
       customToast({
         severity: ERROR,
@@ -489,12 +485,12 @@ const AddUser = () => {
     const { name, type, label, required, options = [] } = field;
     const value = formData[name] ?? "";
     const error = errors[name];
-    const colClass = field.colClass || "col-12 col-md-4";
+    const colClass = field.colClass || "col-12 col-md-2";
 
     if (type === "select") {
       return (
         <div className={colClass} key={name} style={{ position: "relative" }}>
-          <label className="form-label fw-medium required-label">{label}</label>
+          <label className="form-label required-label">{label}</label>
           <select
             name={name}
             value={value}
@@ -561,6 +557,15 @@ const AddUser = () => {
       <div className="card">
         <div className="card-body">
           <div className="row g-2">{formFields.map(renderField)}</div>
+          <div className="mt-3">
+            <button
+              className="btn btn-primary"
+              disabled={submitted}
+              onClick={handleSubmit}
+            >
+              Save
+            </button>
+          </div>
         </div>
       </div>
     </div>

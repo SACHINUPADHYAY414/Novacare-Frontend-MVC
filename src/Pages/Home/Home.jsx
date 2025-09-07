@@ -9,9 +9,6 @@ import {
   NO_DOCTORS_FOUND,
   NOT_FOUND,
   WARNING,
-  SUCCESS_MSG,
-  SEARCH_FAILED,
-  DOCTOR_REQUIRED
 } from "../../Utils/strings";
 import Footer from "../../Components/Footer/Footer";
 import api from "../../Components/Action/Api";

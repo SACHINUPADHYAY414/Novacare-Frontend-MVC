@@ -2,7 +2,12 @@ import React, { useEffect, useState, useCallback } from "react";
 import { useSelector } from "react-redux";
 import api from "../../../Components/Action/Api";
 import { useToastr } from "../../../Components/Toastr/ToastrProvider";
-import { RiEdit2Line, RiDeleteBinLine, RiSave2Line, RiCloseLine } from "react-icons/ri";
+import {
+  RiEdit2Line,
+  RiDeleteBinLine,
+  RiSave2Line,
+  RiCloseLine
+} from "react-icons/ri";
 import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
 import CustomInputField from "../../../Components/CustomInput/CustomInputField";
 import { OverlayTrigger, Tooltip } from "react-bootstrap";
@@ -94,16 +99,21 @@ const Users = () => {
     switch (name) {
       case "name":
         if (!validateLength(sanitizedValue, 2, 50)) {
-          error = sanitizedValue.length < 2 ? ERROR_MINIMUM_LENGTH(2) : ERROR_MAXIMUM_LENGTH(50);
+          error =
+            sanitizedValue.length < 2
+              ? ERROR_MINIMUM_LENGTH(2)
+              : ERROR_MAXIMUM_LENGTH(50);
         }
         break;
       case "mobileNumber":
         sanitizedValue = sanitizeMobileNumber(sanitizedValue);
-        if (!validateLength(sanitizedValue, 10, 10)) error = ERROR_MUST_LENGTH(10);
+        if (!validateLength(sanitizedValue, 10, 10))
+          error = ERROR_MUST_LENGTH(10);
         break;
       case "email":
         sanitizedValue = sanitizeEmail(sanitizedValue);
-        if (sanitizedValue && !verifyEmail(sanitizedValue)) error = ERROR_VALIDATE_EMAIL;
+        if (sanitizedValue && !verifyEmail(sanitizedValue))
+          error = ERROR_VALIDATE_EMAIL;
         break;
       default:
         break;
@@ -115,7 +125,12 @@ const Users = () => {
 
   const handleSave = async () => {
     if (Object.values(errors).some(Boolean)) {
-      customToast({ severity: ERROR, summary: OPPS_MSG, detail: ENTER_VALID_DATA, life: 3000 });
+      customToast({
+        severity: ERROR,
+        summary: OPPS_MSG,
+        detail: ENTER_VALID_DATA,
+        life: 3000
+      });
       return;
     }
 
@@ -138,12 +153,22 @@ const Users = () => {
       await api.put(`/api/admin/user/${editedData.id}`, payload, {
         headers: { Authorization: `Bearer ${token}` }
       });
-      customToast({ severity: "success", summary: SUCCESS_MSG, detail: "User updated successfully!", life: 3000 });
+      customToast({
+        severity: "success",
+        summary: SUCCESS_MSG,
+        detail: "User updated successfully!",
+        life: 3000
+      });
       fetchUsers();
       setEditRowId(null);
       setErrors({});
     } catch (err) {
-      customToast({ severity: ERROR, summary: OPPS_MSG, detail: err.response?.data?.message || OPPS_ERROR, life: 4000 });
+      customToast({
+        severity: ERROR,
+        summary: OPPS_MSG,
+        detail: err.response?.data?.message || OPPS_ERROR,
+        life: 4000
+      });
     }
   };
 
@@ -151,11 +176,23 @@ const Users = () => {
     if (!window.confirm("Are you sure you want to delete this user?")) return;
 
     try {
-      await api.delete(`/api/admin/user/${id}`, { headers: { Authorization: `Bearer ${token}` } });
-      customToast({ severity: "success", summary: SUCCESS_MSG, detail: "User deleted successfully!", life: 3000 });
+      await api.delete(`/api/admin/user/${id}`, {
+        headers: { Authorization: `Bearer ${token}` }
+      });
+      customToast({
+        severity: "success",
+        summary: SUCCESS_MSG,
+        detail: "User deleted successfully!",
+        life: 3000
+      });
       fetchUsers();
     } catch (err) {
-      customToast({ severity: ERROR, summary: OPPS_MSG, detail: err.response?.data?.message || OPPS_ERROR, life: 4000 });
+      customToast({
+        severity: ERROR,
+        summary: OPPS_MSG,
+        detail: err.response?.data?.message || OPPS_ERROR,
+        life: 4000
+      });
     }
   };
 
@@ -164,13 +201,17 @@ const Users = () => {
       return (
         <div style={{ position: "relative" }}>
           <select
-            className={`form-select form-select-sm ${error ? "is-invalid" : ""}`}
+            className={`form-select form-select-sm ${
+              error ? "is-invalid" : ""
+            }`}
             value={value || ""}
             onChange={(e) => onChangeHandler(field.name, e.target.value)}
           >
             <option value="">{field.placeholder}</option>
             {field.options?.map((opt) => (
-              <option key={opt.id} value={opt.id}>{opt.name}</option>
+              <option key={opt.id} value={opt.id}>
+                {opt.name}
+              </option>
             ))}
           </select>
           {error && (
@@ -178,7 +219,17 @@ const Users = () => {
               placement="top"
               overlay={<Tooltip>{error}</Tooltip>}
             >
-              <span style={{ position: "absolute", right: "2px", top: "50%", transform: "translateY(-50%)", color: "#ff3d42" }}>!</span>
+              <span
+                style={{
+                  position: "absolute",
+                  right: "2px",
+                  top: "50%",
+                  transform: "translateY(-50%)",
+                  color: "#ff3d42"
+                }}
+              >
+                !
+              </span>
             </OverlayTrigger>
           )}
         </div>
@@ -204,8 +255,13 @@ const Users = () => {
   return (
     <div className="my-2">
       <div className="d-flex justify-content-start align-items-center mb-1 gap-2">
-        <h3 className="text-muted mb-0">Users List</h3>
-        <Link to="/dashboard/add-user" className="text-primary mt-1 fw-bold text-decoration-none">+ Add</Link>
+        <h4 className="text-muted mb-0">Users List</h4>
+        <Link
+          to="/dashboard/add-user"
+          className="text-primary mt-1 fw-bold text-decoration-none"
+        >
+          + Add
+        </Link>
       </div>
 
       <div className="w-100 px-1">
@@ -224,44 +280,102 @@ const Users = () => {
             <tbody>
               {currentUsers.map((user, idx) => (
                 <tr key={user.id}>
-                  <td className="align-middle text-nowrap">{indexOfFirstUser + idx + 1}</td>
+                  <td className="align-middle text-nowrap">
+                    {indexOfFirstUser + idx + 1}
+                  </td>
                   <td className="align-middle text-nowrap">
                     {editRowId === user.id
-                      ? renderField({ name: "name", type: "text" }, editedData.name, errors.name, handleChange)
+                      ? renderField(
+                          { name: "name", type: "text" },
+                          editedData.name,
+                          errors.name,
+                          handleChange
+                        )
                       : user.name}
                   </td>
                   <td className="align-middle text-nowrap">
                     {editRowId === user.id
-                      ? renderField({ name: "email", type: "text" }, editedData.email, errors.email, handleChange)
+                      ? renderField(
+                          { name: "email", type: "text" },
+                          editedData.email,
+                          errors.email,
+                          handleChange
+                        )
                       : user.email}
                   </td>
                   <td className="align-middle text-nowrap">
                     {editRowId === user.id
-                      ? renderField({ name: "mobileNumber", type: "text" }, editedData.mobileNumber, errors.mobileNumber, handleChange)
+                      ? renderField(
+                          { name: "mobileNumber", type: "text" },
+                          editedData.mobileNumber,
+                          errors.mobileNumber,
+                          handleChange
+                        )
                       : user.mobileNumber}
                   </td>
                   <td className="align-middle text-nowrap">
                     {editRowId === user.id
-                      ? renderField({ name: "role", type: "select", options: roleOptions, placeholder: "Select Role" }, editedData.role, errors.role, handleChange)
+                      ? renderField(
+                          {
+                            name: "role",
+                            type: "select",
+                            options: roleOptions,
+                            placeholder: "Select Role"
+                          },
+                          editedData.role,
+                          errors.role,
+                          handleChange
+                        )
                       : user.role}
                   </td>
                   <td className="align-middle text-nowrap">
                     {editRowId === user.id ? (
                       <div className="d-flex justify-content-center gap-2">
-                        <OverlayTrigger placement="top" overlay={<Tooltip>Save</Tooltip>}>
-                          <RiSave2Line size={22} className="text-success cursor-pointer" onClick={handleSave} />
+                        <OverlayTrigger
+                          placement="top"
+                          overlay={<Tooltip>Save</Tooltip>}
+                        >
+                          <RiSave2Line
+                            size={22}
+                            className="text-success cursor-pointer"
+                            onClick={handleSave}
+                          />
                         </OverlayTrigger>
-                        <OverlayTrigger placement="top" overlay={<Tooltip>Cancel</Tooltip>}>
-                          <RiCloseLine size={22} className="text-secondary cursor-pointer" onClick={() => { setEditRowId(null); setErrors({}); }} />
+                        <OverlayTrigger
+                          placement="top"
+                          overlay={<Tooltip>Cancel</Tooltip>}
+                        >
+                          <RiCloseLine
+                            size={22}
+                            className="text-secondary cursor-pointer"
+                            onClick={() => {
+                              setEditRowId(null);
+                              setErrors({});
+                            }}
+                          />
                         </OverlayTrigger>
                       </div>
                     ) : (
                       <div className="d-flex justify-content-center gap-2">
-                        <OverlayTrigger placement="top" overlay={<Tooltip>Edit</Tooltip>}>
-                          <RiEdit2Line size={22} className="text-primary cursor-pointer" onClick={() => handleEdit(user)} />
+                        <OverlayTrigger
+                          placement="top"
+                          overlay={<Tooltip>Edit</Tooltip>}
+                        >
+                          <RiEdit2Line
+                            size={22}
+                            className="text-primary cursor-pointer"
+                            onClick={() => handleEdit(user)}
+                          />
                         </OverlayTrigger>
-                        <OverlayTrigger placement="top" overlay={<Tooltip>Delete</Tooltip>}>
-                          <RiDeleteBinLine size={22} className="text-danger cursor-pointer" onClick={() => handleDelete(user.id)} />
+                        <OverlayTrigger
+                          placement="top"
+                          overlay={<Tooltip>Delete</Tooltip>}
+                        >
+                          <RiDeleteBinLine
+                            size={22}
+                            className="text-danger cursor-pointer"
+                            onClick={() => handleDelete(user.id)}
+                          />
                         </OverlayTrigger>
                       </div>
                     )}
@@ -273,17 +387,35 @@ const Users = () => {
 
           {totalPages > 1 && (
             <div className="d-flex justify-content-center align-items-center mt-3 gap-1">
-              <FaChevronLeft
-                size={20}
-                className={`cursor-pointer ${currentPage === 1 ? "text-muted" : "text-primary"}`}
-                onClick={() => currentPage > 1 && setCurrentPage(currentPage - 1)}
-              />
-              <span>Page {currentPage} of {totalPages}</span>
-              <FaChevronRight
-                size={20}
-                className={`cursor-pointer ${currentPage === totalPages ? "text-muted" : "text-primary"}`}
-                onClick={() => currentPage < totalPages && setCurrentPage(currentPage + 1)}
-              />
+              <OverlayTrigger
+                placement="top"
+                overlay={<Tooltip>Previous</Tooltip>}
+              >
+                <FaChevronLeft
+                  size={20}
+                  className={`cursor-pointer ${
+                    currentPage === 1 ? "text-muted" : "text-primary"
+                  }`}
+                  onClick={() =>
+                    currentPage > 1 && setCurrentPage(currentPage - 1)
+                  }
+                />
+              </OverlayTrigger>
+
+              <span>
+                Page {currentPage} of {totalPages}
+              </span>
+              <OverlayTrigger placement="top" overlay={<Tooltip>Next</Tooltip>}>
+                <FaChevronRight
+                  size={20}
+                  className={`cursor-pointer ${
+                    currentPage === totalPages ? "text-muted" : "text-primary"
+                  }`}
+                  onClick={() =>
+                    currentPage < totalPages && setCurrentPage(currentPage + 1)
+                  }
+                />
+              </OverlayTrigger>
             </div>
           )}
         </div>

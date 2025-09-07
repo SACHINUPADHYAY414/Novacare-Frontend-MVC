@@ -487,7 +487,7 @@ const Register = () => {
     if (type === "select") {
       return (
         <div className={colClass} key={name} style={{ position: "relative" }}>
-          <label className="form-label fw-medium required-label">{label}</label>
+          <label className="form-label required-label">{label}</label>
           <select
             name={name}
             value={value}

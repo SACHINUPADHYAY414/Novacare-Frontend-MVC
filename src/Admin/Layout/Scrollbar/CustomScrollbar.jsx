@@ -9,21 +9,6 @@ const CustomScrollbar = ({ children, className }) => {
   const scrollContainerRef = useRef();
 
   useEffect(() => {
-    // const updateScrollbar = () => {
-    //   const container = scrollContainerRef.current;
-    //   if (!container) return;
-
-    //   const containerHeight = container.clientHeight;
-    //   const contentHeight = container.scrollHeight;
-    //   const newHeight = (containerHeight / contentHeight) * containerHeight;
-    //   const newTop = (container.scrollTop / contentHeight) * containerHeight;
-    //   console.log(newHeight,newTop)
-
-    //   setScrollbarHeight(newHeight);
-    //   setScrollbarTop(newTop);
-    // };
-
-
     const updateScrollbar = () => {
         const container = scrollContainerRef.current;
         if (!container) return;
@@ -38,7 +23,6 @@ const CustomScrollbar = ({ children, className }) => {
           setScrollbarHeight(newHeight);
           setScrollbarTop(newTop);
         } else {
-          // Hide scrollbar if content height is less than container height
           setScrollbarHeight(0);
           setScrollbarTop(0);
         }
