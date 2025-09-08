@@ -18,7 +18,6 @@ export const setToken = (token) => {
   storeToken = token;
 };
 
-// Request Interceptor: Add token to headers unless skipAuth is true
 api.interceptors.request.use(
   (config) => {
     if (!config.skipAuth && storeToken) {
@@ -29,7 +28,6 @@ api.interceptors.request.use(
   (error) => Promise.reject(error)
 );
 
-// Response Interceptor: Show toast on network/server errors
 api.interceptors.response.use(
   (response) => response,
   (error) => {

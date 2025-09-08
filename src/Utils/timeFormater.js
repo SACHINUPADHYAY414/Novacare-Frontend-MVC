@@ -111,3 +111,46 @@ export const timeTaken = (timeStr) => {
   const hour12 = hour % 12 === 0 ? 12 : hour % 12;
   return `${hour12}:${minute.toString().padStart(2, "0")} ${ampm}`;
 };
+
+
+export const calculateDuration = (from, to) => {
+    if (!from || !to) return 0;
+
+    const [fromH, fromM] = from.split(":").map(Number);
+    const [toH, toM] = to.split(":").map(Number);
+
+    const fromMinutes = fromH * 60 + fromM;
+    const toMinutes = toH * 60 + toM;
+
+    const diff = toMinutes - fromMinutes;
+    return diff > 0 ? diff : 0;
+  };
+
+  export function convertTimeToMinutes(timeStr) {
+    if (!timeStr) return null;
+
+    // 24-hour format like "14:30"
+    const twentyFourHourMatch = timeStr.match(/^(\d{1,2}):(\d{2})$/);
+    if (twentyFourHourMatch) {
+      const hours = parseInt(twentyFourHourMatch[1], 10);
+      const minutes = parseInt(twentyFourHourMatch[2], 10);
+      return hours * 60 + minutes;
+    }
+
+    // 12-hour format like "02:30 PM"
+    const twelveHourMatch = timeStr.match(/^(\d{1,2}):(\d{2})\s?(AM|PM)$/i);
+    if (twelveHourMatch) {
+      let hours = parseInt(twelveHourMatch[1], 10);
+      const minutes = parseInt(twelveHourMatch[2], 10);
+      const meridian = twelveHourMatch[3].toUpperCase();
+
+      if (meridian === "PM" && hours !== 12) {
+        hours += 12;
+      } else if (meridian === "AM" && hours === 12) {
+        hours = 0;
+      }
+      return hours * 60 + minutes;
+    }
+
+    return null;
+  }

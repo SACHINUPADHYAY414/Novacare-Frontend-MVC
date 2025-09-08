@@ -19,7 +19,9 @@ import Users from "./Admin/Pages/Users/Users.jsx";
 import Doctors from "./Admin/Pages/Doctors/Doctors.jsx";
 import AddUser from "./Admin/Pages/Users/AddUser.jsx";
 import Specialt from './Admin/Pages/Specialty/Specialty';
-
+import AddDoctor from "./Admin/Pages/Doctors/AddDoctor.jsx";
+import EditDoctor from "./Admin/Pages/Doctors/EditDoctor.jsx";
+import DutyRoster from "./Admin/Pages/DutyRoster/DutyRoster.jsx";
 const App = () => {
   const { pathname } = useLocation();
   const token = useSelector((state) => state.auth.token);
@@ -64,6 +66,9 @@ const App = () => {
         <Route path="doctors" element={<Doctors />} />
         <Route path="add-user" element={<AddUser />} />
         <Route path="specialty" element={<Specialt/>}/>
+        <Route path="add-doctor" element={<AddDoctor/>}/>
+        <Route path="edit-doctor" element={<EditDoctor/>}/>
+        <Route path="dutyRoster" element={<DutyRoster/>}/>
       </Route>
     </Routes>
   );

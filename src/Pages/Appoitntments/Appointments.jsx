@@ -83,9 +83,9 @@ function Appointments() {
       </h3>
       <div className="table-responsive">
         <table className="table table-bordered table-striped mt-2 text-center text-nowrap">
-          <thead className="table-dark">
+          <thead className="table-primary">
             <tr>
-              <th>S.no</th>
+              <th>S.No</th>
               <th>Doctors</th>
               <th>
                 Appointment Date{" "}

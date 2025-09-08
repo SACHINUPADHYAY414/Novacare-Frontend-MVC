@@ -13,7 +13,7 @@ body {
   font-family: Arial, sans-serif;
 }
 .dashboard-main-content {
-  background-color:#e4fffb
+  background-color: #e4fffb;
 }
 
 /* Custom Scrollbar */
@@ -61,7 +61,6 @@ body {
   /* padding-bottom: 1rem; */
 }
 
-
 /* Navigation */
 .dashboard-nav-item {
   font-size: 0.9rem;
@@ -84,17 +83,14 @@ body {
 
 /* No horizontal overflow anywhere */
 .dashboard-main-content * {
-  max-width: 100%;
   overflow-wrap: break-word;
 }
-
 
 .dashboard-main-content img,
 .dashboard-main-content table {
   max-width: 100%;
   height: auto;
 }
-
 
 /* Utility: Remove horizontal margin causing overflow */
 .dashboard-mx-2,
@@ -121,7 +117,7 @@ button {
   background-color: #0a5353 !important;
 }
 
-.dashboard-nav-link:hover{
+.dashboard-nav-link:hover {
   background-color: #0ad8b5;
 }
 
@@ -129,10 +125,36 @@ button {
   background-color: #0ad8b5;
   color: #fff;
 }
-.icon{
+.icon {
   width: 20px;
   height: 20px;
   margin-left: 0.1rem;
   display: inline-block;
   vertical-align: middle;
+}
+.dashboard-layout-wrapper {
+  height: 100vh;
+  display: flex;
+  overflow: hidden;
+}
+.dashboard-main-content {
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 auto;
+  overflow: hidden;
+  height: 100vh;
+  height: calc(100vh - 0px);
+}
+
+.dashboard-header-background-color {
+  flex-shrink: 0;
+  margin-left: 1.3rem !important;
+  margin-right: 1.3rem !important;
+}
+
+.dashboard-main-content main {
+  flex: 1 1 auto;
+  overflow-y: auto;
+  margin-left: 1.3rem !important;
+  margin-right: 1.3rem !important;
 }

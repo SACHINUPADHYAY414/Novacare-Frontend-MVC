@@ -21,7 +21,7 @@ const CustomInputField = ({
   disabled,
   isInvalid,
   dateRange,
-  hideLabel,
+  hideLabel
 }) => {
   const inputRef = useRef(null);
   const [passwordVisibility, setPasswordVisibility] = useState({});
@@ -31,7 +31,7 @@ const CustomInputField = ({
   const handlePasswordVisibilityToggle = (fieldId) => {
     setPasswordVisibility((prevState) => ({
       ...prevState,
-      [fieldId]: !prevState[fieldId],
+      [fieldId]: !prevState[fieldId]
     }));
   };
 
@@ -42,7 +42,7 @@ const CustomInputField = ({
     right: "1.4rem",
     top: "50%",
     transform: "translateY(-50%)",
-    cursor: "pointer",
+    cursor: "pointer"
   };
 
   const iconRightPosition = field?.type === "date" ? "40px" : "1.4rem";
@@ -71,15 +71,20 @@ const CustomInputField = ({
             placeholderText="DD/MM/YYYY"
             minDate={field?.minDate || new Date(1930, 0, 1)}
             {...(!dateRange && {
-              maxDate: new Date(),
+              maxDate: new Date()
             })}
             maxLength={field?.maxLength}
+            maxDate={
+              new Date(new Date().setFullYear(new Date().getFullYear() + 5))
+            }
             minLength={field?.minLength}
             onInput={onInput}
             onChange={(date) => {
               if (date) {
                 const formattedDate = format(date, "yyyy-MM-dd");
-                onChange({ target: { name: field?.name, value: formattedDate } });
+                onChange({
+                  target: { name: field?.name, value: formattedDate }
+                });
               }
             }}
             onPaste={onPaste}
@@ -106,7 +111,7 @@ const CustomInputField = ({
                 "Tab",
                 "ArrowLeft",
                 "ArrowRight",
-                "Delete",
+                "Delete"
               ];
               if (!/[0-9]/.test(e.key) && !allowedKeys.includes(e.key)) {
                 e.preventDefault();
@@ -188,7 +193,7 @@ const CustomInputField = ({
                 right: iconRightPosition,
                 top: "50%",
                 transform: "translateY(-50%)",
-                cursor: "pointer",
+                cursor: "pointer"
               }}
             >
               <RiInformation2Line color="#ff3d42" />

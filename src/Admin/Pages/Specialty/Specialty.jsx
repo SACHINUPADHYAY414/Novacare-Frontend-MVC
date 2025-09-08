@@ -43,6 +43,8 @@ const Specialty = () => {
   const [loadingId, setLoadingId] = useState(null);
   const [currentPage, setCurrentPage] = useState(1);
   const [addingNew, setAddingNew] = useState(false);
+  const [searchSpecializationId, setSearchSpecializationId] = useState("");
+  const [appliedFilters, setAppliedFilters] = useState({});
 
   const perPage = 10;
   const { customToast } = useToastr();
@@ -67,6 +69,7 @@ const Specialty = () => {
     fetchSpecialties();
   }, []);
 
+  // Handle input changes for both edit and add
   const handleChange = (e, required, label, pastedValue) => {
     let { name, value } = e.target;
     if (pastedValue) value = value + pastedValue;
@@ -91,6 +94,7 @@ const Specialty = () => {
     setErrors((prev) => ({ ...prev, [name]: error }));
   };
 
+  // Handle paste event for validations
   const onPaste = (e, required, label) => {
     e.preventDefault();
     const name = e.target.name;
@@ -105,6 +109,7 @@ const Specialty = () => {
     handleChange(e, required, label, value);
   };
 
+  // Validate input on blur
   const handleOnBlur = (e, required, label) => {
     let { name, value } = e.target;
     let error = "";
@@ -135,6 +140,7 @@ const Specialty = () => {
     setErrors((prev) => ({ ...prev, [name]: error }));
   };
 
+  // Save edit
   const handleSave = async () => {
     const name = formData.name.trim();
     if (errors.name || !name) {
@@ -177,6 +183,7 @@ const Specialty = () => {
     }
   };
 
+  // Delete specialization
   const handleDelete = async (id) => {
     if (!window.confirm("Are you sure you want to delete this specialization?"))
       return;
@@ -184,7 +191,19 @@ const Specialty = () => {
     try {
       setLoadingId(id);
       await api.delete(`/api/specialization/${id}`);
-      setSpecialties((prev) => prev.filter((spec) => spec.id !== id));
+
+      // ✅ Re-fetch updated list
+      await fetchSpecialties();
+
+      // ✅ Reset to page 1
+      setCurrentPage(1);
+
+      // ✅ If the deleted specialization was filtered, clear it
+      if (appliedFilters.specialization_id === String(id)) {
+        setAppliedFilters({});
+        setSearchSpecializationId("");
+      }
+
       customToast({
         severity: "success",
         summary: SUCCESS_MSG,
@@ -204,6 +223,7 @@ const Specialty = () => {
     }
   };
 
+  // Save new specialization
   const handleSaveNew = async () => {
     const name = formData.newName.trim();
     if (errors.newName || !name) {
@@ -242,24 +262,49 @@ const Specialty = () => {
     }
   };
 
+  // Cancel edit mode
   const handleCancel = () => {
     setEditId(null);
     setFormData({ ...formData, name: "" });
     setErrors({});
   };
 
+  // Cancel add new mode
   const handleCancelNew = () => {
     setAddingNew(false);
     setFormData({ ...formData, newName: "" });
     setErrors({});
   };
 
-  const totalPages = Math.ceil(specialties.length / perPage);
-  const currentSpecialties = specialties.slice(
+  // Handle search filter apply
+  const handleSearch = () => {
+    setAppliedFilters({
+      specialization_id: searchSpecializationId || undefined
+    });
+    setCurrentPage(1);
+  };
+
+  // Handle clearing filters
+  const handleClear = () => {
+    setSearchSpecializationId("");
+    setAppliedFilters({});
+    setCurrentPage(1);
+  };
+
+  // Filter specialties based on applied filters
+  const filteredSpecialties = specialties.filter((spec) => {
+    if (appliedFilters.specialization_id) {
+      return String(spec.id) === appliedFilters.specialization_id;
+    }
+    return true;
+  });
+
+  // Pagination
+  const totalPages = Math.ceil(filteredSpecialties.length / perPage);
+  const currentSpecialties = filteredSpecialties.slice(
     (currentPage - 1) * perPage,
     currentPage * perPage
   );
-
   const colClass = "col-12";
   const field = {
     id: "name",
@@ -273,7 +318,7 @@ const Specialty = () => {
   return (
     <div className="my-2">
       <div className="d-flex justify-content-start align-items-center mb-2 gap-2">
-        <h4 className="text-muted mb-0">Specializations List</h4>
+        <h4 className="text-muted mb-0">Specialty List</h4>
         {!addingNew && (
           <span
             className="text-primary mt-1 fw-bold"
@@ -285,12 +330,56 @@ const Specialty = () => {
         )}
       </div>
 
+      {/* Search card */}
+      <div className="card rounded mb-2">
+        <div className="card-body">
+          <div className="row g-2">
+            <div className="col-md-3">
+              <label htmlFor="Specialization" className="form-label">
+                Specialty
+              </label>
+              <select
+                className="form-select"
+                value={searchSpecializationId}
+                onChange={(e) => setSearchSpecializationId(e.target.value)}
+              >
+                <option value="">Select</option>
+                {specialties.map((spec) => (
+                  <option key={spec.id} value={spec.id}>
+                    {spec.name}
+                  </option>
+                ))}
+              </select>
+            </div>{" "}
+            <div
+              className="text- col-12 col-md-2 mt-4"
+              style={{ paddingTop: "0.9rem" }}
+            >
+              <button
+                className="btn btn-primary btn-sm me-2"
+                style={{ padding: "0.43rem", marginBottom: "0.2rem" }}
+                onClick={handleSearch}
+              >
+                Search
+              </button>
+              <button
+                className="btn btn-danger"
+                style={{ padding: "0.43rem", marginBottom: "0.2rem" }}
+                onClick={handleClear}
+              >
+                Clear
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
       <div className="table-responsive rounded">
         <table className="table table-striped table-bordered text-center align-middle text-nowrap">
           <thead className="table-primary">
             <tr>
-              <th>S.no</th>
-              <th>Specialization Name</th>
+              <th>S.No</th>
+              <th>Specialty</th>
               <th>Action</th>
             </tr>
           </thead>

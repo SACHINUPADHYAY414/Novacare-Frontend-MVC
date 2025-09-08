@@ -264,12 +264,12 @@ const Users = () => {
         </Link>
       </div>
 
-      <div className="w-100 px-1">
+      <div className="w-100">
         <div className="table-responsive rounded">
           <table className="table table-striped table-bordered table-hover text-center mb-0">
             <thead className="table-primary">
               <tr>
-                <th className="align-middle text-nowrap">S.no</th>
+                <th className="align-middle text-nowrap">S.No</th>
                 <th className="align-middle text-nowrap">Name</th>
                 <th className="align-middle text-nowrap">Email</th>
                 <th className="align-middle text-nowrap">Mobile</th>

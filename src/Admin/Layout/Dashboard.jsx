@@ -9,7 +9,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useToastr } from "../../Components/Toastr/ToastrProvider";
 import { logout } from "../../Redux/authSlice";
 import { SUCCESS_MSG } from "../../Utils/strings";
-import Loader from "../../Components/Loader/Loader"; // 👈 Import your Loader here
+import Loader from "../../Components/Loader/Loader";
 import "./Scrollbar/style.css";
 
 // Navigation links
@@ -27,6 +27,11 @@ const navItems = [
   {
     label: "Specialty",
     path: "/dashboard/specialty",
+    icon: <SiPolymerproject className="icon" />
+  },
+   {
+    label: "DutyRoster",
+    path: "/dashboard/dutyRoster",
     icon: <SiPolymerproject className="icon" />
   }
 ];
@@ -198,7 +203,9 @@ const Header = memo(({ handleLogout, user }) => (
     </button>
 
     <div className="d-flex align-items-center ms-auto position-relative">
-      {user?.name && <h6 className="text-white fw-semibold me-3 mb-0">{user.name}</h6>}
+      {user?.name && (
+        <h6 className="text-white fw-semibold mb-0">{user.name}</h6>
+      )}
       <button
         className="btn border-0 align-items-center"
         id="dropdownMenuButton"
@@ -228,7 +235,8 @@ const Header = memo(({ handleLogout, user }) => (
 // Dashboard Component
 const Dashboard = () => {
   const [sidebarOpen, setSidebarOpen] = useState(true);
-  const [isMainContentPageFocused, setIsMainContentPageFocused] = useState(false);
+  const [isMainContentPageFocused, setIsMainContentPageFocused] =
+    useState(false);
   const [isLoading, setIsLoading] = useState(true);
 
   const offcanvasRef = useRef(null);
@@ -269,7 +277,7 @@ const Dashboard = () => {
 
   return (
     <div
-      className="d-flex w-100 min-vh-100"
+      className="dashboard-layout-wrapper d-flex w-100 min-vh-100"
       onMouseLeave={() => setIsMainContentPageFocused(false)}
     >
       {/* Desktop Sidebar */}
@@ -297,7 +305,7 @@ const Dashboard = () => {
           <Header handleLogout={handleLogout} user={user} />
         </div>
         <main
-          className="mx-3"
+          className="mx-1"
           onMouseEnter={() => setIsMainContentPageFocused(true)}
         >
           {isLoading ? <Loader /> : <Outlet />}
