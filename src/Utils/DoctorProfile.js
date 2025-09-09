@@ -7,9 +7,8 @@ export const getDoctorProfileImage = (doctor) => {
   const loadingImage = images.loaderImage;
 
   if (!doctor) return loadingImage;
-
   return (
-    doctor.profileImage ||
+    doctor.profileImageUrl ||
     doctor.profilePic ||
     (doctor.gender === "Male"
       ? maleImage

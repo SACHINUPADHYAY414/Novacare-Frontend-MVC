@@ -352,10 +352,10 @@ const AddDoctor = () => {
     } else if (formData.profileImageUrl) {
       formPayload.append("profileImageUrl", formData.profileImageUrl.trim());
     }
-   // For debug: log all formData entries
-    for (const pair of formPayload.entries()) {
-      console.log(pair[0], pair[1]);
-    }
+  //  // For debug: log all formData entries
+  //   for (const pair of formPayload.entries()) {
+  //     console.log(pair[0], pair[1]);
+  //   }
 
     try {
       const res = await api.post("/api/doctor/add-single", formPayload, {

@@ -35,7 +35,7 @@ import {
   TRUE
 } from "../../../Utils/strings.js";
 
-const DoctorForm = () => {
+const EditDoctor = () => {
   const navigate = useNavigate();
   const { customToast } = useToastr();
 
@@ -274,31 +274,48 @@ const DoctorForm = () => {
     }
   ];
 
-  // Updated handleChange:
-  const handleChange = (e, required, label, pastedValue = "") => {
-    let { name, value, type, files } = e.target;
+  const handleImageChange = (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
 
-    if (type === "file") {
-      const file = files[0];
-      if (file) {
-        if (file.size > MAX_FILE_SIZE_MB * 1024 * 1024) {
-          customToast({
-            severity: ERROR,
-            summary: OPPS_MSG,
-            detail: `File size should be less than ${MAX_FILE_SIZE_MB} MB.`,
-            life: 3000
-          });
-          return;
-        }
-        setImageFile(file);
-        setImagePreview(URL.createObjectURL(file));
-      }
+    if (file.size > MAX_FILE_SIZE_MB * 1024 * 1024) {
+      customToast({
+        severity: ERROR,
+        summary: OPPS_MSG,
+        detail: `File size should be less than ${MAX_FILE_SIZE_MB} MB.`,
+        life: 3000
+      });
       return;
     }
 
+    setImageFile(file);
+    setImagePreview(URL.createObjectURL(file));
+  };
+
+  // Updated handleChange:
+  const handleChange = (e, required, label, pastedValue = "") => {
+    let { name, value, type } = e.target;
+
+    // if (type === "file") {
+    //   const file = files[0];
+    //   if (file) {
+    //     if (file.size > MAX_FILE_SIZE_MB * 1024 * 1024) {
+    //       customToast({
+    //         severity: ERROR,
+    //         summary: OPPS_MSG,
+    //         detail: `File size should be less than ${MAX_FILE_SIZE_MB} MB.`,
+    //         life: 3000
+    //       });
+    //       return;
+    //     }
+    //     setImageFile(file);
+    //     setImagePreview(URL.createObjectURL(file));
+    //   }
+    //   return;
+    // }
+
     if (pastedValue) value += pastedValue;
 
-    // For select fields (like status), don't sanitize or validate person name
     let updatedValue = value;
     if (type !== "select-one") {
       const sanitizedValue = sanitizeInput(value);
@@ -454,7 +471,9 @@ const DoctorForm = () => {
       const formPayload = new FormData();
 
       if (imageFile) {
-        formPayload.append("profileImage", imageFile);
+        formPayload.append("profileImageUrl", imageFile);
+      } else if (formData.profileImageUrl) {
+        formPayload.append("profileImageUrl", formData.profileImageUrl.trim());
       }
 
       formPayload.append("gender", formData.gender);
@@ -464,9 +483,7 @@ const DoctorForm = () => {
       formPayload.append("qualification", formData.qualification);
       formPayload.append("specializationId", formData.specialization_id);
       formPayload.append("status", formData.status === "true");
-
       if (doctorId) {
-        // Update existing doctor
         await api.put(`/api/doctor/${doctorId}`, formPayload, {
           headers: { "Content-Type": "multipart/form-data" }
         });
@@ -477,7 +494,6 @@ const DoctorForm = () => {
           life: 3000
         });
       } else {
-        // Create new doctor
         await api.post("/api/doctor", formPayload, {
           headers: { "Content-Type": "multipart/form-data" }
         });
@@ -501,19 +517,19 @@ const DoctorForm = () => {
 
   return (
     <div className="my-2">
-      <h4 className="text-muted mb-1">Add Doctor</h4>
+      <h4 className="text-muted mb-1">Edit Doctor</h4>
       <div className="card">
         <div className="card-body p-3">
           <Form onSubmit={handleSubmit} encType="multipart/form-data">
-            {/* Image Upload and Preview */}
             <div className="text-start">
               <input
                 type="file"
                 accept="image/*"
                 id="profileImageInput"
                 style={{ display: "none" }}
-                onChange={handleChange}
+                onChange={handleImageChange}
               />
+
               <div
                 onClick={() =>
                   document.getElementById("profileImageInput").click()
@@ -564,4 +580,4 @@ const DoctorForm = () => {
   );
 };
 
-export default DoctorForm;
+export default EditDoctor;

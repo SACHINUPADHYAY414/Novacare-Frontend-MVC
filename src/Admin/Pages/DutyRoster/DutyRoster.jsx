@@ -547,7 +547,7 @@ const DutyRoster = () => {
       <div className="d-flex justify-content-start align-items-center mb-1 gap-2">
         <h4 className="text-muted mb-0">DutyRoster List</h4>
         <Link
-          to="/dashboard/add-dutyRoster"
+          to="/dashboard/add-duty-roster"
           className="text-primary mt-1 fw-bold text-decoration-none"
         >
           + Add

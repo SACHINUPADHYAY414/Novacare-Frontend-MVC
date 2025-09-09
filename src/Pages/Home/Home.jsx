@@ -126,7 +126,6 @@ const Home = ({ from = "" }) => {
         `/api/duty-roster/search-doctor?${params.toString()}`
       );
       const result = response.data;
-
       if (!result || (Array.isArray(result) && result.length === 0)) {
         customToast({
           severity: "warn",
@@ -339,7 +338,7 @@ const Home = ({ from = "" }) => {
                           ...doc,
                           name: matchedDoctor?.name,
                           gender: matchedDoctor?.gender,
-                          profilePic: matchedDoctor?.profilePic
+                          profilePic: matchedDoctor?.profileImageUrl
                         };
                         return (
                           <div

@@ -17,7 +17,8 @@ import {
   ERROR,
   WARNING,
   SUCCESS_MSG,
-  NOT_FOUND
+  NOT_FOUND,
+  COMPANY_LOCATION
 } from "../../Utils/strings";
 import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
 import {
@@ -49,6 +50,16 @@ const DoctorSlot = () => {
   const [isOverflowing, setIsOverflowing] = useState(false);
 
   const dateScrollerRef = useRef(null);
+  const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth <= 768);
+    };
+
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
 
   useEffect(() => {
     if (!doctor) {
@@ -465,7 +476,7 @@ const DoctorSlot = () => {
               {/* Location group */}
               <div className="d-flex align-items-center gap-2">
                 <FaLocationDot className="text-danger" />
-                <span>Noida</span>
+                <span>{COMPANY_LOCATION}</span>
               </div>
             </div>
           </div>
@@ -533,7 +544,13 @@ const DoctorSlot = () => {
 
           {/* Time Slots */}
           <form>
-            <div className="row g-2 mt-3">
+            <div
+              className="row g-2 mt-3"
+              style={{
+                maxHeight: isMobile ? "none" : "55vh",
+                overflowY: isMobile ? "visible" : "auto"
+              }}
+            >
               {allSlots.length ? (
                 allSlots.map((slot, idx) => (
                   <div key={idx} className="col-6 col-sm-4 col-md-2">

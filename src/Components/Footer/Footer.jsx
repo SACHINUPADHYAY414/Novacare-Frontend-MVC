@@ -116,7 +116,7 @@ const Footer = () => {
 
           {/* Newsletter */}
           <div
-            className="text-center text-md-start flex-fill"
+            className="text-center text-md-start justify-content-center align-items-center flex-fill"
             style={{ minWidth: "280px" }}
           >
             <form onSubmit={handleSubmit}>
@@ -325,7 +325,7 @@ const Footer = () => {
                 <li className="nav-item mx-2 d-none d-sm-block">
                   <span
                     className="bg-danger rounded-circle d-inline-block"
-                    style={{ width: "8px", height: "8px", marginTop: "18px" }}
+                    style={{ width: "8px", height: "8px", marginTop: "14px" }}
                   ></span>
                 </li>
               )}

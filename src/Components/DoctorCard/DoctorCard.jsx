@@ -7,7 +7,6 @@ import { getDoctorProfileImage } from "../../Utils/DoctorProfile";
 const DoctorCard = ({ doctor }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-
   if (!doctor) return null;
 
   const name = doctor.doctorName || doctor.name || "Unnamed Doctor";

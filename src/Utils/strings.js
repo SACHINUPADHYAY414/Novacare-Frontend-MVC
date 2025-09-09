@@ -3,6 +3,9 @@ export const BOOKING_SLOT_ALREADY_BOOKED =
   "This time slot is already booked. Please select another.";
 export const COMPANY_NAME = "Novacare";
 export const COMPANY_START = "2021-01-01";
+export const COMPANY_LOCATION= "Noida";
+
+
 export const DOB_RANGE_MESSAGE =
   "Date of birth should be between January 1, 1930, and today's date. Please enter a valid date.";
 export const ERROR = "error";
