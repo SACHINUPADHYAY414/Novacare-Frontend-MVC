@@ -34,6 +34,7 @@ import {
   verifyStartingOrEndingCharacters
 } from "../../../Utils/allValidation";
 import { OverlayTrigger, Tooltip } from "react-bootstrap";
+import { confirmDialog } from "../../../Components/ConfirmAction/ConfirmAction";
 
 const Specialty = () => {
   const [specialties, setSpecialties] = useState([]);
@@ -155,7 +156,7 @@ const Specialty = () => {
 
     try {
       setLoadingId(editId);
-      await api.put(`/api/specialization/${editId}`, { name });
+      await api.put(`/api/specialization/update/${editId}`, { name });
       setSpecialties((prev) =>
         prev.map((spec) => (spec.id === editId ? { ...spec, name } : spec))
       );
@@ -185,20 +186,20 @@ const Specialty = () => {
 
   // Delete specialization
   const handleDelete = async (id) => {
-    if (!window.confirm("Are you sure you want to delete this specialization?"))
-      return;
+    const confirmed = await confirmDialog({
+      title: "Are you sure you want to Delete?",
+      confirmButtonText: "Yes, Delete it!",
+      cancelButtonText: "Cancel",
+      confirmButtonClass: "btn btn-primary"
+    });
 
+    if (!confirmed) return;
     try {
       setLoadingId(id);
       await api.delete(`/api/specialization/${id}`);
 
-      // ✅ Re-fetch updated list
       await fetchSpecialties();
-
-      // ✅ Reset to page 1
       setCurrentPage(1);
-
-      // ✅ If the deleted specialization was filtered, clear it
       if (appliedFilters.specialization_id === String(id)) {
         setAppliedFilters({});
         setSearchSpecializationId("");
@@ -235,7 +236,14 @@ const Specialty = () => {
       });
       return;
     }
+    const confirmed = await confirmDialog({
+      title: "Are you sure you want to save changes?",
+      confirmButtonText: "Yes, save it!",
+      cancelButtonText: "Cancel",
+      confirmButtonClass: "btn btn-primary"
+    });
 
+    if (!confirmed) return;
     try {
       setLoadingId("new");
       await api.post("/api/specialization/add", { name });

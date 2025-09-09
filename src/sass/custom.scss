@@ -631,3 +631,37 @@ th.text-success {
   color: #28a745 !important;
   font-weight: bold;
 }
+.swal2-actions .swal2-confirm {
+  margin-right: 0.5rem;
+}
+.custom-confirm-btn {
+  background-color: #DDD;
+  color: #333;
+  border: 1px solid #CCC;
+  padding: 8px 16px;
+  border-radius: 4px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.custom-confirm-btn:hover {
+  background-color: #CCC;
+}
+
+.custom-cancel-btn {
+  background-color: #f44336;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 4px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.custom-cancel-btn:hover {
+  background-color: #d32f2f;
+}
+
+

@@ -75,7 +75,7 @@ const CustomInputField = ({
             })}
             maxLength={field?.maxLength}
             maxDate={
-              new Date(new Date().setFullYear(new Date().getFullYear() + 5))
+              new Date(new Date().setFullYear(new Date().getFullYear() + 10))
             }
             minLength={field?.minLength}
             onInput={onInput}
@@ -165,7 +165,7 @@ const CustomInputField = ({
             onChange={onChange}
             onPaste={onPaste}
             onBlur={onBlur}
-            style={{ paddingRight: "2.5rem" }} // make room for icon
+            style={{ paddingRight: "2.5rem" }}
             disabled={disabled}
             readOnly={readOnly}
             onFocus={onFocus}

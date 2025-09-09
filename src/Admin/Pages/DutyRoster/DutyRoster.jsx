@@ -19,7 +19,18 @@ const DutyRoster = () => {
   const { customToast } = useToastr();
   const [doctors, setDoctors] = useState([]);
   const [dutyRosters, setDutyRosters] = useState([]);
-  const [searchFormData, setSearchFormData] = useState({});
+  const getCurrentDateString = () => {
+    const today = new Date();
+    const yyyy = today.getFullYear();
+    const mm = String(today.getMonth() + 1).padStart(2, "0");
+    const dd = String(today.getDate()).padStart(2, "0");
+    return `${yyyy}-${mm}-${dd}`;
+  };
+
+  const [searchFormData, setSearchFormData] = useState({
+    duty_date: getCurrentDateString()
+  });
+
   const [appliedFilters, setAppliedFilters] = useState({});
   const [currentPage, setCurrentPage] = useState(1);
   const [sortConfig, setSortConfig] = useState([]);
@@ -47,7 +58,6 @@ const DutyRoster = () => {
     try {
       const res = await api.get("/api/duty-roster/all");
       const rawRosters = res.data || [];
-
       const mappedRosters = rawRosters.map((duty) => {
         const doctor = doctors.find((doc) => doc.id === duty.doctorId);
         return {
@@ -55,7 +65,6 @@ const DutyRoster = () => {
           doctor_name: doctor ? doctor.name : "N/A"
         };
       });
-
       setDutyRosters(mappedRosters);
     } catch (e) {
       customToast({
@@ -78,6 +87,10 @@ const DutyRoster = () => {
     }
   }, [doctors]);
 
+  useEffect(() => {
+    setAppliedFilters({ duty_date: getCurrentDateString() });
+  }, []);
+
   const handleEditClick = (duty) => {
     setEditingId(duty.id);
     setEditFormData({
@@ -86,7 +99,8 @@ const DutyRoster = () => {
       fromTime: duty.fromTime || "",
       toTime: duty.toTime || "",
       isAvailable: duty.isAvailable ? "true" : "false",
-      duration: duty.duration || 0
+      duration: duty.duration || 0,
+      status: duty.status || ""
     });
   };
 
@@ -116,7 +130,8 @@ const DutyRoster = () => {
         fromTime: editFormData.fromTime,
         toTime: editFormData.toTime,
         isAvailable: editFormData.isAvailable === "true",
-        duration: editFormData.duration
+        duration: editFormData.duration,
+        status: editFormData.status
       };
 
       await api.put(`/api/duty-roster/update/${id}`, payload, {
@@ -125,6 +140,7 @@ const DutyRoster = () => {
         }
       });
 
+      await fetchDutyRosters();
       setDutyRosters((prev) =>
         prev.map((d) =>
           d.id === id
@@ -158,15 +174,26 @@ const DutyRoster = () => {
   };
 
   const filteredDutyRosters = dutyRosters.filter((duty) => {
-    const { duty_date, is_available, doctor_id, fromTime, toTime } =
+    const { duty_date, is_available, doctor_id, fromTime, toTime, status } =
       appliedFilters;
 
+    // Date exact match or no filter
     const dutyDateMatch = duty_date ? duty.dutyDate === duty_date : true;
+
+    // Availability as string match or no filter
     const availabilityMatch = is_available
       ? String(duty.isAvailable) === is_available
       : true;
+
+    // Doctor id as string match or no filter
     const doctorMatch = doctor_id ? String(duty.doctorId) === doctor_id : true;
 
+    // Status case-insensitive trimmed match or no filter
+    const statusMatch = status
+      ? duty.status?.trim().toUpperCase() === status.trim().toUpperCase()
+      : true;
+
+    // Time filters (converted to minutes)
     const dutyFromMinutes = convertTimeToMinutes(duty.fromTime);
     const dutyToMinutes = convertTimeToMinutes(duty.toTime);
 
@@ -175,6 +202,7 @@ const DutyRoster = () => {
 
     const fromTimeMatch =
       filterFromMinutes !== null ? dutyFromMinutes >= filterFromMinutes : true;
+
     const toTimeMatch =
       filterToMinutes !== null ? dutyToMinutes <= filterToMinutes : true;
 
@@ -183,7 +211,8 @@ const DutyRoster = () => {
       availabilityMatch &&
       doctorMatch &&
       fromTimeMatch &&
-      toTimeMatch
+      toTimeMatch &&
+      statusMatch
     );
   });
 
@@ -326,6 +355,19 @@ const DutyRoster = () => {
       required: FALSE,
       placeholder: "Select",
       colClass: "col-12 col-md-2"
+    },
+    {
+      label: "Status",
+      id: "status",
+      name: "status",
+      type: "select",
+      options: [
+        { id: "Active", name: "Active" },
+        { id: "InActive", name: "InActive" }
+      ],
+      required: FALSE,
+      placeholder: "Select",
+      colClass: "col-12 col-md-2"
     }
   ];
 
@@ -349,7 +391,7 @@ const DutyRoster = () => {
     if (currentDuties.length === 0) {
       return (
         <tr>
-          <td colSpan="8" className="text-center text-muted">
+          <td colSpan="9" className="text-center text-muted">
             No data found
           </td>
         </tr>
@@ -441,6 +483,20 @@ const DutyRoster = () => {
               )}
             </td>
             <td>
+              <select
+                name="status"
+                value={editFormData.status}
+                onChange={handleEditChange}
+                className={`form-control ${errors.status ? "is-invalid" : ""}`}
+              >
+                <option value="Active">Active</option>
+                <option value="InActive">InActive</option>
+              </select>
+              {errors.status && (
+                <div className="invalid-feedback">{errors.status}</div>
+              )}
+            </td>
+            <td>
               <OverlayTrigger placement="top" overlay={<Tooltip>Edit</Tooltip>}>
                 <RiSave2Line
                   size={22}
@@ -469,6 +525,8 @@ const DutyRoster = () => {
           <td>{duty.toTime}</td>
           <td>{duty.duration}</td>
           <td>{duty.isAvailable ? "Available" : "Unavailable"}</td>
+          <td>{duty.status || "N/A"}</td>
+
           <td>
             <OverlayTrigger placement="top" overlay={<Tooltip>Edit</Tooltip>}>
               <RiEdit2Line
@@ -590,6 +648,7 @@ const DutyRoster = () => {
               <th role="button" onClick={() => toggleSort("isAvailable")}>
                 Is Available {renderSortIcon("isAvailable")}
               </th>
+              <th>Status</th>
               <th>Action</th>
             </tr>
           </thead>

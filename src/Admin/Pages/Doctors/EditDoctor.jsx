@@ -34,6 +34,7 @@ import {
   OPPS_ERROR,
   TRUE
 } from "../../../Utils/strings.js";
+import { confirmDialog } from "../../../Components/ConfirmAction/ConfirmAction.jsx";
 
 const EditDoctor = () => {
   const navigate = useNavigate();
@@ -296,24 +297,6 @@ const EditDoctor = () => {
   const handleChange = (e, required, label, pastedValue = "") => {
     let { name, value, type } = e.target;
 
-    // if (type === "file") {
-    //   const file = files[0];
-    //   if (file) {
-    //     if (file.size > MAX_FILE_SIZE_MB * 1024 * 1024) {
-    //       customToast({
-    //         severity: ERROR,
-    //         summary: OPPS_MSG,
-    //         detail: `File size should be less than ${MAX_FILE_SIZE_MB} MB.`,
-    //         life: 3000
-    //       });
-    //       return;
-    //     }
-    //     setImageFile(file);
-    //     setImagePreview(URL.createObjectURL(file));
-    //   }
-    //   return;
-    // }
-
     if (pastedValue) value += pastedValue;
 
     let updatedValue = value;
@@ -466,7 +449,14 @@ const EditDoctor = () => {
       });
       return;
     }
+    const confirmed = await confirmDialog({
+      title: "Are you sure you want to save changes?",
+      confirmButtonText: "Yes, save it!",
+      cancelButtonText: "Cancel",
+      confirmButtonClass: "btn btn-primary"
+    });
 
+    if (!confirmed) return;
     try {
       const formPayload = new FormData();
 

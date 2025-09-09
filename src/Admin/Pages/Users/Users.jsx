@@ -31,9 +31,8 @@ import {
   validateLength,
   verifyEmail
 } from "../../../Utils/allValidation";
-import "bootstrap/dist/css/bootstrap.min.css";
+import { confirmDialog } from "../../../Components/ConfirmAction/ConfirmAction";
 
-// Dummy title mapping function
 const mapTitleToString = (title) => title;
 
 const Users = () => {
@@ -134,6 +133,15 @@ const Users = () => {
       return;
     }
 
+    const confirmed = await confirmDialog({
+      title: "Are you sure you want to save changes?",
+      confirmButtonText: "Yes, save it!",
+      cancelButtonText: "Cancel",
+      confirmButtonClass: "btn btn-primary"
+    });
+
+    if (!confirmed) return;
+
     const payload = {
       title: mapTitleToString(editedData.title),
       name: editedData.name.trim(),
@@ -173,7 +181,15 @@ const Users = () => {
   };
 
   const handleDelete = async (id) => {
-    if (!window.confirm("Are you sure you want to delete this user?")) return;
+    const confirmed = await confirmDialog({
+      title: "Are you sure you want to delete this user?",
+      text: "This action cannot be undone!",
+      confirmButtonText: "Yes, delete!",
+      cancelButtonClass: "btn btn-secondary",
+      confirmButtonClass: "btn btn-danger"
+    });
+
+    if (!confirmed) return;
 
     try {
       await api.delete(`/api/admin/user/${id}`, {

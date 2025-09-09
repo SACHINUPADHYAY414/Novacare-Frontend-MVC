@@ -8,6 +8,12 @@ import { FALSE, NOT_FOUND, OPPS_MSG } from "../../../Utils/strings";
 import CustomInputField from "../../../Components/CustomInput/CustomInputField";
 import { RiInformation2Line } from "react-icons/ri";
 import TooltipWrapper from "../../../Components/Tooltip/TooltipWrapper";
+import {
+  RiEdit2Line,
+  RiDeleteBinLine,
+  RiSave2Line,
+  RiCloseLine
+} from "react-icons/ri";
 
 const Doctors = () => {
   const { customToast } = useToastr();
@@ -312,27 +318,31 @@ const Doctors = () => {
                       <span className="text-danger">Inactive</span>
                     )}
                   </td>
-                  <td>
-                    <span
-                      className="text-primary me-3"
-                      style={{ cursor: "pointer" }}
-                      title="Edit"
-                      onClick={() =>
-                        navigate("/dashboard/edit-doctor", {
-                          state: { doctor: doc, doctorId: doc.id }
-                        })
-                      }
+                  <td className="d-flex justify-content-center gap-2">
+                    <OverlayTrigger
+                      placement="top"
+                      overlay={<Tooltip>Edit</Tooltip>}
                     >
-                      <FaEdit />
-                    </span>
-                    <span
-                      onClick={() => handleDelete(doc.id)}
-                      className="text-danger"
-                      style={{ cursor: "pointer" }}
-                      title="Delete"
+                      <RiEdit2Line
+                        size={22}
+                        className="text-primary cursor-pointer"
+                        onClick={() =>
+                          navigate("/dashboard/edit-doctor", {
+                            state: { doctor: doc, doctorId: doc.id }
+                          })
+                        }
+                      />
+                    </OverlayTrigger>
+                    <OverlayTrigger
+                      placement="top"
+                      overlay={<Tooltip>Delete</Tooltip>}
                     >
-                      <FaTrash />
-                    </span>
+                      <RiDeleteBinLine
+                        size={22}
+                        className="text-danger cursor-pointer"
+                        onClick={() => handleDelete(doc.id)}
+                      />
+                    </OverlayTrigger>
                   </td>
                 </tr>
               ))

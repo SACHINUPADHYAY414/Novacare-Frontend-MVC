@@ -14,6 +14,8 @@ import "./sass/custom.scss";
 import { createRoot } from "react-dom/client";
 import "@popperjs/core";
 import 'rsuite/dist/rsuite.min.css';
+import '@sweetalert2/theme-bootstrap-4/bootstrap-4.css';
+import 'sweetalert2/dist/sweetalert2.min.css';
 
 
 createRoot(document.getElementById("root")).render(

@@ -13,6 +13,7 @@
     "@fortawesome/free-solid-svg-icons": "^7.0.0",
     "@fortawesome/react-fontawesome": "^3.0.2",
     "@reduxjs/toolkit": "^2.8.2",
+    "@sweetalert2/theme-bootstrap-4": "^5.0.27",
     "axios": "^1.11.0",
     "bootstrap": "^5.3.8",
     "emoji-picker-react": "^4.13.2",
