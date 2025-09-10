@@ -11,6 +11,7 @@ import Appointments from "./Pages/Appoitntments/Appointments.jsx";
 import ContactUs from "./Pages/ContactUs/ContactUs.jsx";
 import PageNotFound from "./Pages/PageNotFound/PageNotFound.jsx";
 import ProtectedRoute from "./ProtectRoute.jsx/ProtectRoute";
+import ResetPassword from "./Pages/ResetPassword/ResetPassword.jsx";
 
 // Admin
 import Dashboard from "./Admin/Layout/Dashboard.jsx";
@@ -41,6 +42,7 @@ const App = () => {
         <Route path="validate-otp" element={<ValidateOtp />} />
         <Route path="doctor-slot" element={<DoctorSlot />} />
         <Route path="contact-us" element={<ContactUs />} />
+        <Route path="forgot-password" element={<ResetPassword/>}/>
 
         <Route
           path="appointments"

@@ -21,7 +21,9 @@ const CustomInputField = ({
   disabled,
   isInvalid,
   dateRange,
-  hideLabel
+  hideLabel,
+    labelStyle = {},
+     labelClass = "",
 }) => {
   const inputRef = useRef(null);
   const [passwordVisibility, setPasswordVisibility] = useState({});
@@ -52,9 +54,8 @@ const CustomInputField = ({
       {!hideLabel && field?.label && (
         <label
           htmlFor={field?.id}
-          className={`${
-            field?.required ? "form-label required-label" : "form-label"
-          }`}
+          className={`form-label ${field?.required ? "required-label" : ""} ${labelClass}`} // ✅ Use labelClass
+          style={labelStyle}
         >
           {field?.label}
         </label>

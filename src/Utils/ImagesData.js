@@ -42,6 +42,8 @@ const images = {
     "https://res.cloudinary.com/dt9kb92su/image/upload/v1756986858/image-loader_v2n1m6.gif",
   footerImage:
     "https://www.rgcirc.org/wp-content/uploads/2023/07/ftr-img-btm.png",
-    donateImage:"https://res.cloudinary.com/dt9kb92su/image/upload/v1756986953/donateicon.png_z9pwdp.webp"
+    donateImage:"https://res.cloudinary.com/dt9kb92su/image/upload/v1756986953/donateicon.png_z9pwdp.webp",
+    loginBg:"https://t4.ftcdn.net/jpg/16/00/17/45/240_F_1600174593_gYbxK49p37lZxc3kFzrWZsFOgXQ0qTsk.jpg",
+    resetPasswordBackground:"https://t3.ftcdn.net/jpg/15/29/09/70/360_F_1529097065_hv5PpXSAKHQZxGN5comuqGx1XMORYl73.jpg"
 };
 export default images;

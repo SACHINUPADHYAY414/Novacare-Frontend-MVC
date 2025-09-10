@@ -84,6 +84,7 @@ const DutyRoster = () => {
   useEffect(() => {
     if (doctors.length > 0) {
       fetchDutyRosters();
+      handleSearch()
     }
   }, [doctors]);
 

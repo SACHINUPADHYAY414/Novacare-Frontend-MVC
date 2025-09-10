@@ -165,7 +165,7 @@ const Login = () => {
         })
       );
       setLoading(false);
-    navigate("/validate-otp", { replace: TRUE });
+      navigate("/validate-otp", { replace: TRUE });
 
       const errorMessage = response?.data?.message;
       e.message ||
@@ -200,16 +200,17 @@ const Login = () => {
       onBlur={(e) => handleOnBlur(e, field.label)}
       onPaste={(e) => onPaste(e, field.label)}
       error={errors[field.name] || ""}
+      labelStyle={{ color: "#fff", fontWeight: "600", fontSize: "1.1rem" }}
     />
   );
 
   return (
     <div
-      className="d-flex justify-content-center align-items-center w-100 text-black text-start"
+      className="justify-content-center align-items-center w-100 text-black text-start"
       style={{
         minHeight: "calc(100vh - 145px)",
         zIndex: 2,
-         backgroundImage: `url(${images.background2})`,
+        backgroundImage: `url(${images.loginBg})`,
         backgroundRepeat: "no-repeat",
         backgroundSize: "cover"
       }}
@@ -228,7 +229,7 @@ const Login = () => {
         style={{ maxHeight: "80vh" }}
       >
         <div
-          className="text-center text-black me-5 d-none d-md-block"
+          className="text-center text-white me-5 d-none d-md-block"
           style={{ zIndex: 2, paddingBottom: "100px" }}
         >
           <h1 className="fw-bold">Hospital Portal</h1>
@@ -237,14 +238,21 @@ const Login = () => {
           </p>
         </div>
 
-        <div className="login-card">
-          <div className="text-center mb-1">
+        <div
+          className="login-card"
+          style={{
+            background: "rgba(255, 255, 255, 0.15)",
+            backdropFilter: "blur(3px)",
+            boxShadow: "0 8px 32px 0 rgba(31, 38, 135, 0.37)",
+            borderRadius: "10px",
+            border: "1px solid rgba(255, 255, 255, 0.18)",
+            zIndex: 2,
+            color: "white"
+          }}
+        >
+          <div className="text-center">
             <div className="otp-verify-icon">
-              <img
-                src={images.compalyLogo}
-                alt="User Icon"
-                className="mt-1"
-              />
+              <img src={images.compalyLogo} alt="User Icon" />
             </div>
             <h4 className="fw-bold">Login</h4>
           </div>
@@ -258,7 +266,7 @@ const Login = () => {
                 style={{
                   fontSize: "0.75rem",
                   cursor: "pointer",
-                  color: "#0d6efd"
+                  color: "#fff"
                 }}
               >
                 Forgot Password?

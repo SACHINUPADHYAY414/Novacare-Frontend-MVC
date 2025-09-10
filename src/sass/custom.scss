@@ -162,7 +162,7 @@
   display: none;
 }
 
-@media(min-width: 768px) {
+@media (min-width: 768px) {
   .doctor-profile-card {
     max-width: 80% !important;
     flex: 0 0 80% !important;
@@ -170,7 +170,6 @@
     margin-right: auto;
   }
 }
-
 
 @media (max-width: 576px) {
   .doctor-profile-card {
@@ -250,7 +249,6 @@
   border-top-right-radius: 5px !important;
   background-color: #0074bc !important;
 }
-
 
 .chatbot-body {
   height: 350px;
@@ -407,7 +405,7 @@
   font-size: 2rem;
   border-radius: 50%;
   transition: transform 0.3s ease, font-size 0.3s ease;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
   background-color: #0074bc;
   color: white;
   border: none;
@@ -421,17 +419,33 @@
 }
 
 @keyframes bounce {
-  0%   { transform: scale(1); }
-  30%  { transform: scale(1.15); }
-  50%  { transform: scale(0.95); }
-  70%  { transform: scale(1.05); }
-  100% { transform: scale(1); }
+  0% {
+    transform: scale(1);
+  }
+  30% {
+    transform: scale(1.15);
+  }
+  50% {
+    transform: scale(0.95);
+  }
+  70% {
+    transform: scale(1.05);
+  }
+  100% {
+    transform: scale(1);
+  }
 }
 
 @keyframes pulse {
-  0% { transform: scale(1); }
-  50% { transform: scale(1.05); }
-  100% { transform: scale(1); }
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+  100% {
+    transform: scale(1);
+  }
 }
 
 .open-btn {
@@ -517,14 +531,15 @@
 /* Base styles (Mobile first) */
 .login-card {
   z-index: 2;
-  background: rgba(255, 255, 255, 0.95);
+  // background: rgba(255, 255, 255, 0.95);
   border-radius: 16px;
   padding: 1.5rem;
-  box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+  // box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
   width: 90%;
   max-width: 360px;
   margin: 5vh auto;
   transition: all 0.3s ease;
+  color: white !important;
 }
 
 .login-icon,
@@ -532,10 +547,10 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: #f57c00;
+  // background-color: #f57c00;
   border-radius: 50%;
   overflow: hidden;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  // box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   transition: all 0.3s ease;
 }
 
@@ -548,7 +563,7 @@
 .otp-verify-icon {
   width: 50px;
   height: 50px;
-  margin: 0.3rem auto 1rem;
+  margin: 0 auto;
 }
 
 .login-icon img,
@@ -557,6 +572,10 @@
   height: 100%;
   object-fit: cover;
   border-radius: 50%;
+}
+.otp-heading {
+  margin-top: 0.2rem;
+  margin-bottom: 0;
 }
 
 /* Tablets (≥768px) */
@@ -590,13 +609,8 @@
     min-height: 340px;
   }
 
-  .login-icon {
-    font-size: 32px;
-    margin: -0.4rem auto 0.5rem;
-  }
-
   .otp-verify-icon {
-    margin: 0rem auto 1rem;
+    margin: 0 auto 0.1rem;
     height: 60px;
     width: 60px;
   }
@@ -619,12 +633,12 @@
 label {
   font-weight: 500 !important;
   font-size: 1rem;
-  color: #0c7276 !important;
+  // color: #0c7276 !important;
 }
 
 .table-primary th {
   color: white !important;
-   background:#4c9dc5;
+  background: #4c9dc5;
 }
 
 th.text-success {
@@ -635,9 +649,9 @@ th.text-success {
   margin-right: 0.5rem;
 }
 .custom-confirm-btn {
-  background-color: #DDD;
+  background-color: #ddd;
   color: #333;
-  border: 1px solid #CCC;
+  border: 1px solid #ccc;
   padding: 8px 16px;
   border-radius: 4px;
   font-weight: 600;
@@ -646,7 +660,7 @@ th.text-success {
 }
 
 .custom-confirm-btn:hover {
-  background-color: #CCC;
+  background-color: #ccc;
 }
 
 .custom-cancel-btn {
@@ -663,5 +677,3 @@ th.text-success {
 .custom-cancel-btn:hover {
   background-color: #d32f2f;
 }
-
-
