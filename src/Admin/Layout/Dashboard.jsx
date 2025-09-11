@@ -29,9 +29,19 @@ const navItems = [
     path: "/dashboard/specialty",
     icon: <SiPolymerproject className="icon" />
   },
-   {
+  {
     label: "DutyRoster",
     path: "/dashboard/dutyRoster",
+    icon: <SiPolymerproject className="icon" />
+  },
+  {
+    label:"Appointments",
+    path:"/dashboard/appointments-list",
+    icon:<SiPolymerproject className="icon"/>
+  },
+  {
+    label: "Users Enquary",
+    path: "/dashboard/enquary",
     icon: <SiPolymerproject className="icon" />
   }
 ];

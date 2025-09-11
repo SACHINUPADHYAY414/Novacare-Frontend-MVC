@@ -12,6 +12,8 @@ import ContactUs from "./Pages/ContactUs/ContactUs.jsx";
 import PageNotFound from "./Pages/PageNotFound/PageNotFound.jsx";
 import ProtectedRoute from "./ProtectRoute.jsx/ProtectRoute";
 import ResetPassword from "./Pages/ResetPassword/ResetPassword.jsx";
+import Blog from "./Pages/Blogs/Blogs.jsx";
+
 
 // Admin
 import Dashboard from "./Admin/Layout/Dashboard.jsx";
@@ -24,6 +26,8 @@ import AddDoctor from "./Admin/Pages/Doctors/AddDoctor.jsx";
 import EditDoctor from "./Admin/Pages/Doctors/EditDoctor.jsx";
 import DutyRoster from "./Admin/Pages/DutyRoster/DutyRoster.jsx";
 import AddDutyRoster from "./Admin/Pages/DutyRoster/AddDutyRoster.jsx";
+import UsersEnquary from "./Admin/Pages/UsersEnquary/UsersEnquary.jsx";
+import AllAppointments from "./Admin/Pages/Appointments/Appointments.jsx";
 
 const App = () => {
   const { pathname } = useLocation();
@@ -42,7 +46,8 @@ const App = () => {
         <Route path="validate-otp" element={<ValidateOtp />} />
         <Route path="doctor-slot" element={<DoctorSlot />} />
         <Route path="contact-us" element={<ContactUs />} />
-        <Route path="forgot-password" element={<ResetPassword/>}/>
+        <Route path="forgot-password" element={<ResetPassword />} />
+        <Route path="blog" element={<Blog />} />
 
         <Route
           path="appointments"
@@ -74,7 +79,8 @@ const App = () => {
         <Route path="edit-doctor" element={<EditDoctor />} />
         <Route path="dutyRoster" element={<DutyRoster />} />
         <Route path="add-duty-roster" element={<AddDutyRoster />} />
-
+        <Route path="enquary" element={<UsersEnquary/>}/>
+        <Route path="appointments-list" element={<AllAppointments/>}/>
       </Route>
     </Routes>
   );

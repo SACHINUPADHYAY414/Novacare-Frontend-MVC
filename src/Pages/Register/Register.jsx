@@ -17,7 +17,7 @@ import {
   ERROR_MUST_LENGTH,
   ERROR,
   WARNING,
-  NOT_FOUND,
+  SERVER_ERROR,
   ENTER_VALID_DATA,
   SUCCESS,
   OPPS_ERROR,
@@ -122,7 +122,7 @@ const Register = () => {
           presentCity: ""
         }));
       } catch (e) {
-        const errorMessage = e?.response?.data?.message || NOT_FOUND;
+        const errorMessage = e?.response?.data?.message || SERVER_ERROR;
         e.message ||
           customToast({
             severity: ERROR,

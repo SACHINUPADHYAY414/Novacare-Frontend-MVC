@@ -29,7 +29,7 @@ import {
   ERROR_DOUBLE_SPACE,
   ERROR_PASTE_DATA,
   ERROR,
-  NOT_FOUND,
+  SERVER_ERROR,
   SUCCESS,
   OPPS_ERROR,
   TRUE
@@ -69,7 +69,7 @@ const AddDoctor = () => {
       setSpecialties(res.data || []);
     } catch (e) {
       setSpecialties([]);
-      const errorMessage = e?.response?.data?.message || NOT_FOUND;
+      const errorMessage = e?.response?.data?.message || SERVER_ERROR;
       customToast({
         severity: "error",
         summary: OPPS_MSG,
@@ -108,7 +108,7 @@ const AddDoctor = () => {
         customToast({
           severity: ERROR,
           summary: OPPS_MSG,
-          detail: e?.response?.data?.message || NOT_FOUND,
+          detail: e?.response?.data?.message || SERVER_ERROR,
           life: 4000
         });
       }

@@ -21,7 +21,7 @@ const images = {
   interventionalGastro:
     "https://www.rgcirc.org/wp-content/uploads/2023/10/laboratory-transfusion-1.png",
   nuclearMedicine:
-    "https://www.rgcirc.org/wp-content/uploads/2023/10/neuclear-medicine.png",
+    "https://www.rgcirc.org/wp-content/uploads/2023/10/pallative-home-care-service.png",
   supportServices:
     "https://www.rgcirc.org/wp-content/uploads/2023/11/SUPPORT-SERVICES.png",
   internalMedicine:
@@ -32,18 +32,37 @@ const images = {
     "https://www.rgcirc.org/wp-content/uploads/2023/11/RESPIRATORY-MEDICINE.png",
   radiology:
     "https://www.rgcirc.org/wp-content/uploads/2023/10/interventional-radiology-2.png",
+  palliativeCare:
+    "https://www.rgcirc.org/wp-content/uploads/2023/10/pallative-home-care-service.png",
+  respiratoryMedicine:
+    "https://www.rgcirc.org/wp-content/uploads/2023/11/RESPIRATORY-MEDICINE.png",
+  interventionalGastro2:
+    "https://www.rgcirc.org/wp-content/uploads/2023/11/INTERVENTIONAL-GASTROENTEROLOGY-SERVICES.png",
   otpImage:
     "https://www.rgcirc.org/wp-content/uploads/2023/11/INTERVENTIONAL-GASTROENTEROLOGY-SERVICES.png",
   maleImage:
     "https://res.cloudinary.com/dt9kb92su/image/upload/v1756985715/Men_fd6afd.jpg",
   femaleImage:
     "https://res.cloudinary.com/dt9kb92su/image/upload/v1756985715/Female_osrp2e.jpg",
+  labTransfusion:
+    "https://www.rgcirc.org/wp-content/uploads/2023/10/laboratory-transfusion-1.png",
   loaderImage:
     "https://res.cloudinary.com/dt9kb92su/image/upload/v1756986858/image-loader_v2n1m6.gif",
   footerImage:
     "https://www.rgcirc.org/wp-content/uploads/2023/07/ftr-img-btm.png",
-    donateImage:"https://res.cloudinary.com/dt9kb92su/image/upload/v1756986953/donateicon.png_z9pwdp.webp",
-    loginBg:"https://t4.ftcdn.net/jpg/16/00/17/45/240_F_1600174593_gYbxK49p37lZxc3kFzrWZsFOgXQ0qTsk.jpg",
-    resetPasswordBackground:"https://t3.ftcdn.net/jpg/15/29/09/70/360_F_1529097065_hv5PpXSAKHQZxGN5comuqGx1XMORYl73.jpg"
+  donateImage:
+    "https://res.cloudinary.com/dt9kb92su/image/upload/v1756986953/donateicon.png_z9pwdp.webp",
+  loginBg:
+    "https://t4.ftcdn.net/jpg/16/00/17/45/240_F_1600174593_gYbxK49p37lZxc3kFzrWZsFOgXQ0qTsk.jpg",
+  resetPasswordBackground:
+    "https://t3.ftcdn.net/jpg/15/29/09/70/360_F_1529097065_hv5PpXSAKHQZxGN5comuqGx1XMORYl73.jpg"
 };
+
 export default images;
+
+export const landingBackground = [
+  "https://www.trootech.com/backend/uploads/A_Hospital_Management_System_for_Efficient_Handling_of_Internal_Processes_046a5f4838.jpg",
+  "https://t4.ftcdn.net/jpg/02/70/36/25/360_F_270362596_kIpf2k7Q5PBjR5wWTp5qentfEeQnm5dM.jpg",
+  "https://www.sparshhospital.com/wp-content/uploads/2023/07/General-Medicine-Banner-Desktop.jpg",
+  "https://e0.pxfuel.com/wallpapers/150/633/desktop-wallpaper-amazing-ultra-doctors-background-doctor-background-doctor-medicine.jpg"
+];

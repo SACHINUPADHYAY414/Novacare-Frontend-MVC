@@ -310,10 +310,10 @@ const Navbar = () => {
 
       {/* Secondary Navbar */}
       <nav
-        className="navbar  navbar-expand-lg navbar-dark"
+        className="navbar navbar-expand-lg navbar-dark d-none d-lg-flex"
         style={{ backgroundColor: "#0074bc" }}
       >
-        <div className="container d-none d-lg-flex">
+        <div className="container">
           <ul className="navbar-nav mx-auto fw-bold gap-3">
             <li className="nav-item">
               <Link to="/patient-family" className="nav-link text-white">
@@ -357,21 +357,23 @@ const Navbar = () => {
             </li>
           </ul>
         </div>
-        <div
-          className="d-lg-none w-100 text-white fw-bold d-flex justify-content-center align-items-center text-center"
-          style={{ fontSize: "0.75rem" }}
-        >
-          <strong style={{ fontSize: "0.8rem" }}>Upcoming App:</strong>
-          <span className="mx-2">
-            {uppcomingAppointment
-              ? `${uppcomingAppointment.doctor?.name || "N/A"} on ${new Date(
-                  uppcomingAppointment.appointmentDate
-                ).toLocaleDateString()} at ${
-                  uppcomingAppointment.appointmentTime
-                }`
-              : "No upcoming appointment"}
-          </span>
-        </div>
+        {isAuthenticated ? (
+          <div
+            className="d-lg-none w-100 text-white fw-bold d-flex justify-content-center align-items-center text-center"
+            style={{ fontSize: "0.75rem" }}
+          >
+            <strong style={{ fontSize: "0.8rem" }}>Upcoming App:</strong>
+            <span className="mx-2">
+              {uppcomingAppointment
+                ? `${uppcomingAppointment.doctor?.name || "N/A"} on ${new Date(
+                    uppcomingAppointment.appointmentDate
+                  ).toLocaleDateString()} at ${
+                    uppcomingAppointment.appointmentTime
+                  }`
+                : "No upcoming appointment"}
+            </span>
+          </div>
+        ) : null}
       </nav>
     </div>
   );

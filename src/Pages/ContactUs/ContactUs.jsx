@@ -24,6 +24,7 @@ import {
 import api from "../../Components/Action/Api.js";
 import { useToastr } from "../../Components/Toastr/ToastrProvider.jsx";
 import videoData from "../../Utils/VideosUrl.js";
+import { useNavigate } from "react-router-dom";
 
 const ContactUs = () => {
   const { customToast } = useToastr();
@@ -34,6 +35,7 @@ const ContactUs = () => {
     message: ""
   });
   const [errors, setErrors] = useState({});
+  const navigate = useNavigate();
 
   const fields = [
     {
@@ -114,8 +116,8 @@ const ContactUs = () => {
           response?.data?.message || "Your message has been sent successfully!",
         life: 3000
       });
-
       setFormData({ name: "", email: "", message: "" });
+      navigate("/");
     } catch (error) {
       customToast({
         severity: "error",
@@ -156,7 +158,7 @@ const ContactUs = () => {
         className="position-absolute top-0 start-0 w-100 h-100 object-fit-cover"
         style={{ zIndex: 0 }}
       >
-       <source src={videoData.DnaBackground} type="video/mp4" />
+        <source src={videoData.DnaBackground} type="video/mp4" />
       </video>
 
       {/* Overlay */}

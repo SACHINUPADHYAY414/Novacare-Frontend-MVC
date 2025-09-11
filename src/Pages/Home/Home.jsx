@@ -7,16 +7,14 @@ import {
   COMPANY_START,
   PLEASE_SELECT_DOCTOR,
   NO_DOCTORS_FOUND,
-  NOT_FOUND,
-  WARNING,
+  WARNING
 } from "../../Utils/strings";
 import Footer from "../../Components/Footer/Footer";
 import api from "../../Components/Action/Api";
 import { useToastr } from "../../Components/Toastr/ToastrProvider.jsx";
 import DoctorCard from "../../Components/DoctorCard/DoctorCard.jsx";
 import { Tooltip, Whisper, Button } from "rsuite";
-import videoData from "../../Utils/VideosUrl.js";
-import images from "../../Utils/ImagesData.js"
+import images, { landingBackground } from "../../Utils/ImagesData.js";
 
 const Home = ({ from = "" }) => {
   const { customToast } = useToastr();
@@ -89,7 +87,7 @@ const Home = ({ from = "" }) => {
       } catch (e) {
         setFetchDoctors([]);
         setSpecialties([]);
-        const errorMessage = e?.response?.data?.message || NOT_FOUND;
+        const errorMessage = e?.response?.data?.message || SERVER_ERROR;
         e.message ||
           customToast({
             severity: "error",
@@ -152,7 +150,7 @@ const Home = ({ from = "" }) => {
       if (error.response?.status === 404) {
         customToast({
           severity: "warn",
-          summary: NOT_FOUND,
+          summary: SERVER_ERROR,
           detail: NO_DOCTORS_FOUND,
           life: 3000,
           sticky: false,
@@ -184,27 +182,37 @@ const Home = ({ from = "" }) => {
     setCurrentPage((prev) => Math.min(prev + 1, totalPages));
   };
 
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentImageIndex(
+        (prevIndex) => (prevIndex + 1) % landingBackground.length
+      );
+    }, 5000);
+
+    return () => clearInterval(interval);
+  }, []);
+
   return (
     <div>
       <div
-        className="text-white text-center position-relative"
-        style={{ minHeight: "81vh", overflow: "hidden" }}
+        className="hero-section text-white text-center position-relative"
+        style={{
+          overflow: "hidden",
+          backgroundImage: `url("${landingBackground[currentImageIndex]}")`,
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+          backgroundRepeat: "no-repeat",
+          transition: "background-image 1s ease-in-out",
+          zIndex: 0,
+          minHeight: "81vh"
+        }}
       >
-        <video
-          autoPlay
-          muted
-          loop
-          playsInline
-          className="position-absolute top-0 start-0 w-100 h-100 object-fit-cover"
-          style={{ zIndex: 0 }}
-        > <source src={videoData.HeroBackground} type="video/mp4" />
-          Your browser does not support the video tag.
-        </video>
-
         <div
           className="position-absolute top-0 start-0 w-100 h-100"
           style={{
-            backgroundColor: "rgba(0, 0, 0, 0.3)",
+            backgroundColor: "rgba(0, 0, 0, 0.1)",
             zIndex: 1,
             pointerEvents: "none"
           }}
@@ -212,15 +220,23 @@ const Home = ({ from = "" }) => {
 
         <div
           className="container position-relative d-flex flex-column justify-content-center align-items-center text-white text-center"
-          style={{ zIndex: 1, minHeight: "81vh" }}
+          style={{ zIndex: 1, minHeight: "63vh" }}
         >
           <div className="row g-1 justify-content-center w-100">
-            <div className="col-12 col-lg-8">
-              <h2 className="fw-bold mb-3">Find the Right Doctor</h2>
-              <p className="lead mb-4 text-white">
+            <div className="col-12 col-lg-8 text-black">
+              <h5
+                className="display-3 fw-bold mb-3 text-white glow-text"
+                style={{
+                  letterSpacing: "2px",
+                  textShadow: "0 0 15px #fd6b6b"
+                }}
+              >
+                Find the Best Doctor
+              </h5>
+              <p className="lead mb-4 text-white fw-bold">
                 Search by doctor and specialty to book your appointment
               </p>
-              <div className="bg-white position-relative text-dark rounded shadow-lg p-4 pe-4">
+              <div className="bg-white rounded p-4 p-sm-3 p-md-4 pe-4 pe-sm-3 pe-md-4 position-relative">
                 {totalDoctors > 0 && showResults && (
                   <button
                     className="position-absolute top-0 end-0 translate-middle bg-transparent text-danger border-0 d-flex align-items-center justify-content-center"
@@ -416,7 +432,7 @@ const Home = ({ from = "" }) => {
       <div
         className="container-fluid py-5"
         style={{
-        backgroundImage: `url(${images.background1})`,
+          backgroundImage: `url(${images.background1})`,
           backgroundRepeat: "no-repeat",
           backgroundSize: "cover",
           backgroundColor: "#0074bc"

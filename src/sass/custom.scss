@@ -677,3 +677,9 @@ th.text-success {
 .custom-cancel-btn:hover {
   background-color: #d32f2f;
 }
+@media (max-width: 767.98px) {
+  .hero-section {
+    min-height: 60vh;
+    max-height: 80vh;
+  }
+}

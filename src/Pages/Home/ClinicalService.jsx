@@ -148,7 +148,7 @@ const ClinicalService = () => {
       href: "www.rgcirc.org/clinical-services/interventional-gestroentrology-services/"
     },
     {
-      image: images.nuclearMedicine2,
+      image: images.nuclearMedicine,
       name: "Nuclear Medicine Services",
       para: "The department of Nuclear Medicine provides The {COMPANY_NAME}",
       href: "/clinical-services/nuclear-medicine-services/"

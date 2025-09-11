@@ -4,7 +4,12 @@ import api from "../../../Components/Action/Api";
 import { FaChevronLeft, FaChevronRight, FaEdit, FaTrash } from "react-icons/fa";
 import { OverlayTrigger, Tooltip } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
-import { FALSE, NOT_FOUND, OPPS_MSG } from "../../../Utils/strings";
+import {
+  FALSE,
+  NOT_FOUND,
+  OPPS_MSG,
+  SERVER_ERROR
+} from "../../../Utils/strings";
 import CustomInputField from "../../../Components/CustomInput/CustomInputField";
 import { RiInformation2Line } from "react-icons/ri";
 import TooltipWrapper from "../../../Components/Tooltip/TooltipWrapper";
@@ -36,7 +41,7 @@ const Doctors = () => {
       setSpecialties(res.data || []);
     } catch (e) {
       setSpecialties([]);
-      const errorMessage = e?.response?.data?.message || NOT_FOUND;
+      const errorMessage = e?.response?.data?.message || SERVER_ERROR;
       customToast({
         severity: "error",
         summary: OPPS_MSG,
@@ -249,7 +254,7 @@ const Doctors = () => {
 
   return (
     <div className="my-2">
-      <div className="d-flex justify-content-start align-items-center mb-1 gap-2">
+      <div className="d-flex justify-content-start align-items-center mb-2 gap-2">
         <h4 className="text-muted mb-0">Doctors List</h4>
         <Link
           to="/dashboard/add-doctor"
@@ -266,7 +271,7 @@ const Doctors = () => {
             {formFields.map((field) => renderField(field))}
 
             <div
-              className="text- col-12 col-md-2 mt-4"
+              className="col-12 col-md-2 mt-4"
               style={{ paddingTop: "0.9rem" }}
             >
               <button
@@ -303,9 +308,9 @@ const Doctors = () => {
           </thead>
           <tbody>
             {currentDoctors.length > 0 ? (
-              currentDoctors.map((doc) => (
+              currentDoctors.map((doc, idx) => (
                 <tr key={doc.id}>
-                  <td>{doc.id}</td>
+                  <td>{indexOfFirstDoctor + idx + 1}</td>
                   <td>{doc.name}</td>
                   <td>
                     {doc.specialization?.name || doc.specializationName || "-"}

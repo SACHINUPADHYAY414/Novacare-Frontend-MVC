@@ -16,7 +16,7 @@ import {
   OPPS_MSG,
   SUCCESS_MSG,
   ERROR,
-  NOT_FOUND,
+  SERVER_ERROR,
   OPPS_ERROR,
   ENTER_VALID_DATA,
   ERROR_VALIDATE_EMAIL,
@@ -46,6 +46,16 @@ const Users = () => {
   const { customToast } = useToastr();
   const token = useSelector((state) => state.auth.token);
   const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
+  const [searchFields, setSearchFields] = useState({
+    email: "",
+    mobile: "",
+    role: ""
+  });
+  const [activeFilters, setActiveFilters] = useState({
+    email: "",
+    mobile: "",
+    role: ""
+  });
 
   const roleOptions = [
     { id: "ADMIN", name: "ADMIN" },
@@ -62,7 +72,7 @@ const Users = () => {
       customToast({
         severity: ERROR,
         summary: OPPS_MSG,
-        detail: err.response?.data?.message || NOT_FOUND,
+        detail: err.response?.data?.message || SERVER_ERROR,
         life: 4000
       });
     }
@@ -262,15 +272,30 @@ const Users = () => {
     );
   };
 
-  // Pagination
+  const filteredUsers = users.filter((user) => {
+    const emailMatch = user.email
+      .toLowerCase()
+      .includes(activeFilters.email.toLowerCase());
+
+    const mobileMatch = user.mobileNumber
+      .toLowerCase()
+      .includes(activeFilters.mobile.toLowerCase());
+
+    const roleMatch = user.role
+      .toLowerCase()
+      .includes(activeFilters.role.toLowerCase());
+
+    return emailMatch && mobileMatch && roleMatch;
+  });
+
   const indexOfLastUser = currentPage * usersPerPage;
   const indexOfFirstUser = indexOfLastUser - usersPerPage;
-  const currentUsers = users.slice(indexOfFirstUser, indexOfLastUser);
-  const totalPages = Math.ceil(users.length / usersPerPage);
+  const currentUsers = filteredUsers.slice(indexOfFirstUser, indexOfLastUser);
+  const totalPages = Math.ceil(filteredUsers.length / usersPerPage);
 
   return (
     <div className="my-2">
-      <div className="d-flex justify-content-start align-items-center mb-1 gap-2">
+      <div className="d-flex justify-content-start align-items-center mb-2 gap-2">
         <h4 className="text-muted mb-0">Users List</h4>
         <Link
           to="/dashboard/add-user"
@@ -278,6 +303,91 @@ const Users = () => {
         >
           + Add
         </Link>
+      </div>
+
+      {/* search card */}
+      <div className="card rounded mb-2">
+        <div className="card-body">
+          <div className="row g-2 align-items-center">
+            <div className="col-12 col-md-2">
+              <label htmlFor="email" className="form-label">
+                Email
+              </label>
+              <input
+                type="text"
+                className="form-control"
+                placeholder="Search by Email"
+                value={searchFields.email}
+                onChange={(e) =>
+                  setSearchFields((prev) => ({
+                    ...prev,
+                    email: e.target.value
+                  }))
+                }
+              />
+            </div>
+            <div className="col-12 col-md-2">
+              <label htmlFor="mobile" className="form-label">
+                Mobile No
+              </label>
+              <input
+                type="tel"
+                className="form-control"
+                placeholder="Search by Mobile Number"
+                value={searchFields.mobile}
+                onChange={(e) =>
+                  setSearchFields((prev) => ({
+                    ...prev,
+                    mobile: e.target.value
+                  }))
+                }
+              />
+            </div>
+            <div className="col-12 col-md-2">
+              <label htmlFor="role" className="form-label">
+                Role
+              </label>
+              <select
+                className="form-select"
+                value={searchFields.role}
+                onChange={(e) =>
+                  setSearchFields((prev) => ({ ...prev, role: e.target.value }))
+                }
+              >
+                <option value="">All Roles</option>
+                <option value="ADMIN">ADMIN</option>
+                <option value="USER">USER</option>
+              </select>
+            </div>
+            <div
+              className="col-12 col-md-2 mt-4"
+              style={{ paddingTop: "0.9rem" }}
+            >
+              <button
+                className="btn btn-primary btn-sm me-2"
+                style={{ padding: "0.43rem", marginBottom: "0.2rem" }}
+                onClick={() => {
+                  setActiveFilters(searchFields);
+                  setCurrentPage(1);
+                }}
+              >
+                Search
+              </button>
+
+              <button
+                className="btn btn-sm btn-danger"
+                style={{ padding: "0.43rem", marginBottom: "0.2rem" }}
+                onClick={() => {
+                  setSearchFields({ email: "", mobile: "", role: "" });
+                  setActiveFilters({ email: "", mobile: "", role: "" });
+                  setCurrentPage(1);
+                }}
+              >
+                Clear
+              </button>
+            </div>
+          </div>
+        </div>
       </div>
 
       <div className="w-100">

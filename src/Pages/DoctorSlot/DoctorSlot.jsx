@@ -17,7 +17,7 @@ import {
   ERROR,
   WARNING,
   SUCCESS_MSG,
-  NOT_FOUND,
+  SERVER_ERROR,
   COMPANY_LOCATION
 } from "../../Utils/strings";
 import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
@@ -77,7 +77,7 @@ const DoctorSlot = () => {
         setFetchDoctors(respDoctor.data || []);
         setSpecialties(resSpecialties.data || []);
       } catch (e) {
-        const errorMessage = e?.response?.data?.message || NOT_FOUND;
+        const errorMessage = e?.response?.data?.message || SERVER_ERROR;
         e.message ||
           customToast({
             severity: "error",
@@ -115,6 +115,12 @@ const DoctorSlot = () => {
 
   const formatTime = (date) => {
     return date.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
+  };
+
+  const showDate = (dateStr) => {
+    if (!dateStr) return "";
+    const options = { day: "2-digit", month: "short", year: "numeric" };
+    return new Date(dateStr).toLocaleDateString("en-US", options);
   };
 
   const generateTimeSlots = (
@@ -463,11 +469,16 @@ const DoctorSlot = () => {
               Book Appointment
             </h4>
 
-            <div className="d-flex mb-2 flex-row flex-md-row align-items-center justify-content-between gap-2">
+            <div className="d-flex mb-2 fw-semibold flex-row flex-md-row align-items-center justify-content-between gap-2">
               {/* Search group */}
+              <span>
+                Date:{" "}
+                {selectedDate ? showDate(selectedDate) : "No date selected"}
+              </span>
               <div
                 className="d-flex align-items-center gap-2"
                 onClick={openSearch}
+                style={{ cursor: "pointer" }}
               >
                 <FiSearch className="text-primary" />
                 <span>Search</span>

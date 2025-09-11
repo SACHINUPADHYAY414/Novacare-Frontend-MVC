@@ -10,7 +10,7 @@ import {
 import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
 import CustomInputField from "../../../Components/CustomInput/CustomInputField";
 import {
-  NOT_FOUND,
+  SERVER_ERROR,
   OPPS_MSG,
   SUCCESS_MSG,
   ERROR,
@@ -56,7 +56,7 @@ const Specialty = () => {
       setSpecialties(res.data || []);
     } catch (e) {
       setSpecialties([]);
-      const errorMessage = e?.response?.data?.message || NOT_FOUND;
+      const errorMessage = e?.response?.data?.message || SERVER_ERROR;
       customToast({
         severity: "error",
         summary: OPPS_MSG,
@@ -329,7 +329,7 @@ const Specialty = () => {
         <h4 className="text-muted mb-0">Specialty List</h4>
         {!addingNew && (
           <span
-            className="text-primary mt-1 fw-bold"
+            className="text-primary mt-1 fw-bold text-decoration-none"
             style={{ cursor: "pointer" }}
             onClick={() => setAddingNew(true)}
           >
@@ -360,7 +360,7 @@ const Specialty = () => {
               </select>
             </div>{" "}
             <div
-              className="text- col-12 col-md-2 mt-4"
+              className="col-12 col-md-2 mt-4"
               style={{ paddingTop: "0.9rem" }}
             >
               <button
