@@ -10,6 +10,7 @@ import { COMPANY_NAME } from "../../Utils/strings";
 import { FaArrowLeft, FaArrowRight } from "react-icons/fa6";
 import UnderLine from "../../Components/UnderLine/UnderLine";
 import images from "../../Utils/ImagesData";
+import Ellipses from "../../Components/Ellipses/Ellipses";
 
 const ClinicalService = () => {
   const [currentServiceId, setCurrentServiceId] = useState(1);
@@ -254,20 +255,20 @@ const ClinicalService = () => {
           ))}
       </div>
 
-      <div className="container py-5">
+      <div className="container py-3">
         <h2 className="fw-bold text-secondary text-center fs-2 mb-1">
           Other <span className="text-danger">Services</span>
         </h2>
 
         <UnderLine />
 
-        <div className="position-relative justify-content-center">
+        {/* Desktop Scroll Buttons */}
+        <div className="position-relative d-none d-lg-block">
           <button
             type="button"
             onClick={scrollLeft}
-            className="btn position-absolute top-50 translate-middle-y d-none d-sm-flex d-flex justify-content-center align-items-center"
+            className="btn position-absolute top-50 start-0 translate-middle-y d-flex justify-content-center align-items-center"
             style={{
-              left: -20,
               zIndex: 10,
               width: "40px",
               height: "40px",
@@ -283,9 +284,8 @@ const ClinicalService = () => {
           <button
             type="button"
             onClick={scrollRight}
-            className="btn position-absolute top-50 translate-middle-y d-none d-sm-flex d-flex justify-content-center align-items-center"
+            className="btn position-absolute top-50 end-0 translate-middle-y d-flex justify-content-center align-items-center"
             style={{
-              right: -20,
               zIndex: 10,
               width: "40px",
               height: "40px",
@@ -298,21 +298,22 @@ const ClinicalService = () => {
             <FaArrowRight className="fs-5" />
           </button>
 
+          {/* Scrollable Row on Desktop */}
           <div
-            className="d-flex flex-column flex-sm-row overflow-auto px-0 px-sm-2"
+            className="d-none d-lg-flex overflow-auto px-2"
             ref={sliderRef}
             style={{
-              scrollBehavior: "smooth",
               gap: "1rem",
-              scrollbarWidth: "none",
-              msOverflowStyle: "none"
+              scrollBehavior: "smooth",
+              scrollbarWidth: "none", // Firefox
+              msOverflowStyle: "none" // IE
             }}
           >
             {otherServices.map((service, index) => (
               <div
                 key={index}
-                className="card border-primary text-center p-3 flex-shrink-0 col-12 col-sm-6 col-md-3 col-lg-between-3-4"
-                style={{ maxWidth: "100%", minHeight: "200px" }}
+                className="card border-primary text-center p-3 flex-shrink-0"
+                style={{ width: "250px", minHeight: "200px" }}
               >
                 <img
                   src={service.image}
@@ -324,28 +325,74 @@ const ClinicalService = () => {
                     objectFit: "contain"
                   }}
                 />
-                <div
-                  className="card-body"
-                  style={{
-                    whiteSpace: "normal",
-                    wordWrap: "break-word",
-                    overflowWrap: "anywhere"
-                  }}
-                >
-                  <h6 className="card-title fw-semibold">{service.name}</h6>
-                  <p className="card-text text-muted">
-                    {" "}
-                    {service.para.replace("{COMPANY_NAME}", COMPANY_NAME)}
+                <div className="card-body pb-2">
+                  <h6 className="card-title fw-semibold">
+                    <Ellipses
+                      text={service.name}
+                      maxChars={35}
+                      className="text-muted"
+                    />
+                  </h6>
+                  <p
+                    className="card-text text-muted justify-content-center align-items-center"
+                    // style={{ textAlign: "justify" }}
+                  >
+                    <Ellipses
+                      text={service.para.replace(
+                        "{COMPANY_NAME}",
+                        COMPANY_NAME
+                      )}
+                      maxChars={180}
+                      className="text-muted"
+                    />
                   </p>
                 </div>
-                <div>
-                  <a href={service.href} className="btn btn-danger btn-sm">
+                <div className="mx-auto">
+                  <a
+                    href={service.href}
+                    className="btn btn-danger btn-sm w-100"
+                  >
                     Read More
                   </a>
                 </div>
               </div>
             ))}
           </div>
+        </div>
+
+        {/* Stacked Cards on Mobile/Tablet */}
+        <div className="row g-3 d-lg-none mt-3">
+          {otherServices.map((service, index) => (
+            <div key={index} className="col-12 col-sm-6 col-md-4">
+              <div className="card border-primary text-center p-3 h-100">
+                <img
+                  src={service.image}
+                  alt={`Service ${index + 1}`}
+                  className="card-img-top mx-auto"
+                  style={{
+                    height: "60px",
+                    width: "64px",
+                    objectFit: "contain"
+                  }}
+                />
+                <div className="card-body">
+                  <h6 className="card-title fw-semibold">
+                    <Ellipses
+                      text={service.name}
+                      maxChars={20}
+                      className="text-muted"
+                    />
+                  </h6>
+                  <p className="card-text text-muted">
+                    {service.para.replace("{COMPANY_NAME}", COMPANY_NAME)}
+                  </p>
+                </div>
+                <a href={service.href} className="btn btn-danger btn-sm">
+                  Read More
+                </a>
+              </div>
+            </div>
+          ))}
         </div>
       </div>
     </section>

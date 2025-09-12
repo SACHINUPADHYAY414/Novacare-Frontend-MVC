@@ -17,6 +17,8 @@ import { Tooltip, Whisper, Button } from "rsuite";
 import images, { blogs, landingBackground } from "../../Utils/ImagesData.js";
 import UnderLine from "../../Components/UnderLine/UnderLine.jsx";
 import { FiArrowRight } from "react-icons/fi";
+import Ellipses from "../../Components/Ellipses/Ellipses.jsx";
+import { getDoctorProfileImage } from "../../Utils/DoctorProfile.js";
 
 const Home = ({ from = "" }) => {
   const { customToast } = useToastr();
@@ -26,6 +28,8 @@ const Home = ({ from = "" }) => {
   const [specialties, setSpecialties] = useState([]);
   const [doctors, setDoctors] = useState([]);
   const companyStartDate = new Date(COMPANY_START);
+  const [isHovered, setIsHovered] = useState(false);
+
   const currentDate = new Date();
   let yearlyExperience =
     currentDate.getFullYear() - companyStartDate.getFullYear();
@@ -521,6 +525,115 @@ const Home = ({ from = "" }) => {
       {/* Other sections */}
       <div>
         <ClinicalService />
+        <div className="container text-center">
+          <div className="d-flex justify-content-between align-items-center mb-2">
+            <h2 className="fw-bold text-secondary fs-2 mb-0 mx-auto text-center">
+              Our <span className="text-danger">Specialist</span>
+              <UnderLine />
+            </h2>
+            <a
+              href="find-doctors"
+              className="text-decoration-none text-danger fw-bolder text-decoration-underline"
+            >
+              View All
+            </a>
+          </div>
+
+          <div className="row gx-3 gy-5 py-3 pb-2">
+            {fetchDoctors.slice(0, 12).map((doctor) => {
+              const isHovere = isHovered === doctor.id;
+
+              return (
+                <div
+                  key={doctor.id}
+                  className="col-12 col-sm-6 col-md-4 col-lg-3 col-xl-2 pt-2"
+                >
+                  <div
+                    className="card image-card text-center p-3 pb-0 d-flex flex-column"
+                    style={{
+                      height: "160px",
+                      boxShadow: isHovere
+                        ? "0 4px 15px rgba(0,0,0,0.2)"
+                        : "none",
+                      transition: "box-shadow 0.3s ease, transform 0.3s ease",
+                      transform: isHovere
+                        ? "translateY(-5px)"
+                        : "translateY(0)",
+                      cursor: "pointer"
+                    }}
+                    onMouseEnter={() => setIsHovered(doctor.id)}
+                    onMouseLeave={() => setIsHovered(null)}
+                  >
+                    <div
+                      className="rounded-circle mx-auto d-block"
+                      style={{
+                        width: "80px",
+                        height: "80px",
+                        marginTop: "-60px",
+                        borderRadius: "50%",
+                        backgroundImage: `url("${images.background3}")`,
+                        backgroundPosition: "center",
+                        backgroundRepeat: "no-repeat",
+                        display: "flex",
+                        justifyContent: "center",
+                        alignItems: "center",
+                        overflow: "hidden"
+                      }}
+                    >
+                      <img
+                        src={getDoctorProfileImage(doctor)}
+                        alt={`${doctor.name || "Doctor"} profile`}
+                        style={{
+                          width: "100%",
+                          height: "100%",
+                          objectFit: "cover",
+                          borderRadius: "50%",
+                          transform: "scale(1.15)",
+                          backgroundColor: "transparent",
+                          display: "block"
+                        }}
+                        onError={(e) => {
+                          e.target.src = images.defaultDoctorImage;
+                        }}
+                      />
+                    </div>
+
+                    <div className="card-body d-flex flex-column flex-grow-1 text-nowrap">
+                      <div className="text-center fw-semibold">
+                        <Ellipses
+                          text={doctor.name}
+                          maxChars={20}
+                          className="text-muted"
+                        />
+                      </div>
+                      <div className="text-center">
+                        <Ellipses
+                          text={
+                            doctor.specializationName ||
+                            doctor.specialtyName ||
+                            ""
+                          }
+                          maxChars={20}
+                          className="text-muted"
+                        />
+                      </div>
+
+                      <div className="mt-auto mx-auto pt-2">
+                        <a
+                          href="#"
+                          className="btn btn-outline-danger btn-sm w-100"
+                        >
+                          View Profile
+                        </a>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+
         {/* Blogs */}
         <div className="container text-center">
           <div className="d-flex justify-content-between align-items-center">

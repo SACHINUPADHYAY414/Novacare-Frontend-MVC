@@ -64,8 +64,9 @@ export const landingBackground = [
   "https://www.trootech.com/backend/uploads/A_Hospital_Management_System_for_Efficient_Handling_of_Internal_Processes_046a5f4838.jpg",
   "https://t4.ftcdn.net/jpg/02/70/36/25/360_F_270362596_kIpf2k7Q5PBjR5wWTp5qentfEeQnm5dM.jpg",
   "https://www.sparshhospital.com/wp-content/uploads/2023/07/General-Medicine-Banner-Desktop.jpg",
-  "https://e0.pxfuel.com/wallpapers/150/633/desktop-wallpaper-amazing-ultra-doctors-background-doctor-background-doctor-medicine.jpg",
-  "https://res.cloudinary.com/dt9kb92su/image/upload/v1757612945/Ethics-Mobile_bjbypq.jpg"
+  // "https://e0.pxfuel.com/wallpapers/150/633/desktop-wallpaper-amazing-ultra-doctors-background-doctor-background-doctor-medicine.jpg",
+  "https://res.cloudinary.com/dt9kb92su/image/upload/v1757612945/Ethics-Mobile_bjbypq.jpg",
+  "https://static.vecteezy.com/system/resources/previews/017/398/144/non_2x/healthcare-services-annual-health-checkup-heart-rate-pulse-measurement-pills-antibiotics-dna-diseases-genes-illustration-on-light-blue-hexagonal-background-health-and-medicine-concept-vector.jpg"
 ];
 
 

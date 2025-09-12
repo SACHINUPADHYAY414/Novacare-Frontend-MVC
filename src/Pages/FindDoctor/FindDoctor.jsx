@@ -7,6 +7,7 @@ import { getDoctorProfileImage } from "../../Utils/DoctorProfile";
 import Ellipses from "../../Components/Ellipses/Ellipses";
 import Footer from "../../Components/Footer/Footer";
 import images from "../../Utils/ImagesData";
+import { SERVER_ERROR } from "../../Utils/strings";
 
 const FindDoctor = () => {
   const { customToast } = useToastr();
@@ -20,7 +21,7 @@ const FindDoctor = () => {
       customToast({
         severity: "error",
         summary: "Oops!",
-        detail: error.response?.data?.message || "Failed to fetch doctors.",
+        detail: error.response?.data?.message || SERVER_ERROR,
         life: 3000
       });
     }
@@ -69,7 +70,7 @@ const FindDoctor = () => {
         >
           <img
             src={getDoctorProfileImage(matchedDoctor)}
-            alt={`${doctor.doctorName || "Doctor"} profile`} // ✅ FIXED
+            alt={`${doctor.doctorName || "Doctor"} profile`}
             style={{
               width: "100%",
               height: "100%",
