@@ -1,6 +1,5 @@
 import React, { useEffect } from "react";
 import { Routes, Route, useLocation } from "react-router-dom";
-import { useSelector } from "react-redux";
 import Layout from "./Components/Layout/Layout";
 import Home from "./Pages/Home/Home.jsx";
 import Login from "./Pages/Login/Login";
@@ -13,7 +12,7 @@ import PageNotFound from "./Pages/PageNotFound/PageNotFound.jsx";
 import ProtectedRoute from "./ProtectRoute.jsx/ProtectRoute";
 import ResetPassword from "./Pages/ResetPassword/ResetPassword.jsx";
 import Blog from "./Pages/Blogs/Blogs.jsx";
-
+import FindDoctor from "./Pages/FindDoctor/FindDoctor.jsx";
 
 // Admin
 import Dashboard from "./Admin/Layout/Dashboard.jsx";
@@ -28,61 +27,80 @@ import DutyRoster from "./Admin/Pages/DutyRoster/DutyRoster.jsx";
 import AddDutyRoster from "./Admin/Pages/DutyRoster/AddDutyRoster.jsx";
 import UsersEnquary from "./Admin/Pages/UsersEnquary/UsersEnquary.jsx";
 import AllAppointments from "./Admin/Pages/Appointments/Appointments.jsx";
+import AboutUs from "./Pages/AboutUs/AboutUs.jsx";
 
 const App = () => {
   const { pathname } = useLocation();
-  const token = useSelector((state) => state.auth.token);
 
   useEffect(() => {
     window.scrollTo(0, 0);
+
+    const handleContextMenu = (e) => {
+      e.preventDefault();
+    };
+
+    const handleCopy = (e) => {
+      e.preventDefault();
+    };
+
+    document.addEventListener("contextmenu", handleContextMenu);
+    document.addEventListener("copy", handleCopy);
+
+    return () => {
+      document.removeEventListener("contextmenu", handleContextMenu);
+      document.removeEventListener("copy", handleCopy);
+    };
   }, [pathname]);
 
   return (
-    <Routes>
-      <Route path="/" element={<Layout />}>
-        <Route index element={<Home />} />
-        <Route path="login" element={<Login />} />
-        <Route path="register" element={<Register />} />
-        <Route path="validate-otp" element={<ValidateOtp />} />
-        <Route path="doctor-slot" element={<DoctorSlot />} />
-        <Route path="contact-us" element={<ContactUs />} />
-        <Route path="forgot-password" element={<ResetPassword />} />
-        <Route path="blog" element={<Blog />} />
+    <div style={{ userSelect: "none" }}>
+      <Routes>
+        <Route path="/" element={<Layout />}>
+          <Route index element={<Home />} />
+          <Route path="login" element={<Login />} />
+          <Route path="register" element={<Register />} />
+          <Route path="validate-otp" element={<ValidateOtp />} />
+          <Route path="doctor-slot" element={<DoctorSlot />} />
+          <Route path="contact-us" element={<ContactUs />} />
+          <Route path="forgot-password" element={<ResetPassword />} />
+          <Route path="blog" element={<Blog />} />
+          <Route path="find-doctors" element={<FindDoctor />} />
+          <Route path="about-us" element={<AboutUs />} />
+          
+          <Route
+            path="appointments"
+            element={
+              <ProtectedRoute>
+                <Appointments />
+              </ProtectedRoute>
+            }
+          />
+          <Route path="*" element={<PageNotFound />} />
+        </Route>
 
+        {/* Admin Dashboard */}
         <Route
-          path="appointments"
+          path="dashboard"
           element={
-            <ProtectedRoute>
-              <Appointments />
+            <ProtectedRoute role="ADMIN">
+              <Dashboard />
             </ProtectedRoute>
           }
-        />
-
-        <Route path="*" element={<PageNotFound />} />
-      </Route>
-
-      {/* Admin Dashboard */}
-      <Route
-        path="dashboard"
-        element={
-          <ProtectedRoute role="ADMIN">
-            <Dashboard />
-          </ProtectedRoute>
-        }
-      >
-        <Route index element={<HomeDashboard />} />
-        <Route path="users" element={<Users />} />
-        <Route path="doctors" element={<Doctors />} />
-        <Route path="add-user" element={<AddUser />} />
-        <Route path="specialty" element={<Specialt />} />
-        <Route path="add-doctor" element={<AddDoctor />} />
-        <Route path="edit-doctor" element={<EditDoctor />} />
-        <Route path="dutyRoster" element={<DutyRoster />} />
-        <Route path="add-duty-roster" element={<AddDutyRoster />} />
-        <Route path="enquary" element={<UsersEnquary/>}/>
-        <Route path="appointments-list" element={<AllAppointments/>}/>
-      </Route>
-    </Routes>
+        >
+          <Route index element={<HomeDashboard />} />
+          <Route path="users" element={<Users />} />
+          <Route path="doctors" element={<Doctors />} />
+          <Route path="add-user" element={<AddUser />} />
+          <Route path="specialty" element={<Specialt />} />
+          <Route path="add-doctor" element={<AddDoctor />} />
+          <Route path="edit-doctor" element={<EditDoctor />} />
+          <Route path="dutyRoster" element={<DutyRoster />} />
+          <Route path="add-duty-roster" element={<AddDutyRoster />} />
+          <Route path="enquary" element={<UsersEnquary />} />
+          <Route path="appointments-list" element={<AllAppointments />} />
+        </Route>
+      </Routes>
+    </div>
   );
 };
 

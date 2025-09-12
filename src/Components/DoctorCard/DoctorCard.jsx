@@ -3,6 +3,7 @@ import { useDispatch } from "react-redux";
 import { setSelectedDoctor } from "../../Redux/doctorSlice";
 import Ellipses from "../Ellipses/Ellipses";
 import { getDoctorProfileImage } from "../../Utils/DoctorProfile";
+import images from "../../Utils/ImagesData";
 
 const DoctorCard = ({ doctor }) => {
   const dispatch = useDispatch();
@@ -30,33 +31,55 @@ const DoctorCard = ({ doctor }) => {
     <button
       type="button"
       onClick={handleClick}
-      className="h-100 d-flex flex-column text-decoration-none text-dark border-0 bg-transparent p-0"
+      className="h-100 d-flex p-0 flex-column text-decoration-none text-dark border-0 bg-transparent"
       aria-label={`View slots and book appointment for Dr. ${name}`}
     >
-      <img
-        src={getDoctorProfileImage(doctor)}
-        alt={name}
-        className="img-fluid"
+      <div
+        className="mx-auto d-block doctor-profile-img"
         style={{
+          backgroundImage: `url("${images.background3}")`,
+          // backgroundPosition: "center",
+          backgroundRepeat: "no-repeat",
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          overflow: "hidden",
           width: "100%",
-          height: "auto",
-          maxHeight: "220px",
-          objectFit: "cover",
-          display: "block",
-          borderRadius: "0"
+          minWidth: "100%",
+          height: "auto"
         }}
-      />
-
-      <div className="card-body pb-0 pt-0 my-1 d-flex flex-column flex-grow-1 overflow-hidden border-top">
-        <h6 className="mt-1">{name}</h6>
-        <div className="text-center mt-auto">
-          <span className="speciality-heading">
-            <Ellipses
-              text={qualification}
-              maxChars={50}
+      >
+        <img
+          src={getDoctorProfileImage(doctor)}
+          alt={`${doctor.doctorName || "Doctor"} profile`}
+          className="img-fluid"
+          style={{
+            width: "100%",
+            height: "auto",
+            minHeight: "200px",
+            objectFit: "cover",
+            display: "block",
+            backgroundColor: "transparent"
+          }}
+          onError={(e) => {
+            e.target.src = images.defaultDoctorImage;
+          }}
+        />
+      </div>
+      <div className="card-body pb-2 pt-0 d-flex flex-column flex-grow-1 overflow-hidden border-top">
+        <h6 className="mt-1">
+           <Ellipses
+              text={name}
+              maxChars={20}
               className="speciality-heading"
             />
-          </span>
+        </h6>
+        <div className="text-center mt-auto">
+          <Ellipses
+              text={qualification}
+              maxChars={20}
+              className="speciality-heading"
+            />
         </div>
       </div>
     </button>

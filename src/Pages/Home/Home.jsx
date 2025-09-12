@@ -14,7 +14,9 @@ import api from "../../Components/Action/Api";
 import { useToastr } from "../../Components/Toastr/ToastrProvider.jsx";
 import DoctorCard from "../../Components/DoctorCard/DoctorCard.jsx";
 import { Tooltip, Whisper, Button } from "rsuite";
-import images, { landingBackground } from "../../Utils/ImagesData.js";
+import images, { blogs, landingBackground } from "../../Utils/ImagesData.js";
+import UnderLine from "../../Components/UnderLine/UnderLine.jsx";
+import { FiArrowRight } from "react-icons/fi";
 
 const Home = ({ from = "" }) => {
   const { customToast } = useToastr();
@@ -23,7 +25,6 @@ const Home = ({ from = "" }) => {
   const [specialty, setSpecialty] = useState("");
   const [specialties, setSpecialties] = useState([]);
   const [doctors, setDoctors] = useState([]);
-
   const companyStartDate = new Date(COMPANY_START);
   const currentDate = new Date();
   let yearlyExperience =
@@ -345,7 +346,7 @@ const Home = ({ from = "" }) => {
               {totalDoctors > 0 && showResults && (
                 <div className="my-1 card">
                   <>
-                    <div className="row g-1">
+                    <div className="row g-1 mx-2 my-1 pb-0">
                       {paginatedDoctors.map((doc) => {
                         const matchedDoctor = fetchDoctors.find(
                           (d) => d.id === doc.doctorId
@@ -369,8 +370,8 @@ const Home = ({ from = "" }) => {
                       })}
 
                       {/* Pagination Controls */}
-                      <div className="row ">
-                        <div className="col-12 d-flex justify-content-center gap-3 mb-2">
+                      <div className="row pb-0">
+                        <div className="col-12 d-flex justify-content-center gap-3">
                           <Whisper
                             placement="top"
                             trigger="hover"
@@ -416,7 +417,7 @@ const Home = ({ from = "" }) => {
                           </Whisper>
                         </div>
                       </div>
-                      <div className="text-end text-muted">
+                      <div className="text-end text-muted mt-0 pt-0=">
                         Found {totalDoctors} doctor{totalDoctors > 1 ? "s" : ""}
                       </div>
                     </div>
@@ -482,7 +483,12 @@ const Home = ({ from = "" }) => {
                 </li>
               </ul>
 
-              <a href="#" className="btn btn-danger px-4 py-2 mt-3">
+              <a
+                href="#"
+                className="btn btn-danger mt-2 mx-4"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
                 Read More
               </a>
             </div>
@@ -515,6 +521,54 @@ const Home = ({ from = "" }) => {
       {/* Other sections */}
       <div>
         <ClinicalService />
+        {/* Blogs */}
+        <div className="container text-center">
+          <div className="d-flex justify-content-between align-items-center">
+            <h2 className="fw-bold text-secondary fs-2 mb-0 mx-auto text-center">
+              Treatment <span className="text-danger">Services</span>
+              <UnderLine />
+            </h2>
+            <a
+              href="blog"
+              className="text-decoration-none text-danger fw-bolder text-decoration-underline"
+            >
+              View All
+            </a>
+          </div>
+
+          <div className="row">
+            {blogs.slice(0, 3).map((blog, index) => (
+              <div
+                className="col-12 col-md-4 mb-4"
+                style={{ cursor: "pointer" }}
+                key={blog.id || index}
+              >
+                <div className="card h-100">
+                  <img
+                    src={blog.image}
+                    className="card-img-top"
+                    alt={blog.title}
+                    style={{ height: "180px", objectFit: "cover" }}
+                  />
+                  <div className="card-body">
+                    <h6 className="card-title fw-bold">{blog.title}</h6>
+                    <p className="card-text text-muted small mb-2">
+                      {blog.description}
+                    </p>
+                    <a
+                      href="#"
+                      className="text-decoration-none fw-bold d-flex align-items-center justify-content-center"
+                    >
+                      <FiArrowRight size={20} />
+                      Read more
+                    </a>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+
         <Footer />
       </div>
     </div>

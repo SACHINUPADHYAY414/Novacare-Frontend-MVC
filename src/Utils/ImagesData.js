@@ -41,7 +41,7 @@ const images = {
   otpImage:
     "https://www.rgcirc.org/wp-content/uploads/2023/11/INTERVENTIONAL-GASTROENTEROLOGY-SERVICES.png",
   maleImage:
-    "https://res.cloudinary.com/dt9kb92su/image/upload/v1756985715/Men_fd6afd.jpg",
+    "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRVT_T6vEafQxo666kRhAtHG3fDbs9DHUouLQ&s",
   femaleImage:
     "https://res.cloudinary.com/dt9kb92su/image/upload/v1756985715/Female_osrp2e.jpg",
   labTransfusion:
@@ -64,5 +64,84 @@ export const landingBackground = [
   "https://www.trootech.com/backend/uploads/A_Hospital_Management_System_for_Efficient_Handling_of_Internal_Processes_046a5f4838.jpg",
   "https://t4.ftcdn.net/jpg/02/70/36/25/360_F_270362596_kIpf2k7Q5PBjR5wWTp5qentfEeQnm5dM.jpg",
   "https://www.sparshhospital.com/wp-content/uploads/2023/07/General-Medicine-Banner-Desktop.jpg",
-  "https://e0.pxfuel.com/wallpapers/150/633/desktop-wallpaper-amazing-ultra-doctors-background-doctor-background-doctor-medicine.jpg"
+  "https://e0.pxfuel.com/wallpapers/150/633/desktop-wallpaper-amazing-ultra-doctors-background-doctor-background-doctor-medicine.jpg",
+  "https://res.cloudinary.com/dt9kb92su/image/upload/v1757612945/Ethics-Mobile_bjbypq.jpg"
+];
+
+
+export const blogs = [
+  {
+    id: 1,
+    title: "Joint Pain (Arthralgia): Common Causes and Treatment Options",
+    description:
+      "Joint pain, medically known as 'arthralgia', can manifest in...",
+    image:
+      "https://max-website20-images.s3.ap-south-1.amazonaws.com/medium_Joint_Pain_Arthralgia_a6b612c32e.jpg"
+  },
+  {
+    id: 2,
+    title: "World Suicide Prevention Day 2025: Creating Hope Through Action",
+    description:
+      "Suicide is a topic many people avoid speaking about, often...",
+    image:
+      "https://max-website20-images.s3.ap-south-1.amazonaws.com/medium_Suicide_b5a25c92d3.jpg"
+  },
+  {
+    id: 3,
+    title: "Deviated Nasal Septum: When Does It Need Surgery?",
+    description:
+      "Breathing freely is something most of us take for granted, ...",
+    image:
+      "https://max-website20-images.s3.ap-south-1.amazonaws.com/medium_Deviated_Nasal_Septum_2fe6d85c6c.jpg"
+  },
+  {
+    id: 4,
+    title:
+      "Living with Lymphoma: Diagnosis, Treatment, and Hope Through Immunotherapy",
+    description:
+      "Lymphoma is a type of blood cancer that develops in the lymphatic system, which plays a crucial role in the body’s..",
+    image:
+      "https://max-website20-images.s3.ap-south-1.amazonaws.com/medium_Living_with_Lymphoma_3805a711b2.jpg"
+  },
+  {
+    id: 5,
+    title: " Swollen Feet Explained: Common Causes and Home Remedies",
+    description:
+      "Swollen feet can make even simple tasks like walking or standing uncomfortable. Sometimes, the swelling develops ...",
+    image:
+      "https://max-website20-images.s3.ap-south-1.amazonaws.com/medium_Swollen_Feet_Explained_f59a2c0fdd.jpg"
+  },
+  {
+    id: 6,
+    title: "What is Bronchopneumonia? Symptoms, Causes, and Treatment Options?",
+    description:
+      "Bronchopneumonia is a lung infection that can make breathing difficult and cause considerable discomfort It...",
+    image:
+      "https://max-website20-images.s3.ap-south-1.amazonaws.com/medium_What_is_Bronchopneumonia_b4aca41bd2.jpg"
+  },
+  {
+    id: 7,
+    title: "Oesophageal Cancer: Causes, Symptoms, and Treatment Options",
+    description:
+      "Oesophageal cancer is a type of cancer that affects the food pipe (oesophagus). Though a serious concern, it often goes ...",
+    image:
+      "https://max-website20-images.s3.ap-south-1.amazonaws.com/medium_Oesophageal_Cancer_31856e1b13.jpg"
+  },
+  {
+    id: 8,
+    title:
+      "World Alzheimer's Day 2025: Key Facts on Alzheimer's Disease, Symptoms, Causes & Stages",
+    description:
+      "Alzheimer’s disease is a progressive brain disorder that affects memory, thinking, and behaviour. It is the most ...",
+    image:
+      "https://max-website20-images.s3.ap-south-1.amazonaws.com/medium_World_Alzheimer_s_Day_190a697c9d.webp"
+  },
+  {
+    id: 9,
+    title: "Weight Loss Drugs Effect on Heart: Risks & Safer Approaches",
+    description:
+      "In recent years, weight loss drugs have gained significant attention worldwide. With rising rates of obesity, diabetes, It...",
+    image:
+      "https://max-website20-images.s3.ap-south-1.amazonaws.com/medium_Weight_Loss_Drug_Trends_173f128b45.jpg"
+  }
 ];

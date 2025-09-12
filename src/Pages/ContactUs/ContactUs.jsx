@@ -28,6 +28,7 @@ import { useNavigate } from "react-router-dom";
 
 const ContactUs = () => {
   const { customToast } = useToastr();
+  const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState({
     name: "",
@@ -35,7 +36,6 @@ const ContactUs = () => {
     message: ""
   });
   const [errors, setErrors] = useState({});
-  const navigate = useNavigate();
 
   const fields = [
     {
@@ -145,46 +145,37 @@ const ContactUs = () => {
   );
 
   return (
-    <div
-      className="text-white position-relative"
-      style={{ minHeight: "80vh", overflow: "hidden" }}
-    >
-      {/* Background Video */}
+    <div className="text-white position-relative contact-section-wrapper">
       <video
         autoPlay
         muted
         loop
         playsInline
-        className="position-absolute top-0 start-0 w-100 h-100 object-fit-cover"
+        className="position-absolute top-0 start-0 w-100 h-100 object-fit-cover bg-video"
         style={{ zIndex: 0 }}
       >
         <source src={videoData.DnaBackground} type="video/mp4" />
       </video>
 
-      {/* Overlay */}
       <div
         className="position-absolute top-0 start-0 w-100 h-100"
         style={{ backgroundColor: "rgba(0, 50, 80, 0.6)", zIndex: 1 }}
       ></div>
 
-      {/* Content */}
       <Container
-        fluid
-        className="d-flex justify-content-center mx-auto px-4 align-items-center h-100"
-        style={{ position: "relative", zIndex: 2 }}
+        className="d-flex justify-content-center mx-auto align-items-center"
+        style={{ position: "relative", zIndex: 2, height: "100%" }}
       >
-        <Row className="w-100 h-100 align-items-center">
-          {/* Left Content */}
-          <Col
-            xs={12}
-            md={8}
-            className="text-center text-md-start px-4 py-3 py-md-0"
-          >
-            <h1 className="fw-bold text-white mt-3 mt-md-4 fs-2 fs-md-1 lh-sm">
+        <Row
+          className="w-100 align-items-center flex-column flex-sm-row"
+          style={{ height: "100%" }}
+        >
+          <Col xs={12} md={8} sm={6} className="text-center text-sm-start px-4 py-3">
+            <h1 className="fw-bold text-white mt-3 mt-sm-4 fs-3 fs-sm-2 fs-md-1 lh-sm">
               Get in Touch with Us
             </h1>
 
-            <p className="text-light mb-4 fs-6 fs-md-5">
+            <p className="text-light mb-4 fs-6 fs-sm-5">
               We are here to provide you the best healthcare support. Reach out
               for appointments, emergencies, or just to say hello.
             </p>
@@ -204,18 +195,18 @@ const ContactUs = () => {
             </div>
           </Col>
 
-          {/* Right Form */}
           <Col
             xs={12}
             md={4}
-            className="d-flex justify-content-center align-items-center px-3 mb-3 mb-md-0 py-md-0"
-            style={{ minHeight: "80vh" }}
+            sm={6}
+            className="d-flex justify-content-center align-items-center px-3 py-3"
           >
-            <div className="card shadow-lg w-100">
+            <div className="card shadow-lg w-100 contact-form-card">
               <div className="card-body">
-                <h2 className="text-center mb-3 text-primary fw-bold">
+                <h2 className="text-center mb- text-primary fw-bold fs-4 fs-sm-3 fs-md-2">
                   Contact Us
                 </h2>
+
                 <p className="text-muted text-center mb-4">
                   Fill out the form and our team will get back to you shortly.
                 </p>
@@ -223,12 +214,7 @@ const ContactUs = () => {
                 <form onSubmit={handleSubmit}>
                   {fields.map(renderInput)}
                   <div className="d-grid mt-2">
-                    <Button
-                      type="submit"
-                      variant="primary"
-                      size="lg"
-                      disabled={loading}
-                    >
+                    <Button type="submit" variant="primary" disabled={loading}>
                       {loading ? "Sending..." : "Send Message"}
                     </Button>
                   </div>

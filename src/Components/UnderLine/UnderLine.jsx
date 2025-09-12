@@ -5,7 +5,7 @@ const UnderLine = () => {
    <div className="d-flex justify-content-center align-items-center mb-4 gap-2">
           <div
             className="bg-primary"
-            style={{ height: "4px", width: "60px", borderRadius: "2px" }}
+            style={{ height: "4px", width: "40px", borderRadius: "2px" }}
           ></div>
           <div
             className="bg-danger rounded-circle"
@@ -13,7 +13,7 @@ const UnderLine = () => {
           ></div>
           <div
             className="bg-primary"
-            style={{ height: "4px", width: "60px", borderRadius: "2px" }}
+            style={{ height: "4px", width: "40px", borderRadius: "2px" }}
           ></div>
         </div>
   );

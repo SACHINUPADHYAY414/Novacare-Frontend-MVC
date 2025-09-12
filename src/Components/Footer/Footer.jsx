@@ -171,7 +171,7 @@ const Footer = () => {
               </h5>
               <ul className="list-unstyled">
                 <li>
-                  <Link to="/About" className="text-white text-decoration-none">
+                  <Link to="/about-us" className="text-white text-decoration-none">
                     About {COMPANY_NAME}
                   </Link>
                 </li>

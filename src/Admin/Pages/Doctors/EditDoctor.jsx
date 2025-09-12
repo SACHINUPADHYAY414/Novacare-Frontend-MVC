@@ -279,12 +279,24 @@ const EditDoctor = () => {
     const file = e.target.files[0];
     if (!file) return;
 
+    const allowedTypes = ["image/png", "image/jpeg", "image/jpg"];
+
+    if (!allowedTypes.includes(file.type)) {
+      customToast({
+        severity: "error",
+        summary: "Oops!",
+        detail: "Only PNG and JPG files are allowed.",
+        life: 3000,
+      });
+      return;
+    }
+
     if (file.size > MAX_FILE_SIZE_MB * 1024 * 1024) {
       customToast({
-        severity: ERROR,
-        summary: OPPS_MSG,
+        severity: "error",
+        summary: "Oops!",
         detail: `File size should be less than ${MAX_FILE_SIZE_MB} MB.`,
-        life: 3000
+        life: 3000,
       });
       return;
     }
@@ -293,7 +305,6 @@ const EditDoctor = () => {
     setImagePreview(URL.createObjectURL(file));
   };
 
-  // Updated handleChange:
   const handleChange = (e, required, label, pastedValue = "") => {
     let { name, value, type } = e.target;
 

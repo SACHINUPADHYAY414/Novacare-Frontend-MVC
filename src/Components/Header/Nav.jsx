@@ -80,14 +80,8 @@ const Navbar = () => {
         style={{ fontSize: "0.85rem" }}
       >
         <div className="container d-none d-lg-flex justify-content-end align-items-center px-2 gap-2">
-          <Link to="/" className="text-dark text-decoration-none">
+          <Link to="/find-doctors" className="text-dark text-decoration-none">
             Find a Doctor
-          </Link>
-          <Link
-            to="/patient-service"
-            className="text-dark text-decoration-none"
-          >
-            Patient Online Service
           </Link>
           <Link
             to="/pay-bills"
@@ -221,6 +215,13 @@ const Navbar = () => {
                   Contact Us
                 </Link>
               </li>
+              <li className="nav-item">
+                <Link
+                  to="/about-us"
+                  className="nav-link text-dark"
+                  onClick={closeOffcanvas}
+                > About Us</Link>
+              </li>
             </ul>
 
             {/* Fixed Bottom Login/Logout Button */}
@@ -249,7 +250,7 @@ const Navbar = () => {
 
         {/* Desktop menu */}
         <div className="collapse navbar-collapse d-none d-lg-block">
-          <ul className="navbar-nav ms-auto fw-bold align-items-center gap-3">
+          <ul className="navbar-nav ms-auto fw-bold align-items-center gap-1">
             <li className="nav-item">
               <Link to="/" className="nav-link text-dark">
                 Home
@@ -269,6 +270,9 @@ const Navbar = () => {
               <Link to="/contact-us" className="nav-link text-dark">
                 Contact Us
               </Link>
+            </li>
+            <li className="nav-item">
+              <Link to="/about-us" className="nav-link text-dark">About Us</Link>
             </li>
           </ul>
           <div className="d-flex align-items-center">
@@ -300,7 +304,7 @@ const Navbar = () => {
                 </Dropdown.Menu>
               </Dropdown>
             ) : (
-              <button className="btn btn-primary" onClick={handleLoginClick}>
+              <button className="btn btn-primary btn-sm" onClick={handleLoginClick}>
                 Login
               </button>
             )}

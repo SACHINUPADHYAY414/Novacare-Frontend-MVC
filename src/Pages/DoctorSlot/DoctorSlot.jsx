@@ -33,6 +33,7 @@ import {
   getDoctorQualification
 } from "../../Utils/DoctorProfile.js";
 import Ellipses from "../../Components/Ellipses/Ellipses.jsx";
+import images from "../../Utils/ImagesData.js";
 
 const MySwal = withReactContent(Swal);
 
@@ -439,11 +440,36 @@ const DoctorSlot = () => {
         {/* Doctor Profile */}
         <div className="col-12 col-md-3 mt-md-2">
           <div className="card shadow-sm text-center p-3 doctor-profile-card">
-            <img
-              src={getDoctorProfileImage(matchedDoctor)}
-              alt={matchedDoctor?.name || "Doctor"}
-              className="img-fluid rounded-circle mx-auto mb-2 doctor-profile-img"
-            />
+            <div
+              className="rounded-circle mx-auto d-block img-fluid rounded-circle mx-auto mb-2 doctor-profile-img"
+              style={{
+                borderRadius: "50%",
+                backgroundImage: `url("${images.background3}")`,
+                backgroundPosition: "center",
+                backgroundRepeat: "no-repeat",
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+                overflow: "hidden"
+              }}
+            >
+              <img
+                src={getDoctorProfileImage(matchedDoctor)}
+                alt={`${doctor.doctorName || "Doctor"} profile`}
+                style={{
+                  width: "100%",
+                  height: "100%",
+                  objectFit: "cover",
+                  borderRadius: "50%",
+                  transform: "scale(1.15)",
+                  backgroundColor: "transparent",
+                  display: "block"
+                }}
+                onError={(e) => {
+                  e.target.src = images.defaultDoctorImage;
+                }}
+              />
+            </div>
             <h5 className="mt-2 fw-bold doctor-name">{doctor.doctorName}</h5>
             <div className="text-center mt-auto fw-semibold mb-1">
               <Ellipses

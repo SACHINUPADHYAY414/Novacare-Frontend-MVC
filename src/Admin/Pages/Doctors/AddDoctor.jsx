@@ -94,11 +94,10 @@ const AddDoctor = () => {
     [cityList]
   );
 
-  // Fetch states when country is selected (we assume backend defaults country internally)
   useEffect(() => {
     const fetchStates = async () => {
       try {
-        const response = await api.get(`/api/states`); // no country param needed
+        const response = await api.get(`/api/states`);
         setStateList(response.data || []);
         setCityList([]);
         setFormData((prev) => ({ ...prev, presentState: "", presentCity: "" }));
@@ -116,7 +115,6 @@ const AddDoctor = () => {
     fetchStates();
   }, []);
 
-  // Load cities when state changes
   useEffect(() => {
     const selectedState = stateList.find(
       (state) => state.stateId.toString() === formData.presentState
@@ -129,7 +127,6 @@ const AddDoctor = () => {
     setFormData((prev) => ({ ...prev, presentCity: "" }));
   }, [formData.presentState, stateList]);
 
-  // Form fields
   const formFields = [
     {
       label: "Gender",
@@ -200,7 +197,6 @@ const AddDoctor = () => {
     }
   ];
 
-  // Handlers
   const handleChange = (e, required, label, pastedValue = "") => {
     let { name, value, type, files } = e.target;
 

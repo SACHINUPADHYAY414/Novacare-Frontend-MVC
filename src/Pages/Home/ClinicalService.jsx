@@ -225,19 +225,19 @@ const ClinicalService = () => {
               </div>
               <div className="col-12 col-md-6 order-2 order-1 order-md-2">
                 <h3 className="fw-bold text-dark">{service.title}</h3>
-                <p className="text-muted">{service.description}</p>
+                <p className="text-muted fs-6">{service.description}</p>
 
                 {service.para1 && (
                   <div className="d-flex justify-content-start align-items-center mb-2">
                     <span className="text-primary me-1">{service.icon}</span>
-                    <p className="mb-0 text-muted mt-1">{service.para1}</p>
+                    <p className="mb-0 text-muted mt-1 f-6">{service.para1}</p>
                   </div>
                 )}
 
                 {service.para2 && (
                   <div className="d-flex justify-content-start align-items-center mb-2">
                     <span className="text-primary me-1">{service.icon}</span>
-                    <p className="mb-0 text-muted mt-1">{service.para2}</p>
+                    <p className="mb-0 text-muted mt-1 f-6">{service.para2}</p>
                   </div>
                 )}
 
