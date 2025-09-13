@@ -35,21 +35,21 @@ const App = () => {
   useEffect(() => {
     window.scrollTo(0, 0);
 
-    const handleContextMenu = (e) => {
-      e.preventDefault();
-    };
+    // const handleContextMenu = (e) => {
+    //   e.preventDefault();
+    // };
 
-    const handleCopy = (e) => {
-      e.preventDefault();
-    };
+    // const handleCopy = (e) => {
+    //   e.preventDefault();
+    // };
 
-    document.addEventListener("contextmenu", handleContextMenu);
-    document.addEventListener("copy", handleCopy);
+    // document.addEventListener("contextmenu", handleContextMenu);
+    // document.addEventListener("copy", handleCopy);
 
-    return () => {
-      document.removeEventListener("contextmenu", handleContextMenu);
-      document.removeEventListener("copy", handleCopy);
-    };
+    // return () => {
+    //   document.removeEventListener("contextmenu", handleContextMenu);
+    //   document.removeEventListener("copy", handleCopy);
+    // };
   }, [pathname]);
 
   return (
