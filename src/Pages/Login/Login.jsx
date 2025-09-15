@@ -218,7 +218,7 @@ const Login = () => {
       const response = await api.post("/api/auth/login", formData);
 
       const { user, token, otp, otpSkipped, message } = response.data || {};
-
+console.log("response.data",response.data)
       if (otpSkipped) {
         const userRole = user?.role || user?.type;
 

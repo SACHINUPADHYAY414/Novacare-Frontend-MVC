@@ -354,7 +354,7 @@ const Register = () => {
         })
       );
 
-      if (response.data.isSkipOtp) {
+      if (response.data.otpSkipped) {
         navigate("/");
       } else {
         navigate("/validate-otp");
