@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const api = axios.create({
-  baseURL: import.meta.env.VITE_LOCAL_API || "https://novacare-backend.onrender.com",
+  baseURL: import.meta.env.VITE_LOCAL_API ,
   headers: {
     "Content-Type": "application/json",
   },

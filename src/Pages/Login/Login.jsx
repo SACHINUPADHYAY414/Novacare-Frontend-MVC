@@ -10,7 +10,9 @@ import {
   SERVER_ERROR,
   SUCCESS,
   FALSE,
-  TRUE
+  TRUE,
+  OTP_VERIFY_SUCCESS,
+  EXPIRATION_TIME
 } from "../../Utils/strings.js";
 import { FaUser } from "react-icons/fa";
 import {
@@ -25,7 +27,7 @@ import {
 import api from "../../Components/Action/Api.js";
 import { useToastr } from "../../Components/Toastr/ToastrProvider.jsx";
 import { useNavigate } from "react-router-dom";
-import { loginSuccess } from "../../Redux/authSlice.js";
+import { loginSuccess, otpVerifySuccess } from "../../Redux/authSlice.js";
 import { useDispatch } from "react-redux";
 import images from "../../Utils/ImagesData.js";
 
@@ -131,6 +133,64 @@ const Login = () => {
     handleChange(syntheticEvent, label, pastedValue);
   };
 
+  // const handleSubmit = async (e) => {
+  //   e.preventDefault();
+  //   let tempErrors = {};
+
+  //   fields.forEach(({ name, label, required }) => {
+  //     const value = formData[name];
+  //     if (required && !value) {
+  //       tempErrors[name] = ERROR_REQUIRED(label);
+  //     }
+  //     if (name === "email" && value && !verifyEmail(value)) {
+  //       tempErrors[name] = ERROR_VALIDATE_EMAIL;
+  //     }
+  //   });
+
+  //   setErrors(tempErrors);
+
+  //   if (Object.keys(tempErrors).length > 0) {
+  //     return;
+  //   }
+
+  //   try {
+  //     setLoading(true);
+  //     window?.loadingStart();
+  //     const response = await api.post("/api/auth/login", formData);
+
+  //     dispatch(
+  //       loginSuccess({
+  //         from: "login",
+  //         token: null,
+  //         user: response.data,
+  //         otp: response.data.otp
+  //       })
+  //     );
+  //     setLoading(false);
+  //     navigate("/validate-otp", { replace: TRUE });
+
+  //     const errorMessage = response?.data?.message;
+  //     e.message ||
+  //       customToast({
+  //         severity: SUCCESS,
+  //         summary: SUCCESS_MSG,
+  //         detail: errorMessage,
+  //         life: 3000
+  //       });
+  //   } catch (error) {
+  //     console.error("Login error:", error);
+  //     customToast({
+  //       severity: "error",
+  //       summary: OPPS_MSG,
+  //       detail: error.response?.data?.message || error.message || SERVER_ERROR,
+  //       life: 3000
+  //     });
+  //   } finally {
+  //     setLoading(false);
+  //     window?.loadingEnd();
+  //   }
+  // };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     let tempErrors = {};
@@ -154,27 +214,61 @@ const Login = () => {
     try {
       setLoading(true);
       window?.loadingStart();
+
       const response = await api.post("/api/auth/login", formData);
 
-      dispatch(
-        loginSuccess({
-          from: "login",
-          token: null,
-          user: response.data,
-          otp: response.data.otp
-        })
-      );
-      setLoading(false);
-      navigate("/validate-otp", { replace: TRUE });
+      const { user, token, otp, otpSkipped, message } = response.data || {};
 
-      const errorMessage = response?.data?.message;
-      e.message ||
+      if (otpSkipped) {
+        const userRole = user?.role || user?.type;
+
+        if (token) {
+          dispatch(
+            otpVerifySuccess({
+              token,
+              user
+            })
+          );
+          localStorage.setItem("loginTime", Date.now().toString());
+          localStorage.setItem("tokenExpiresIn", EXPIRATION_TIME.toString());
+        }
+        const errorMessage = response?.data?.message;
+        // ✅ Success toast
         customToast({
           severity: SUCCESS,
           summary: SUCCESS_MSG,
           detail: errorMessage,
           life: 3000
         });
+
+        // ✅ Navigate based on role
+        if (userRole === "ADMIN") {
+          navigate("/dashboard", { replace: true });
+        } else {
+          navigate("/", { replace: true });
+        }
+
+        return;
+      }
+
+      // ✅ If OTP not skipped — store otp info and navigate to OTP validation
+      dispatch(
+        loginSuccess({
+          from: "login",
+          token: null,
+          user,
+          otp
+        })
+      );
+
+      customToast({
+        severity: SUCCESS,
+        summary: SUCCESS_MSG,
+        detail: message || "OTP sent to your email",
+        life: 3000
+      });
+
+      navigate("/validate-otp", { replace: true });
     } catch (error) {
       console.error("Login error:", error);
       customToast({

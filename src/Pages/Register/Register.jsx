@@ -354,7 +354,11 @@ const Register = () => {
         })
       );
 
-      navigate("/validate-otp");
+      if (response.data.isSkipOtp) {
+        navigate("/");
+      } else {
+        navigate("/validate-otp");
+      }
     } catch (err) {
       customToast({
         severity: ERROR,

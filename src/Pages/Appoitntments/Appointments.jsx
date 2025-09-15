@@ -128,13 +128,14 @@ function Appointments() {
               <th>Status</th>
             </tr>
           </thead>
+          {/* {JSON.stringify(currentAppointments)} */}
           <tbody>
             {currentAppointments.length > 0 ? (
               currentAppointments.map((appt, index) => (
                 <tr key={appt.id}>
                   <td>{indexOfFirstAppointment + index + 1}</td>
-                  <td>{appt.doctor?.name || "N/A"}</td>
-                  <td>{new Date(appt.appointmentDate).toLocaleDateString()}</td>
+                  <td>{appt.doctorName || "N/A"}</td>
+                  <td>{appt.appointmentDate}</td>
                   <td>{appt.appointmentTime}</td>
                   <td>{appt.status}</td>
                 </tr>

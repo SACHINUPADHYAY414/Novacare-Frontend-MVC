@@ -49,6 +49,88 @@ const ValidateOtp = () => {
     }
   };
 
+  // const handleSubmit = async (e) => {
+  //   e.preventDefault();
+  //   const otpValue = otpDigits.join("");
+
+  //   if (otpValue.length < 6) {
+  //     customToast({
+  //       severity: WARNING,
+  //       summary: OPPS_MSG,
+  //       detail: ENTER_CORRECT_OTP,
+  //       life: 3000
+  //     });
+  //     return;
+  //   }
+
+  //   try {
+  //     setLoading(true);
+
+  //     // Determine endpoint based on origin
+  //     const endpoint =
+  //       from === "register"
+  //         ? "/api/auth/otp-verify"
+  //         : "/api/auth/login/otp-verify";
+
+  //     const response = await api.post(endpoint, {
+  //       email,
+  //       otp: otpValue
+  //     });
+
+  //     const returnedUser = response.data?.user;
+  //     const token = response.data?.token;
+
+  //     if (!returnedUser) {
+  //       customToast({
+  //         severity: ERROR,
+  //         summary: OPPS_MSG,
+  //         detail: INVALID_OTP,
+  //         life: 3000
+  //       });
+  //       return;
+  //     }
+
+  //     const userRole = returnedUser?.role || returnedUser?.type;
+
+  //     // Show success toast
+  //     customToast({
+  //       severity: SUCCESS,
+  //       summary: SUCCESS_MSG,
+  //       detail: response.data?.message || OTP_VERIFY_SUCCESS,
+  //       life: 3000
+  //     });
+
+  //     // Dispatch user + token to Redux
+  //     if (token) {
+  //       dispatch(
+  //         otpVerifySuccess({
+  //           token,
+  //           user: returnedUser
+  //         })
+  //       );
+  //       localStorage.setItem("loginTime", Date.now().toString());
+  //       localStorage.setItem("tokenExpiresIn", EXPIRATION_TIME.toString());
+  //     }
+
+  //     // Navigate based on role
+  //     if (userRole === "ADMIN") {
+  //       navigate("/dashboard", { replace: true });
+  //     } else {
+  //       navigate("/", { replace: true });
+  //     }
+  //   } catch (error) {
+  //     customToast({
+  //       severity: ERROR,
+  //       summary: OPPS_MSG,
+  //       detail: error.response?.data?.message || INVALID_OTP,
+  //       life: 3000
+  //     });
+  //   } finally {
+  //     setLoading(false);
+  //   }
+  // };
+
+  // Resend OTP handler
   const handleSubmit = async (e) => {
     e.preventDefault();
     const otpValue = otpDigits.join("");
@@ -66,7 +148,6 @@ const ValidateOtp = () => {
     try {
       setLoading(true);
 
-      // Determine endpoint based on origin
       const endpoint =
         from === "register"
           ? "/api/auth/otp-verify"
@@ -77,10 +158,10 @@ const ValidateOtp = () => {
         otp: otpValue
       });
 
-      const returnedUser = response.data?.user;
-      const token = response.data?.token;
+      const { user: returnedUser, token, otpSkipped } = response.data;
 
-      if (!returnedUser) {
+      // ✅ If OTP is invalid and not skipped
+      if (!returnedUser && !otpSkipped) {
         customToast({
           severity: ERROR,
           summary: OPPS_MSG,
@@ -92,7 +173,7 @@ const ValidateOtp = () => {
 
       const userRole = returnedUser?.role || returnedUser?.type;
 
-      // Show success toast
+      // ✅ Show success toast regardless (you can adjust this logic as needed)
       customToast({
         severity: SUCCESS,
         summary: SUCCESS_MSG,
@@ -100,7 +181,7 @@ const ValidateOtp = () => {
         life: 3000
       });
 
-      // Dispatch user + token to Redux
+      // ✅ Dispatch to Redux and save token if present
       if (token) {
         dispatch(
           otpVerifySuccess({
@@ -112,7 +193,7 @@ const ValidateOtp = () => {
         localStorage.setItem("tokenExpiresIn", EXPIRATION_TIME.toString());
       }
 
-      // Navigate based on role
+      // ✅ Navigate user based on role
       if (userRole === "ADMIN") {
         navigate("/dashboard", { replace: true });
       } else {
@@ -130,7 +211,6 @@ const ValidateOtp = () => {
     }
   };
 
-  // Resend OTP handler
   const handleResendOtp = async () => {
     try {
       setLoading(true);
