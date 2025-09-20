@@ -68,7 +68,6 @@ const Login = () => {
     const fieldMeta = fields.find((f) => f.name === name);
     const required = fieldMeta?.required || FALSE;
 
-    // Combine current input value and pasted value (if any)
     const newValue = value + pastedValue;
     const sanitized = sanitizeInput(newValue);
     let updatedValue = "";
@@ -133,64 +132,6 @@ const Login = () => {
     handleChange(syntheticEvent, label, pastedValue);
   };
 
-  // const handleSubmit = async (e) => {
-  //   e.preventDefault();
-  //   let tempErrors = {};
-
-  //   fields.forEach(({ name, label, required }) => {
-  //     const value = formData[name];
-  //     if (required && !value) {
-  //       tempErrors[name] = ERROR_REQUIRED(label);
-  //     }
-  //     if (name === "email" && value && !verifyEmail(value)) {
-  //       tempErrors[name] = ERROR_VALIDATE_EMAIL;
-  //     }
-  //   });
-
-  //   setErrors(tempErrors);
-
-  //   if (Object.keys(tempErrors).length > 0) {
-  //     return;
-  //   }
-
-  //   try {
-  //     setLoading(true);
-  //     window?.loadingStart();
-  //     const response = await api.post("/api/auth/login", formData);
-
-  //     dispatch(
-  //       loginSuccess({
-  //         from: "login",
-  //         token: null,
-  //         user: response.data,
-  //         otp: response.data.otp
-  //       })
-  //     );
-  //     setLoading(false);
-  //     navigate("/validate-otp", { replace: TRUE });
-
-  //     const errorMessage = response?.data?.message;
-  //     e.message ||
-  //       customToast({
-  //         severity: SUCCESS,
-  //         summary: SUCCESS_MSG,
-  //         detail: errorMessage,
-  //         life: 3000
-  //       });
-  //   } catch (error) {
-  //     console.error("Login error:", error);
-  //     customToast({
-  //       severity: "error",
-  //       summary: OPPS_MSG,
-  //       detail: error.response?.data?.message || error.message || SERVER_ERROR,
-  //       life: 3000
-  //     });
-  //   } finally {
-  //     setLoading(false);
-  //     window?.loadingEnd();
-  //   }
-  // };
-
   const handleSubmit = async (e) => {
     e.preventDefault();
     let tempErrors = {};
@@ -218,7 +159,6 @@ const Login = () => {
       const response = await api.post("/api/auth/login", formData);
 
       const { user, token, otp, otpSkipped, message } = response.data || {};
-console.log("response.data",response.data)
       if (otpSkipped) {
         const userRole = user?.role || user?.type;
 
@@ -233,7 +173,6 @@ console.log("response.data",response.data)
           localStorage.setItem("tokenExpiresIn", EXPIRATION_TIME.toString());
         }
         const errorMessage = response?.data?.message;
-        // ✅ Success toast
         customToast({
           severity: SUCCESS,
           summary: SUCCESS_MSG,
@@ -241,7 +180,6 @@ console.log("response.data",response.data)
           life: 3000
         });
 
-        // ✅ Navigate based on role
         if (userRole === "ADMIN") {
           navigate("/dashboard", { replace: true });
         } else {
@@ -251,7 +189,6 @@ console.log("response.data",response.data)
         return;
       }
 
-      // ✅ If OTP not skipped — store otp info and navigate to OTP validation
       dispatch(
         loginSuccess({
           from: "login",
