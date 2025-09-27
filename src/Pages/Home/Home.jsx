@@ -154,8 +154,8 @@ const Home = ({ from = "" }) => {
       if (error.response?.status === 404) {
         customToast({
           severity: "warn",
-          summary: SERVER_ERROR,
-          detail: NO_DOCTORS_FOUND,
+          summary: OPPS_MSG,
+          detail: SERVER_ERROR,
           life: 3000,
           sticky: false,
           closable: true
