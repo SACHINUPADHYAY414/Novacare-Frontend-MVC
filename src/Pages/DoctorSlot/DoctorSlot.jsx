@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect, useMemo } from "react";
+import React, { useState, useRef, useEffect, useMemo } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { FaLocationDot } from "react-icons/fa6";
@@ -90,10 +90,6 @@ const DoctorSlot = () => {
     };
     fetchDropdownData();
   }, []);
-  const filtered = doctor.duration.filter(
-    (slot) => slot.dutyDate === selectedDate
-  );
-  console.log("Filtered slots for selectedDate:", filtered);
 
   useEffect(() => {
     return () => {
@@ -140,14 +136,10 @@ const DoctorSlot = () => {
     const slots = [];
     const start = new Date(`${date}T${fromTime}`);
     const end = new Date(`${date}T${toTime}`);
-
-    // bookedSlots ko set me convert karo for fast lookup
     const bookedSet = new Set(bookedSlots);
 
     while (start < end) {
-      // Extract HH:mm format
-      const slotTimeStr = start.toTimeString().slice(0, 5); // "HH:MM"
-
+      const slotTimeStr = start.toTimeString().slice(0, 5);
       const isBooked = bookedSet.has(slotTimeStr);
 
       slots.push({
@@ -246,7 +238,7 @@ const DoctorSlot = () => {
     if (!selectedSlotObj) {
       customToast({
         severity: "warn",
-        summary: "Invalid Slot",
+        summary: INVALID_SLOT,
         detail: "Please select a valid time slot before booking.",
         life: 3000
       });
@@ -256,10 +248,8 @@ const DoctorSlot = () => {
 
     const [appointmentDate, timeWithSeconds] = selectedSlot.split("T");
     const appointmentTime = timeWithSeconds.slice(0, 5);
-    // Use amount from selected slot or fallback to doctor's consultationFee
     const amount = selectedSlotObj.amount || doctor.consultationFee || 0;
 
-    // 1. Create Razorpay order on backend
     try {
       const orderResponse = await api.post("/api/appointments/payment/order", {
         amount
@@ -271,7 +261,6 @@ const DoctorSlot = () => {
 
       const orderData = orderResponse.data;
 
-      // 2. Open Razorpay Checkout
       const options = {
         key: "rzp_test_RNEbI8mcPHk4xG",
         amount: orderData.amount,
@@ -305,8 +294,8 @@ const DoctorSlot = () => {
             ) {
               customToast({
                 severity: "success",
-                summary: "Success",
-                detail: "Appointment booked successfully!",
+                summary: SUCCESS_MSG,
+                detail: APPOINTMENT_BOOKED_SUCCESS,
                 life: 3000
               });
               setSelectedSlot("");
@@ -317,9 +306,9 @@ const DoctorSlot = () => {
           } catch (error) {
             customToast({
               severity: "error",
-              summary: "Oops!",
+              summary: OPPS_MSG,
               detail:
-                error?.response?.data?.message || // <-- Fix here
+                error?.response?.data?.message ||
                 error?.message ||
                 "Failed to book appointment after payment",
               life: 4000
@@ -355,11 +344,8 @@ const DoctorSlot = () => {
     } catch (error) {
       customToast({
         severity: "error",
-        summary: "Error",
-        detail:
-          error?.response?.data?.message ||
-          error.message ||
-          "Something went wrong during booking",
+        summary: OPPS_MSG,
+        detail: error?.response?.data?.message || error.message || SERVER_ERROR,
         life: 4000
       });
       setIsSubmitted(false);
@@ -507,15 +493,21 @@ const DoctorSlot = () => {
     }
   };
 
-  if (!doctor) return null;
   const matchedDoctor = fetchDoctors.find(
     (d) => d.id === doctor?.id || d.id === doctor?.doctorId
   );
+  const displayedAmount = React.useMemo(() => {
+    if (!allSlots.length) return null;
+
+    const slot = allSlots.find((s) => s.full === selectedSlot);
+
+    if (slot) return slot.amount;
+    return allSlots[0].amount;
+  }, [allSlots, selectedSlot]);
 
   return (
     <div className="container py-4">
       <div className="row">
-        {/* Doctor Profile */}
         <div className="col-12 col-md-3 mt-md-2">
           <div className="card shadow-sm text-center p-3 doctor-profile-card">
             <div
@@ -573,31 +565,26 @@ const DoctorSlot = () => {
             </h4>
 
             <div className="d-flex mb-2 fw-semibold flex-row flex-md-row align-items-center justify-content-between gap-2">
-              {/* Search group */}
-              <span>
-                Date:
-                {selectedDate ? showDate(selectedDate) : "No date selected"}
-              </span>
               <div
-                className="d-flex align-items-center gap-2"
+                className="d-flex align-items-center gap-1"
                 onClick={openSearch}
                 style={{ cursor: "pointer" }}
               >
                 <FiSearch className="text-primary" />
                 <span>Search</span>
-              </div>
-
-              {/* Location group */}
-              <div className="d-flex align-items-center gap-2">
-                <FaLocationDot className="text-danger" />
+              </div>{" "}
+              <span>
+                , Date:{" "}
+                {selectedDate ? showDate(selectedDate) : "No date selected"}{" "}
+              </span>
+              <div className="d-flex align-items-center gap-1">
+                <FaLocationDot className="text-danger mb-1" />
                 <span>{COMPANY_LOCATION}</span>
-                Amount:{doctor.amount}
               </div>
             </div>
           </div>
 
-          {/* Date Scroller */}
-          <div className="position-relative px-3">
+          <div className="position-relative px-3 mb-2">
             {isOverflowing && (
               <button
                 type="button"
@@ -656,11 +643,15 @@ const DoctorSlot = () => {
               </button>
             )}
           </div>
-
-          {/* Time Slots */}
+          <div className="text-end">
+            <span className="fw-bold">
+              Consultation Fee :{" "}
+              {displayedAmount ? `₹${displayedAmount.toFixed(2)}` : "N/A"}
+            </span>
+          </div>
           <form>
             <div
-              className="row g-2 mt-3"
+              className="row g-2 mt-1"
               style={{
                 maxHeight: isMobile ? "none" : "55vh",
                 overflowY: isMobile ? "visible" : "auto"
@@ -683,8 +674,7 @@ const DoctorSlot = () => {
                           customToast({
                             severity: WARNING,
                             summary: "Slot Booked",
-                            detail:
-                              "This time slot is already booked. Please select another.",
+                            detail: BOOKING_SLOT_ALREADY_BOOKED,
                             life: 3000
                           });
                         } else {
