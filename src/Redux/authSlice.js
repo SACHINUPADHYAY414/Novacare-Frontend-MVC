@@ -20,9 +20,9 @@ const authSlice = createSlice({
     },
     loginSuccess: (state, action) => {
       state.loading = false;
-      state.isAuthenticated = false; // WAIT for OTP verification
+      state.isAuthenticated = false;
       state.user = action.payload.user;
-      state.token = action.payload.token;  // may be null at this point
+      state.token = action.payload.token;
       state.otp = action.payload.otp;
       state.from = action.payload.from;
     },

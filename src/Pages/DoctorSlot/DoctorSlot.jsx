@@ -90,6 +90,10 @@ const DoctorSlot = () => {
     };
     fetchDropdownData();
   }, []);
+  const filtered = doctor.duration.filter(
+    (slot) => slot.dutyDate === selectedDate
+  );
+  console.log("Filtered slots for selectedDate:", filtered);
 
   useEffect(() => {
     return () => {
@@ -130,7 +134,8 @@ const DoctorSlot = () => {
     toTime,
     duration,
     dutyRosterId,
-    bookedSlots = []
+    bookedSlots = [],
+    amount
   ) => {
     const slots = [];
     const start = new Date(`${date}T${fromTime}`);
@@ -146,14 +151,14 @@ const DoctorSlot = () => {
       const isBooked = bookedSet.has(slotTimeStr);
 
       slots.push({
-        label: formatTime(start), // e.g. "08:00 AM"
-        full: `${date}T${slotTimeStr}`, // e.g. "2025-09-07T08:00"
+        label: formatTime(start),
+        full: `${date}T${slotTimeStr}`,
         status: isBooked ? "BOOKED" : "AVAILABLE",
         dutyRosterId,
-        isAvailable: !isBooked
+        isAvailable: !isBooked,
+        amount
       });
 
-      // Increment by duration minutes
       start.setMinutes(start.getMinutes() + duration);
     }
     return slots;
@@ -179,7 +184,8 @@ const DoctorSlot = () => {
           slot.toTime,
           slot.duration,
           slot.dutyRosterId || slot.id,
-          slot.bookedAppointmentTimes || []
+          slot.bookedAppointmentTimes || [],
+          slot.amount || doctor.consultationFee
         )
       );
   }, [doctor, selectedDate]);
@@ -239,9 +245,9 @@ const DoctorSlot = () => {
 
     if (!selectedSlotObj) {
       customToast({
-        severity: WARNING,
-        summary: INVALID_SLOT,
-        detail: INVALID_SLOT_DETAIL,
+        severity: "warn",
+        summary: "Invalid Slot",
+        detail: "Please select a valid time slot before booking.",
         life: 3000
       });
       setIsSubmitted(false);
@@ -250,38 +256,110 @@ const DoctorSlot = () => {
 
     const [appointmentDate, timeWithSeconds] = selectedSlot.split("T");
     const appointmentTime = timeWithSeconds.slice(0, 5);
+    // Use amount from selected slot or fallback to doctor's consultationFee
+    const amount = selectedSlotObj.amount || doctor.consultationFee || 0;
 
-    const payload = {
-      userId: user.id,
-      doctorId: doctor.id || doctor.doctorId,
-      dutyRosterId: selectedSlotObj.dutyRosterId,
-      status: "BOOKED",
-      appointmentDate,
-      appointmentTime
-    };
-
+    // 1. Create Razorpay order on backend
     try {
-      const response = await api.post("/api/appointments/book", payload);
+      const orderResponse = await api.post("/api/appointments/payment/order", {
+        amount
+      });
 
-      if (response.status === 200 || response.status === 201) {
-        customToast({
-          severity: "success",
-          summary: SUCCESS_MSG,
-          detail: APPOINTMENT_BOOKED_SUCCESS,
-          life: 3000
-        });
-        setSelectedSlot("");
-        navigate("/", { replace: true });
-      } else {
-        throw new Error("Booking failed");
+      if (!(orderResponse.status === 200 || orderResponse.status === 201)) {
+        throw new Error("Failed to create payment order");
       }
-    } catch (e) {
-      const errorMessage =
-        e?.response?.data?.message || e.message || BOOKING_SLOT_ALREADY_BOOKED;
+
+      const orderData = orderResponse.data;
+
+      // 2. Open Razorpay Checkout
+      const options = {
+        key: "rzp_test_RNEbI8mcPHk4xG",
+        amount: orderData.amount,
+        currency: orderData.currency,
+        name: "Novacare",
+        description: "Consultation Fee",
+        order_id: orderData.id,
+        handler: async function (response) {
+          try {
+            const payload = {
+              userId: user.id,
+              doctorId: doctor.id || doctor.doctorId,
+              dutyRosterId: selectedSlotObj.dutyRosterId,
+              status: "BOOKED",
+              appointmentDate,
+              appointmentTime,
+              amount: selectedSlotObj.amount,
+              razorpayOrderId: response.razorpay_order_id,
+              razorpayPaymentId: response.razorpay_payment_id,
+              razorpaySignature: response.razorpay_signature
+            };
+
+            const bookingResponse = await api.post(
+              "/api/appointments/book/after-payment",
+              payload
+            );
+
+            if (
+              bookingResponse.status === 200 ||
+              bookingResponse.status === 201
+            ) {
+              customToast({
+                severity: "success",
+                summary: "Success",
+                detail: "Appointment booked successfully!",
+                life: 3000
+              });
+              setSelectedSlot("");
+              navigate("/", { replace: true });
+            } else {
+              throw new Error("Booking failed after payment");
+            }
+          } catch (error) {
+            customToast({
+              severity: "error",
+              summary: "Oops!",
+              detail:
+                error?.response?.data?.message || // <-- Fix here
+                error?.message ||
+                "Failed to book appointment after payment",
+              life: 4000
+            });
+            setIsSubmitted(false);
+          }
+        },
+
+        prefill: {
+          name: user.name,
+          email: user.email,
+          contact: user.phone || ""
+        },
+        theme: {
+          color: "#3399cc"
+        }
+      };
+
+      const rzp = new window.Razorpay(options);
+
+      rzp.on("payment.failed", function (response) {
+        customToast({
+          severity: "error",
+          summary: "Payment Failed",
+          detail:
+            response.error.description || "Payment failed. Please try again.",
+          life: 4000
+        });
+        setIsSubmitted(false);
+      });
+
+      rzp.open();
+    } catch (error) {
       customToast({
         severity: "error",
-        summary: OPPS_MSG,
-        detail: errorMessage,
+        summary: "Error",
+        detail:
+          error?.response?.data?.message ||
+          error.message ||
+          "Something went wrong during booking",
         life: 4000
       });
       setIsSubmitted(false);
@@ -487,7 +565,6 @@ const DoctorSlot = () => {
             </div>
           </div>
         </div>
-
         {/* Slot Booking */}
         <div className="col-12 col-md-9">
           <div className="d-flex flex-column flex-md-row align-items-center gap-md-0 justify-content-center justify-content-md-between">
@@ -498,7 +575,7 @@ const DoctorSlot = () => {
             <div className="d-flex mb-2 fw-semibold flex-row flex-md-row align-items-center justify-content-between gap-2">
               {/* Search group */}
               <span>
-                Date:{" "}
+                Date:
                 {selectedDate ? showDate(selectedDate) : "No date selected"}
               </span>
               <div
@@ -514,6 +591,7 @@ const DoctorSlot = () => {
               <div className="d-flex align-items-center gap-2">
                 <FaLocationDot className="text-danger" />
                 <span>{COMPANY_LOCATION}</span>
+                Amount:{doctor.amount}
               </div>
             </div>
           </div>
